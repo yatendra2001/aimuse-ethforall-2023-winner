@@ -1,0 +1,100 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
+
+import 'package:ai_muse/common_widgets/custom_button.dart';
+
+import '../widgets/dot_indicator.dart';
+
+class CustomScreen extends StatefulWidget {
+  final PageController pageController;
+  static const routename = '/custom-screeen';
+
+  final double pageNumber;
+  final String title;
+  final String text;
+
+  const CustomScreen({
+    Key? key,
+    required this.pageController,
+    required this.pageNumber,
+    required this.title,
+    required this.text,
+  }) : super(key: key);
+
+  @override
+  State<CustomScreen> createState() => _CustomScreenState();
+}
+
+class _CustomScreenState extends State<CustomScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildAnimation(),
+            Expanded(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.title,
+                    style: GoogleFonts.lexend()
+                        .copyWith(fontWeight: FontWeight.w700, fontSize: 28.sp),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 2.h,
+                  ),
+                  Text(
+                    widget.text,
+                    style: GoogleFonts.lexend().copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12.sp,
+                      color: Color(0XFF8F9BBA),
+                      height: 1.5,
+                      letterSpacing: 1,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  CustomDotIndicator(
+                    curPageIndex: widget.pageNumber,
+                    onTap: (page) {
+                      widget.pageController.jumpToPage(page.round());
+                    },
+                  ),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  CustomButton(
+                    text: "Continue",
+                    onPressed: () {
+                      widget.pageController.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.linear,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 4.h,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildAnimation() {
+    return Expanded(flex: 1, child: Container());
+  }
+}
