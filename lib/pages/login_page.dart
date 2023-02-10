@@ -16,9 +16,8 @@ class _LoginPageState extends State<LoginPage> {
         var session = await connector.createSession(onDisplayUri: (uri) async {
           _uri = uri;
           if (await canLaunch(_uri))
-            await launch(_uri);
+            await launch(_uri, enableJavaScript: true);
           else
-            // can't launch url, there is some error
             throw "Could not launch $_uri";
         });
         print(session.accounts[0]);
