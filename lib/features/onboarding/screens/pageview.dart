@@ -1,5 +1,8 @@
+import 'package:ai_muse/features/authentication/screens/link_wallet_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/custom_onboarding_screen.dart';
+import 'package:ai_muse/features/onboarding/screens/stay_informed.dart';
 import 'package:ai_muse/features/onboarding/screens/welcome_screen.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPageview extends StatefulWidget {
@@ -26,31 +29,36 @@ class _OnboardingPageviewState extends State<OnboardingPageview> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-                onPressed: () {
-                  _pageController.previousPage(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.linear,
-                  );
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: Colors.black,
-                )),
-          ),
-          resizeToAvoidBottomInset: false,
-          body: SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+              onPressed: () {
+                _pageController.previousPage(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.linear,
+                );
+              },
+              icon: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.black,
+              )),
+        ),
+        resizeToAvoidBottomInset: false,
+        body: GestureDetector(
+          onTap: () {
+            _pageController.nextPage(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.linear,
+            );
+          },
+          child: SafeArea(
             child: PageView(
-              physics: NeverScrollableScrollPhysics(),
-              children: _buildPages(),
+              scrollDirection: Axis.horizontal,
               controller: _pageController,
               onPageChanged: _onPageViewChange,
+              children: _buildPages(),
             ),
           ),
         ),
@@ -77,7 +85,7 @@ class _OnboardingPageviewState extends State<OnboardingPageview> {
         text:
             "Nullam ut augue mi. Vestibulum porta, libero condimentum euismod maximus, ligula purus pretium nibh.",
       ),
-      CustomScreen(
+      StayInformedScreen(
         pageNumber: 3,
         pageController: _pageController,
         title: "Stay informed",

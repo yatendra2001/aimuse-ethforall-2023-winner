@@ -5,10 +5,13 @@ import 'package:sizer/sizer.dart';
 class CustomButton extends StatefulWidget {
   final Function() onPressed;
   final String text;
+  final bool showIcon;
+
   const CustomButton({
     Key? key,
     required this.onPressed,
     required this.text,
+    this.showIcon = true,
   }) : super(key: key);
 
   @override
@@ -33,10 +36,12 @@ class _CustomButtonState extends State<CustomButton> {
                   fontSize: 10.sp,
                   color: Colors.white),
             ),
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 14,
-            ),
+            widget.showIcon
+                ? Icon(
+                    Icons.arrow_forward_ios,
+                    size: 14,
+                  )
+                : SizedBox.shrink(),
           ],
         ),
         height: 6.h,
