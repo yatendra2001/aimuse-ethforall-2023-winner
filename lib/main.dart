@@ -12,9 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: MyRoutes.loginRoute,
+      initialRoute: MyRoutes.aiImageRoute,
       routes: {
         MyRoutes.loginRoute: (context) => const LoginPage(),
+        MyRoutes.aiImageRoute: (context) => AIImagePage(),
       },
     );
   }
