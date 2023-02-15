@@ -1,3 +1,6 @@
+import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
+import 'package:ai_muse/features/dashboard/screens/bottom_nav_screen.dart';
+import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/custom_onboarding_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/pageview.dart';
 import 'package:ai_muse/features/onboarding/screens/welcome_screen.dart';
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Ai.muse',
           theme: ThemeData.light(),
-          home: OnboardingPageview(),
+          home: BottomNavBarScreen(),
         );
       },
     );

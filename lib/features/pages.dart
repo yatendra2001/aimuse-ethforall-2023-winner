@@ -1,1 +1,1 @@
-export 'login_page.dart';
+export 'authentication/screens/login_page.dart';
