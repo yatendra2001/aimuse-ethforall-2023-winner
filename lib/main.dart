@@ -1,3 +1,4 @@
+import 'package:ai_muse/config/custom_router.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
 import 'package:ai_muse/features/dashboard/screens/bottom_nav_screen.dart';
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Ai.muse',
           theme: ThemeData.light(),
-          home: BottomNavBarScreen(),
+          onGenerateRoute: CustomRouter.onGenerateRoute,
+          initialRoute: BottomNavBarScreen.routename,
         );
       },
     );

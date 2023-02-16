@@ -1,4 +1,5 @@
 import 'package:ai_muse/common_widgets/gradient_text.dart';
+import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
 import 'package:ai_muse/features/dashboard/widgets/inspired_image_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 class DashBoardScreen extends StatefulWidget {
+  static const routename = '/dashboard';
   const DashBoardScreen({super.key});
 
   @override
@@ -169,60 +171,67 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   }
 
   Widget generateBox() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 4.h),
-      height: 22.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        gradient: LinearGradient(
-          colors: [
-            Color(0XFFB721FF).withOpacity(0.5),
-            Color(0XFF21D4FD).withOpacity(0.5),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0XFF4318FF).withOpacity(0.2),
-            offset: Offset(0, 4),
-            blurRadius: 4,
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(
-            width: 1.w,
-          ),
-          SvgPicture.asset("assets/icons/generate_box_icon.svg"),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Generate",
-                style: GoogleFonts.lexend(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18.sp,
-                ),
-              ),
-              SizedBox(
-                height: 1.h,
-              ),
-              Text(
-                "Create NFT lol",
-                style: GoogleFonts.lexend(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 10.sp,
-                ),
-              )
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => const CreateNFTScreen(),
+        ));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 4.h),
+        height: 22.h,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          gradient: LinearGradient(
+            colors: [
+              Color(0XFFB721FF).withOpacity(0.5),
+              Color(0XFF21D4FD).withOpacity(0.5),
             ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          Image.asset("assets/images/generate_box_image.png")
-        ],
+          boxShadow: [
+            BoxShadow(
+              color: Color(0XFF4318FF).withOpacity(0.2),
+              offset: Offset(0, 4),
+              blurRadius: 4,
+              spreadRadius: 0,
+            )
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(
+              width: 1.w,
+            ),
+            SvgPicture.asset("assets/icons/generate_box_icon.svg"),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Generate",
+                  style: GoogleFonts.lexend(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18.sp,
+                  ),
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Text(
+                  "Create NFT lol",
+                  style: GoogleFonts.lexend(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 10.sp,
+                  ),
+                )
+              ],
+            ),
+            Image.asset("assets/images/generate_box_image.png")
+          ],
+        ),
       ),
     );
   }
