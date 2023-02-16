@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                             )
                           ],
                         ),
-                        (_session.chainId != 80001)
+                        (_session.chainId != 1)
                             ? Row(
                                 children: const [
                                   Icon(Icons.warning,

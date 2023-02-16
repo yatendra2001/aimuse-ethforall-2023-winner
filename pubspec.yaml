@@ -39,16 +39,13 @@ dependencies:
   walletconnect_dart: ^0.0.11
   google_fonts: ^4.0.3
   slider_button: ^2.0.0
+  web3dart: ^2.6.1
+  crypto: ^3.0.2
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
@@ -61,8 +58,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/abi.json
+    - .env
     - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see

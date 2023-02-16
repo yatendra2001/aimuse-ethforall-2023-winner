@@ -1,0 +1,6 @@
+{
+    "name": "test_image1",
+    "description": "This is circle number i",
+    "image": "ipfs://QmQbUrjBJjfMzLhv9xyfyHZXXjWejreiE21NAJP4c7TfQe/test_image1.png",
+    "attributes": "[{'trait_type':'BgColor','value': '{artWork.backgroundIndex}'},{'trait_type':'FgColor','value': '{artWork.forgroundIndex}'},{'trait_type':'Radius','value': '{artWork.radiusIndex}'}]"
+}

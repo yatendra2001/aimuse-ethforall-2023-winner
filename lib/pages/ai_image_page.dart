@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ai_muse/mint_nft/nft_mint_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -68,16 +69,28 @@ class _AIImagePageState extends State<AIImagePage> {
                     )),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      getAIImage();
+                    },
+                    child: Text("Generate AI Image")),
+                ElevatedButton(
+                    onPressed: () async {
+                      // await storeFileInDirectory(
+                      //     url:
+                      //         "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg",
+                      //     title: "Test Image");
+                      await mintImageToIPFS();
+                    },
+                    child: Text("Mint NFT")),
+              ],
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          getAIImage();
-        },
-        tooltip: 'Generate AI Image',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
