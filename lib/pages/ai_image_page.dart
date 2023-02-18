@@ -12,11 +12,13 @@ class AIImagePage extends StatefulWidget {
 }
 
 class _AIImagePageState extends State<AIImagePage> {
-  TextEditingController inputText = TextEditingController();
-  String apikey = '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';
+  TextEditingController inputText = TextEditingController(
+      text:
+          "monkey on bicycle, Water Color artstyle, by Pablo Picasso, by Leonardo Da Vinci, Gold, Wide portrait.");
+  String apikey = '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';
   String url = 'https://api.openai.com/v1/images/generations';
   String? image;
-  void getAIImage() async {
+  Future<void> getAIImage() async {
     if (inputText.text.isNotEmpty) {
       var data = {
         "prompt": inputText.text,
@@ -32,6 +34,7 @@ class _AIImagePageState extends State<AIImagePage> {
           body: jsonEncode(data));
 
       var jsonResponse = jsonDecode(res.body);
+      print(jsonResponse);
 
       image = jsonResponse['data'][0]['url'];
       setState(() {});
@@ -73,8 +76,8 @@ class _AIImagePageState extends State<AIImagePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                      getAIImage();
+                    onPressed: () async {
+                      await getAIImage();
                     },
                     child: Text("Generate AI Image")),
                 ElevatedButton(
@@ -83,7 +86,7 @@ class _AIImagePageState extends State<AIImagePage> {
                       //     url:
                       //         "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg",
                       //     title: "Test Image");
-                      await mintImageToIPFS();
+                      await uploadImageToIPFS();
                     },
                     child: Text("Mint NFT")),
               ],

@@ -42,6 +42,11 @@ dependencies:
   web3dart: ^2.6.1
   crypto: ^3.0.2
   flutter_dotenv: ^5.0.2
+  sizer: ^2.0.15
+  dots_indicator: ^2.1.0
+  flutter_svg: ^1.1.6
+  mime: ^1.0.4
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +66,7 @@ flutter:
   assets:
     - assets/abi.json
     - .env
+    - assets/icons/
     - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
