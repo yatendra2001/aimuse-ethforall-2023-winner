@@ -30,66 +30,69 @@ class StayInformedScreen extends StatefulWidget {
 class _StayInformedScreenState extends State<StayInformedScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildAnimation(),
-            Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.title,
-                    style: GoogleFonts.lexend()
-                        .copyWith(fontWeight: FontWeight.w700, fontSize: 28.sp),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    widget.text,
-                    style: GoogleFonts.lexend().copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12.sp,
-                      color: Color(0XFF8F9BBA),
-                      height: 1.5,
-                      letterSpacing: 1,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildAnimation(),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.title,
+                      style: GoogleFonts.lexend().copyWith(
+                          fontWeight: FontWeight.w700, fontSize: 28.sp),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 4.h,
-                  ),
-                  CustomDotIndicator(
-                    curPageIndex: widget.pageNumber,
-                    onTap: (page) {
-                      widget.pageController.jumpToPage(page.round());
-                    },
-                  ),
-                  SizedBox(
-                    height: 4.h,
-                  ),
-                  CustomButton(
-                    text: "Get Started",
-                    showIcon: false,
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const LinkWalletScreen(),
-                      ));
-                    },
-                  ),
-                ],
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Text(
+                      widget.text,
+                      style: GoogleFonts.lexend().copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12.sp,
+                        color: Color(0XFF8F9BBA),
+                        height: 1.5,
+                        letterSpacing: 1,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    CustomDotIndicator(
+                      curPageIndex: widget.pageNumber,
+                      onTap: (page) {
+                        widget.pageController.jumpToPage(page.round());
+                      },
+                    ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    CustomButton(
+                      text: "Get Started",
+                      showIcon: false,
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (_) => const LinkWalletScreen(),
+                        ));
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 4.h,
-            )
-          ],
+              SizedBox(
+                height: 4.h,
+              )
+            ],
+          ),
         ),
       ),
     );

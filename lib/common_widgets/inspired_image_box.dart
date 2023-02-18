@@ -5,11 +5,13 @@ import 'package:sizer/sizer.dart';
 class InspiredImageBox extends StatefulWidget {
   final String imgName;
   final String text;
-  const InspiredImageBox({
-    Key? key,
-    required this.imgName,
-    required this.text,
-  }) : super(key: key);
+  final bool showbgColor;
+  const InspiredImageBox(
+      {Key? key,
+      required this.imgName,
+      required this.text,
+      this.showbgColor = true})
+      : super(key: key);
 
   @override
   State<InspiredImageBox> createState() => _InspiredImageBoxState();
@@ -22,16 +24,20 @@ class _InspiredImageBoxState extends State<InspiredImageBox> {
       padding: EdgeInsets.symmetric(vertical: 4.h),
       margin: EdgeInsets.symmetric(vertical: 1.5.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: widget.showbgColor
+            ? Colors.white
+            : Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0XFF4318FF).withOpacity(0.05),
-            offset: Offset(0, 4),
-            blurRadius: 4,
-            spreadRadius: 0,
-          )
-        ],
+        boxShadow: widget.showbgColor
+            ? [
+                BoxShadow(
+                  color: Color(0XFF4318FF).withOpacity(0.05),
+                  offset: Offset(0, 4),
+                  blurRadius: 4,
+                  spreadRadius: 0,
+                )
+              ]
+            : null,
       ),
       alignment: Alignment.center,
       child: Column(
@@ -54,6 +60,7 @@ class _InspiredImageBoxState extends State<InspiredImageBox> {
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w500,
                 color: Color(0XFF8F9BBA),
+                height: 1.75,
               ),
               textAlign: TextAlign.center,
             ),

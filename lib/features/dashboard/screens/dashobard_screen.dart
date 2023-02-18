@@ -1,6 +1,6 @@
 import 'package:ai_muse/common_widgets/gradient_text.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
-import 'package:ai_muse/features/dashboard/widgets/inspired_image_box.dart';
+import 'package:ai_muse/common_widgets/inspired_image_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';

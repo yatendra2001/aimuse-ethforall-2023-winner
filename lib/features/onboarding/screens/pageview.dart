@@ -27,39 +27,36 @@ class _OnboardingPageviewState extends State<OnboardingPageview> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-              onPressed: () {
-                _pageController.previousPage(
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.linear,
-                );
-              },
-              icon: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Colors.black,
-              )),
-        ),
-        resizeToAvoidBottomInset: false,
-        body: GestureDetector(
-          onTap: () {
-            _pageController.nextPage(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.linear,
-            );
-          },
-          child: SafeArea(
-            child: PageView(
-              scrollDirection: Axis.horizontal,
-              controller: _pageController,
-              onPageChanged: _onPageViewChange,
-              children: _buildPages(),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+            onPressed: () {
+              _pageController.previousPage(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.linear,
+              );
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: Colors.black,
+            )),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () {
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.linear,
+          );
+        },
+        child: SafeArea(
+          child: PageView(
+            scrollDirection: Axis.horizontal,
+            controller: _pageController,
+            onPageChanged: _onPageViewChange,
+            children: _buildPages(),
           ),
         ),
       ),

@@ -19,10 +19,15 @@ class CustomButton extends StatefulWidget {
 }
 
 class _CustomButtonState extends State<CustomButton> {
+  bool onclicked = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: widget.onPressed,
+      onTap: () {
+        widget.onPressed();
+        onclicked = !onclicked;
+        setState(() {});
+      },
       child: Container(
         padding: EdgeInsets.all(10),
         child: Row(
@@ -50,8 +55,10 @@ class _CustomButtonState extends State<CustomButton> {
           borderRadius: BorderRadius.circular(25),
           color: Color(0XFF4318FF).withOpacity(0.6),
           boxShadow: [
-            BoxShadow(
-                color: Color(0XFF4318FF).withOpacity(0.4), blurRadius: 20),
+            onclicked == false
+                ? BoxShadow(
+                    color: Color(0XFF4318FF).withOpacity(0.4), blurRadius: 20)
+                : BoxShadow(color: Colors.white30),
           ],
         ),
       ),
