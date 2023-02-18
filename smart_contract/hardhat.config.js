@@ -15,6 +15,10 @@ module.exports = {
       url: ALCHEMY_KEY_PROD,
       accounts: [WALLET_PRIVATE_KEY]
     },
+    "mantle-testnet": {
+      url: "https://rpc.testnet.mantle.xyz/",
+      accounts: [process.env.WALLET_PRIVATE_KEY] // Uses the private key from the .env file
+    }
   },
   solidity: "0.8.4",
   etherscan: {
