@@ -48,19 +48,19 @@ class _SplashScreenState extends State<SplashScreen> {
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(0XFFB721FF),
-        // gradient: LinearGradient(
-        //   colors: [
-        //     Color(0XFFB721FF),
-        //     Color(0XFF509CFE),
-        //     Color(0XFF48A5FE),
-        //     Color(0XFF48A5FE),
-        //     Color(0XFF21D4FD),
-        //   ],
-        //   stops: [0, 0.6, 0.7, 0.8, 0.9],
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        // ),
+        // color: Color(0XFFB721FF),
+        gradient: LinearGradient(
+          colors: [
+            Color(0XFFB721FF),
+            Color(0XFF509CFE),
+            Color(0XFF48A5FE),
+            Color(0XFF48A5FE),
+            Color(0XFF21D4FD),
+          ],
+          stops: [0, 0.6, 0.7, 0.8, 0.9],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
     ));
   }

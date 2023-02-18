@@ -28,12 +28,16 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
   int textLength = 0;
 
   Map<String, String> artStyle = {
-    "8-bit": "assets/images/art_style1.png",
-    "Abstract": "assets/images/art_style2.png",
-    "Fantasv": "assets/images/art_style3.png",
-    "Water Color": "assets/images/art_style4.png",
-    "Comic": "assets/images/art_style5.png",
-    "Water Colour": "assets/images/art_style6.png",
+    "Abstract Expressionism": "assets/images/artstyle_img_1.jpg",
+    "Digital Art": "assets/images/artstyle_img_2.jpg",
+    "Art Nouveau": "assets/images/artstyle_img_3.jpg",
+    "Avant-garde": "assets/images/artstyle_img_4.jpg",
+    "Baroque": "assets/images/artstyle_img_5.jpg",
+    "CoBrA": "assets/images/artstyle_img_6.jpg",
+    "Color Field Painting": "assets/images/artstyle_img_7.jpg",
+    "Conceptual art": "assets/images/artstyle_img_8.jpg",
+    "Constructivism": "assets/images/artstyle_img_9.jpeg",
+    "Cubism": "assets/images/artstyle_img_10.jpg",
   };
 
   List<String> finishingTouches = [
@@ -118,6 +122,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -245,26 +250,33 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                                 getPrompt();
                               },
                               child: Container(
+                                alignment: Alignment.center,
                                 margin: EdgeInsets.all(1.h),
+                                padding: EdgeInsets.all(1.h),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                     color:
                                         selectedartstyle.contains(mapEntry.key)
                                             ? Color(0XFF4318FF)
-                                            : Colors.transparent,
+                                            : Color.fromRGBO(0, 0, 0, 0),
                                     width: 1.5,
                                   ),
                                 ),
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      height: 2.h,
-                                    ),
-                                    Transform.scale(
-                                      scale: 1.1,
-                                      child: Image.asset(
-                                        mapEntry.value,
+                                    Expanded(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Transform.scale(
+                                          scaleX: 1.1,
+                                          scaleY: 1.05,
+                                          child: Image.asset(
+                                            mapEntry.value,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
@@ -276,6 +288,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                                         fontWeight: FontWeight.w500,
                                         fontSize: 10.sp,
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ],
                                 ),
