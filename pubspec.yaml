@@ -41,6 +41,7 @@ dependencies:
   sizer: ^2.0.15
   dots_indicator: ^2.1.0
   flutter_svg: ^1.1.6
+  lottie: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/animations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -18,6 +18,8 @@ void main(List<String> args) {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Sizer(
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
           title: 'Ai.muse',
           theme: ThemeData.light(),
           onGenerateRoute: CustomRouter.onGenerateRoute,
-          initialRoute: CreateNFTScreen.routeName,
+          initialRoute: OnboardingPageview.routeName,
         );
       },
     );

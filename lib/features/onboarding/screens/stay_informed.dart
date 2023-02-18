@@ -1,10 +1,9 @@
 import 'package:ai_muse/features/authentication/screens/link_wallet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
-
 import 'package:ai_muse/common_widgets/custom_button.dart';
-
 import '../widgets/dot_indicator.dart';
 
 class StayInformedScreen extends StatefulWidget {
@@ -99,6 +98,9 @@ class _StayInformedScreenState extends State<StayInformedScreen> {
   }
 
   Widget buildAnimation() {
-    return Expanded(flex: 1, child: Container());
+    return Expanded(
+      flex: 4,
+      child: Lottie.asset("assets/animations/stay_informed.json"),
+    );
   }
 }

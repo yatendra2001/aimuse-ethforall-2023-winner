@@ -6,12 +6,9 @@ import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/pageview.dart';
 import 'package:ai_muse/features/splashscreen/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class CustomRouter {
   static Route onGenerateRoute(RouteSettings settings) {
-    print('Route: ${settings.name}');
-
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(

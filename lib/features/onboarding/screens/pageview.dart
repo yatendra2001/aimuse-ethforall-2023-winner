@@ -1,19 +1,18 @@
-import 'package:ai_muse/features/authentication/screens/link_wallet_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/custom_onboarding_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/stay_informed.dart';
 import 'package:ai_muse/features/onboarding/screens/welcome_screen.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPageview extends StatefulWidget {
   static const routeName = '/OnboardingPageview';
-  OnboardingPageview({Key? key}) : super(key: key);
+  const OnboardingPageview({Key? key}) : super(key: key);
 
   static Route route() {
     return PageRouteBuilder(
-        settings: const RouteSettings(name: routeName),
-        transitionDuration: const Duration(seconds: 0),
-        pageBuilder: (context, _, __) => OnboardingPageview());
+      settings: const RouteSettings(name: routeName),
+      transitionDuration: const Duration(seconds: 0),
+      pageBuilder: (context, _, __) => OnboardingPageview(),
+    );
   }
 
   @override
@@ -28,21 +27,24 @@ class _OnboardingPageviewState extends State<OnboardingPageview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-            onPressed: () {
-              _pageController.previousPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.linear,
-              );
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: Colors.black,
-            )),
-      ),
+      appBar: _page != 0
+          ? AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: IconButton(
+                onPressed: () {
+                  _pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.linear,
+                  );
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          : null,
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
         onTap: () {
@@ -51,13 +53,12 @@ class _OnboardingPageviewState extends State<OnboardingPageview> {
             curve: Curves.linear,
           );
         },
-        child: SafeArea(
-          child: PageView(
-            scrollDirection: Axis.horizontal,
-            controller: _pageController,
-            onPageChanged: _onPageViewChange,
-            children: _buildPages(),
-          ),
+        child: PageView(
+          clipBehavior: Clip.none,
+          scrollDirection: Axis.horizontal,
+          controller: _pageController,
+          onPageChanged: _onPageViewChange,
+          children: _buildPages(),
         ),
       ),
     );
