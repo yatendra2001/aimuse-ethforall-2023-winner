@@ -1,6 +1,7 @@
 import 'package:ai_muse/common_widgets/gradient_text.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
-import 'package:ai_muse/features/dashboard/widgets/inspired_image_box.dart';
+import 'package:ai_muse/common_widgets/inspired_image_box.dart';
+import 'package:ai_muse/utils/session_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +16,7 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
+  bool isTestnet = SessionHelper.isTestnet;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -68,59 +70,73 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                 ),
                 Spacer(),
-                Container(
-                  padding: EdgeInsets.all(3.w),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0XFF4318FF).withOpacity(0.05),
-                        offset: Offset(0, 4),
-                        blurRadius: 4,
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                  child: SvgPicture.asset(
-                    "assets/icons/mode_icon.svg",
-                    color: Colors.black,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isTestnet = isTestnet ? false : true;
+                      SessionHelper.isTestnet = isTestnet;
+                      print(SessionHelper.isTestnet);
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(3.w),
+                    decoration: BoxDecoration(
+                      color: isTestnet ? Colors.black : Color(0xff8345E6),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0XFF4318FF).withOpacity(0.05),
+                          offset: Offset(0, 4),
+                          blurRadius: 4,
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: isTestnet
+                        ? SvgPicture.asset(
+                            "assets/icons/mantle_logo.svg",
+                            height: 5.h,
+                          )
+                        : Image.asset(
+                            "assets/images/polygon_logo.png",
+                            height: 5.h,
+                          ),
                   ),
                 ),
                 SizedBox(
                   width: 4.w,
                 ),
-                Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0XFF4318FF).withOpacity(0.05),
-                        offset: Offset(0, 4),
-                        blurRadius: 4,
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      children: [
-                        Icon(Icons.account_balance_wallet),
-                        SizedBox(
-                          width: 2.w,
-                        ),
-                        Text(
-                          "9.168 ETH",
-                          style: GoogleFonts.lexend(
-                              fontSize: 12.sp, fontWeight: FontWeight.w600),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                // Container(
+                //   padding: EdgeInsets.all(4),
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(10),
+                //     color: Colors.white,
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: Color(0XFF4318FF).withOpacity(0.05),
+                //         offset: Offset(0, 4),
+                //         blurRadius: 4,
+                //         spreadRadius: 0,
+                //       )
+                //     ],
+                //   ),
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(4.0),
+                //     child: Row(
+                //       children: [
+                //         Icon(Icons.account_balance_wallet),
+                //         SizedBox(
+                //           width: 2.w,
+                //         ),
+                //         Text(
+                //           "9.168 ETH",
+                //           style: GoogleFonts.lexend(
+                //               fontSize: 12.sp, fontWeight: FontWeight.w600),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(
@@ -147,22 +163,22 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             InspiredImageBox(
               imgName: "db_img1",
               text:
-                  'Stay up to date with exclusive NFT drops, giveaways, and more by following our socials.',
+                  'A dog driving a car, Avant-garde artstyle, by Pablo Picasso, by Claude Monet, gradient : [B2EBF2, 00BCD4, ], Purple, Unreal Engine, Devianart Top Rated, CGSociety Top Rated.',
             ),
             InspiredImageBox(
               imgName: "db_img2",
               text:
-                  'Stay up to date with exclusive NFT drops, giveaways, and more by following our socials.',
+                  'Cubism artstyle, by Johannes Vermeer, Red, Blue, Green, Yellow, Flat light, CryEngine, CGSociety Top Rated.',
             ),
             InspiredImageBox(
               imgName: "db_img3",
               text:
-                  'Stay up to date with exclusive NFT drops, giveaways, and more by following our socials.',
+                  'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
             ),
             InspiredImageBox(
               imgName: "db_img4",
               text:
-                  'Stay up to date with exclusive NFT drops, giveaways, and more by following our socials.',
+                  'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
             ),
           ],
         ),
@@ -173,9 +189,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   Widget generateBox() {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => const CreateNFTScreen(),
-        ));
+        Navigator.of(context).pushNamed(CreateNFTScreen.routeName);
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 4.h),
@@ -185,7 +199,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           borderRadius: BorderRadius.circular(30),
           gradient: LinearGradient(
             colors: [
-              Color(0XFFB721FF).withOpacity(0.5),
+              Color(0XFF4318FF).withOpacity(0.4),
               Color(0XFF21D4FD).withOpacity(0.5),
             ],
             begin: Alignment.topLeft,
@@ -211,7 +225,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Generate",
+                  "Create",
                   style: GoogleFonts.lexend(
                     fontWeight: FontWeight.w600,
                     fontSize: 18.sp,
@@ -221,7 +235,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   height: 1.h,
                 ),
                 Text(
-                  "Create NFT lol",
+                  "personalised\nunique NFT's",
                   style: GoogleFonts.lexend(
                     fontWeight: FontWeight.w500,
                     fontSize: 10.sp,

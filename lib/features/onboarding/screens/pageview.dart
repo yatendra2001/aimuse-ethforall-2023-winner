@@ -1,19 +1,18 @@
-import 'package:ai_muse/features/authentication/screens/link_wallet_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/custom_onboarding_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/stay_informed.dart';
 import 'package:ai_muse/features/onboarding/screens/welcome_screen.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPageview extends StatefulWidget {
   static const routeName = '/OnboardingPageview';
-  OnboardingPageview({Key? key}) : super(key: key);
+  const OnboardingPageview({Key? key}) : super(key: key);
 
   static Route route() {
     return PageRouteBuilder(
-        settings: const RouteSettings(name: routeName),
-        transitionDuration: const Duration(seconds: 0),
-        pageBuilder: (context, _, __) => OnboardingPageview());
+      settings: const RouteSettings(name: routeName),
+      transitionDuration: const Duration(seconds: 0),
+      pageBuilder: (context, _, __) => OnboardingPageview(),
+    );
   }
 
   @override
@@ -27,40 +26,39 @@ class _OnboardingPageviewState extends State<OnboardingPageview> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-              onPressed: () {
-                _pageController.previousPage(
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.linear,
-                );
-              },
-              icon: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Colors.black,
-              )),
-        ),
-        resizeToAvoidBottomInset: false,
-        body: GestureDetector(
-          onTap: () {
-            _pageController.nextPage(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.linear,
-            );
-          },
-          child: SafeArea(
-            child: PageView(
-              scrollDirection: Axis.horizontal,
-              controller: _pageController,
-              onPageChanged: _onPageViewChange,
-              children: _buildPages(),
-            ),
-          ),
+    return Scaffold(
+      appBar: _page != 0
+          ? AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: IconButton(
+                onPressed: () {
+                  _pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.linear,
+                  );
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          : null,
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () {
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.linear,
+          );
+        },
+        child: PageView(
+          clipBehavior: Clip.none,
+          scrollDirection: Axis.horizontal,
+          controller: _pageController,
+          onPageChanged: _onPageViewChange,
+          children: _buildPages(),
         ),
       ),
     );
@@ -76,14 +74,14 @@ class _OnboardingPageviewState extends State<OnboardingPageview> {
         pageController: _pageController,
         title: "Get inspired by our unique NFT Prompts ",
         text:
-            "Nullam ut augue mi. Vestibulum porta, libero condimentum euismod maximus, ligula purus pretium nibh.",
+            "Giving you the jumpstart you need to create unique, one-of-a-kind NFTs that stand out in the crowd.",
       ),
       CustomScreen(
         pageNumber: 2,
         pageController: _pageController,
         title: "Instantly transform your ideas to creative NFTs",
         text:
-            "Nullam ut augue mi. Vestibulum porta, libero condimentum euismod maximus, ligula purus pretium nibh.",
+            "The ultimate tool for creating unique and personalized NFTs. With our easy-to-use prompts, you can create stunning NFTs in just a few simple steps.",
       ),
       StayInformedScreen(
         pageNumber: 3,

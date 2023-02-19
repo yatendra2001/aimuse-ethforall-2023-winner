@@ -1,28 +1,38 @@
 import 'package:ai_muse/features/authentication/screens/link_wallet_screen.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
+import 'package:ai_muse/features/create%20nft/screens/generate_nft_screen.dart';
 import 'package:ai_muse/features/dashboard/screens/bottom_nav_screen.dart';
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
+import 'package:ai_muse/features/onboarding/screens/pageview.dart';
+import 'package:ai_muse/features/splashscreen/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class CustomRouter {
   static Route onGenerateRoute(RouteSettings settings) {
-    print('Route: ${settings.name}');
-
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
           settings: const RouteSettings(name: '/'),
-          builder: (_) => const Scaffold(),
+          builder: (_) => SplashScreen(),
         );
       case CreateNFTScreen.routeName:
-        return MaterialPageRoute(
+        return PageTransition(
           settings: const RouteSettings(name: CreateNFTScreen.routeName),
-          builder: (_) => const CreateNFTScreen(),
+          type: PageTransitionType.rightToLeft,
+          child: const CreateNFTScreen(),
+        );
+      case GenerateNFTScreen.routeName:
+        return PageTransition(
+          settings: const RouteSettings(name: GenerateNFTScreen.routeName),
+          type: PageTransitionType.rightToLeft,
+          child: const GenerateNFTScreen(),
         );
       case LinkWalletScreen.routename:
-        return MaterialPageRoute(
+        return PageTransition(
           settings: const RouteSettings(name: LinkWalletScreen.routename),
-          builder: (_) => const LinkWalletScreen(),
+          type: PageTransitionType.bottomToTop,
+          child: const LinkWalletScreen(),
         );
       case BottomNavBarScreen.routename:
         return MaterialPageRoute(
@@ -33,6 +43,11 @@ class CustomRouter {
         return MaterialPageRoute(
           settings: const RouteSettings(name: DashBoardScreen.routename),
           builder: (_) => const DashBoardScreen(),
+        );
+      case OnboardingPageview.routeName:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: OnboardingPageview.routeName),
+          builder: (_) => OnboardingPageview(),
         );
       default:
         return _errorRoute();

@@ -5,10 +5,12 @@ import 'package:sizer/sizer.dart';
 class CustomOutlineButton extends StatelessWidget {
   final String text;
   final Function() onPressed;
+  final String? walletLogo;
   const CustomOutlineButton({
     Key? key,
     required this.text,
     required this.onPressed,
+    this.walletLogo,
   }) : super(key: key);
 
   @override
@@ -24,14 +26,34 @@ class CustomOutlineButton extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: GoogleFonts.dmSans().copyWith(
-          fontWeight: FontWeight.w500,
-          fontSize: 11.sp,
-          color: const Color(0XFF4318FF),
-        ),
-      ),
+      child: walletLogo != null
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(width: 1.w),
+                Image.asset(
+                  walletLogo!,
+                  scale: 13,
+                ),
+                Text(
+                  text,
+                  style: GoogleFonts.dmSans().copyWith(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 11.sp,
+                    color: const Color(0XFF4318FF),
+                  ),
+                ),
+                SizedBox(width: 3.w),
+              ],
+            )
+          : Text(
+              text,
+              style: GoogleFonts.dmSans().copyWith(
+                fontWeight: FontWeight.w500,
+                fontSize: 11.sp,
+                color: const Color(0XFF4318FF),
+              ),
+            ),
     );
   }
 }

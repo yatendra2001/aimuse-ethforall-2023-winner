@@ -1,7 +1,7 @@
 import 'dart:typed_data';
+import 'package:ai_muse/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:web3dart/web3dart.dart';
 
@@ -15,11 +15,9 @@ class MintNFTPage extends StatefulWidget {
 enum Mode { none, shownfts, mint }
 
 class _MintNFTPageState extends State<MintNFTPage> {
-  final CONTRACT_NAME = dotenv.env['CONTRACT_NAME'];
-  final CONTRACT_ADDRESS = dotenv.env['CONTRACT_ADDRESS'];
   Mode mode = Mode.none; // or shownfts or mint
   http.Client httpClient = http.Client();
-  late Web3Client polygonClient;
+  late Web3Client mantleClient;
   int tokenCounter = -1;
   String tokenSymbol = '';
   Uint8List? mintedImage;
@@ -27,24 +25,23 @@ class _MintNFTPageState extends State<MintNFTPage> {
 
   @override
   void initState() {
-    final ALCHEMY_KEY = dotenv.env['ALCHEMY_KEY_PROD'];
     super.initState();
     httpClient = http.Client();
-    polygonClient = Web3Client(ALCHEMY_KEY!, httpClient);
-    print(polygonClient);
+    mantleClient = Web3Client("https://rpc.testnet.mantle.xyz/", httpClient);
+    print(mantleClient);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(CONTRACT_NAME!),
+        title: Text(CONTRACT_NAME),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text('\n Contract address:'),
-          Text(CONTRACT_ADDRESS!),
+          Text(CONTRACT_ADDRESS_MANTLE_TESTNET),
           FutureBuilder<String>(
             future: getTokenSymbol(),
             builder: (context, snapshot) {
@@ -141,9 +138,9 @@ class _MintNFTPageState extends State<MintNFTPage> {
   }
 
   Widget showLatestMint() {
-    if (mintedImage == null)
+    if (mintedImage == null) {
       return Container();
-    else
+    } else {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -155,15 +152,14 @@ class _MintNFTPageState extends State<MintNFTPage> {
           Text('  Minted Circle$mintedCircleNo.\n  Token number $tokenCounter')
         ],
       );
+    }
   }
 
   Future<DeployedContract> getContract() async {
-    final CONTRACT_NAME = dotenv.env['CONTRACT_NAME'];
-    final CONTRACT_ADDRESS = dotenv.env['CONTRACT_ADDRESS'];
-    String abi = await rootBundle.loadString("assets/abi.json"); //TODO update
+    String abi = await rootBundle.loadString("assets/abi.json");
     DeployedContract contract = DeployedContract(
-      ContractAbi.fromJson(abi, CONTRACT_NAME!),
-      EthereumAddress.fromHex(CONTRACT_ADDRESS!),
+      ContractAbi.fromJson(abi, CONTRACT_NAME),
+      EthereumAddress.fromHex(CONTRACT_ADDRESS_MANTLE_TESTNET),
     );
     return contract;
   }
@@ -171,23 +167,21 @@ class _MintNFTPageState extends State<MintNFTPage> {
   Future<List<dynamic>> query(String functionName, List<dynamic> args) async {
     DeployedContract contract = await getContract();
     ContractFunction function = contract.function(functionName);
-    List<dynamic> result = await polygonClient.call(
+    List<dynamic> result = await mantleClient.call(
         contract: contract, function: function, params: args);
     return result;
   }
 
   Stream<dynamic> mintStream() async* {
-    final WALLET_PRIVATE_KEY = dotenv.env['WALLET_PRIVATE_KEY'];
-    final JSON_CID = dotenv.env['JSON_CID'];
-    EthPrivateKey credential = EthPrivateKey.fromHex(WALLET_PRIVATE_KEY!);
+    EthPrivateKey credential = EthPrivateKey.fromHex(WALLET_PRIVATE_KEY);
     DeployedContract contract = await getContract();
     ContractFunction function = contract.function('mint');
 
-    String url = r'ipfs://' + JSON_CID! + r'/' + 'test_image.json';
+    String url = r'ipfs://' + JSON_CID + r'/' + 'test_image.json';
     print('url to mint $url');
     var results = await Future.wait([
       getImageFromJson(url),
-      polygonClient.sendTransaction(
+      mantleClient.sendTransaction(
         credential,
         Transaction.callContract(
           contract: contract,
@@ -228,12 +222,10 @@ class _MintNFTPageState extends State<MintNFTPage> {
   }
 
   Future<Uint8List> getImageFromJson(String json) async {
-    final JSON_CID = dotenv.env['JSON_CID'];
-    final IMAGES_CID = dotenv.env['IMAGES_CID'];
     String url = json
         .toString()
         .replaceFirst(r'ipfs://', r'https://ipfs.io/ipfs/')
-        .replaceFirst(JSON_CID!, IMAGES_CID!)
+        .replaceFirst(JSON_CID, IMAGES_CID)
         .replaceFirst('.json', '.png');
     var resp = await httpClient.get(Uri.parse(url));
     // TODO Add error checking - if(resp.statusCode!= 200) etc

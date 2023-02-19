@@ -56,6 +56,8 @@ class _LoginPageState extends State<LoginPage> {
         return 'Kovan Testnet';
       case 137:
         return 'Polygon Mainnet';
+      case 5001:
+        return 'Mantle Testnet';
       case 80001:
         return 'Mumbai Testnet';
       default:
