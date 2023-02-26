@@ -100,7 +100,9 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
     "A parrot doing a magic trick",
     "A raccoon cooking in the kitchen",
     "A kangaroo playing the guitar",
-    "A monkey riding a bicycle"
+    "A monkey riding a bicycle",
+    "A man in mars inside a telephone booth",
+    "Deepika Padukone as an alien holding a radio"
   ];
 
   Map<String, String> arts = {

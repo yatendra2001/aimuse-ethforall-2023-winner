@@ -287,8 +287,12 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                               scale: 0.63.sp,
                               child: CustomOutlineButton(
                                 text: "Cancel",
-                                onPressed: () {
-                                  Navigator.of(context).pop();
+                                onPressed: () async {
+                                  await NFTMintRepo().storeFileInDirectory(
+                                      url: imageURL!,
+                                      title: nftName!,
+                                      description:
+                                          SessionHelper.currentPrompt!);
                                 },
                               ),
                             ),
@@ -385,11 +389,12 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                         currentStatus =
                                             "Uploading Image to IPFS...";
                                       });
-                                      final url = await uploadImageToIPFS(
-                                          imageUrl: imageURL!,
-                                          nftName: nftName!,
-                                          description:
-                                              SessionHelper.currentPrompt!);
+                                      final url = await NFTMintRepo()
+                                          .uploadImageToIPFS(
+                                              imageUrl: imageURL!,
+                                              nftName: nftName!,
+                                              description:
+                                                  SessionHelper.currentPrompt!);
                                       setState(() {
                                         currentStatus = "Minting NFT...";
                                       });
