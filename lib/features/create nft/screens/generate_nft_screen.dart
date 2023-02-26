@@ -101,7 +101,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
   Widget build(BuildContext context) {
     return _isMinting
         ? Scaffold(
-          backgroundColor: Colors.white,
+            backgroundColor: Colors.white,
             body:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               SpinKitWanderingCubes(
@@ -120,6 +120,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
             ]),
           )
         : Scaffold(
+            backgroundColor: Colors.white,
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

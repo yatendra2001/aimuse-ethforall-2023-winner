@@ -1,6 +1,7 @@
 import 'package:ai_muse/features/authentication/screens/link_wallet_screen.dart';
 import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
+import 'package:ai_muse/features/dashboard/screens/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -42,7 +43,7 @@ class _StayInformedScreenState extends State<StayInformedScreen> {
             return LinkWalletScreen(
               afterConnect: () {
                 Navigator.of(context)
-                    .pushReplacementNamed(DashBoardScreen.routename);
+                    .pushReplacementNamed(BottomNavBarScreen.routename);
               },
             );
           },
@@ -57,6 +58,7 @@ class _StayInformedScreenState extends State<StayInformedScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
@@ -107,8 +109,8 @@ class _StayInformedScreenState extends State<StayInformedScreen> {
                           text: "Get Started",
                           showIcon: false,
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(DashBoardScreen.routename);
+                            Navigator.of(context).pushReplacementNamed(
+                                BottomNavBarScreen.routename);
                           },
                         ),
                         SizedBox(
@@ -125,7 +127,7 @@ class _StayInformedScreenState extends State<StayInformedScreen> {
                                 return LinkWalletScreen(
                                   afterConnect: () {
                                     Navigator.of(context).pushReplacementNamed(
-                                        DashBoardScreen.routename);
+                                        BottomNavBarScreen.routename);
                                   },
                                 );
                               },

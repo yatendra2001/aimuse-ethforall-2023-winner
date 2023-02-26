@@ -1,4 +1,5 @@
 import 'package:ai_muse/config/custom_router.dart';
+import 'package:ai_muse/features/onboarding/screens/pageview.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: Color(0XFFE0E5F2).withOpacity(1),
           ),
           onGenerateRoute: CustomRouter.onGenerateRoute,
-          initialRoute: BottomNavBarScreen.routename,
+          initialRoute: OnboardingPageview.routeName,
         );
       },
     );
