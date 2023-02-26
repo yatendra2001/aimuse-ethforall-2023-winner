@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:clipboard/clipboard.dart';
@@ -24,23 +25,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController? _textEditingController;
   File? _imageFile;
   final picker = ImagePicker();
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {
-        _imageFile = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
+  final TextEditingController _nameController = TextEditingController();
+  File? _image, _pickedImage;
 
   @override
   void initState() {
-    _textEditingController = TextEditingController(text: displayName);
     super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    _nameController.text = prefs.getString('name') ?? 'User';
+    final String? imagePath = prefs.getString('imagePath');
+    _image = imagePath != null ? File(imagePath) : null;
+    setState(() {});
+  }
+
+  Future<void> _saveData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', _nameController.text);
+    if (_pickedImage != null) {
+      _image = _pickedImage;
+      await prefs.setString('imagePath', _image!.path);
+    }
+    setState(() {});
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final ImagePicker picker = ImagePicker();
+    final PickedFile? pickedFile = await picker.getImage(source: source);
+    _pickedImage = pickedFile != null ? File(pickedFile.path) : _image;
+    setState(() {});
   }
 
   //png
@@ -204,6 +220,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  callSetstate() {
+    if (_pickedImage != null) _image = _pickedImage;
+    setState(() {});
+  }
+
   userCard() {
     return Container(
       width: double.infinity,
@@ -232,14 +253,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               CircleAvatar(
                 radius: 50,
+                backgroundImage: _image != null ? FileImage(_image!) : null,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   clipBehavior: Clip.hardEdge,
-                  child: Image.asset(
-                    "assets/playstore.png",
-                    fit: BoxFit.fitHeight,
-                    alignment: Alignment.center,
-                  ),
+                  child: _image == null
+                      ? Image.asset(
+                          "assets/playstore.png",
+                          fit: BoxFit.fitHeight,
+                          alignment: Alignment.center,
+                        )
+                      : null,
                 ),
               ),
               const Spacer(flex: 2),
@@ -256,87 +280,141 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
+                              return StatefulBuilder(
+                                builder: (BuildContext context,
+                                        StateSetter setState) =>
+                                    Dialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
                                   ),
-                                  height: 50.h,
-                                  width: double.infinity,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 4.w),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Icon(
-                                          Icons.edit_outlined,
-                                          color: Color(0XFF485585),
-                                          size: 4.h,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            getImage();
-                                          },
-                                          child: Stack(
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 50,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(50),
-                                                  clipBehavior: Clip.hardEdge,
-                                                  child: Image.asset(
-                                                    "assets/playstore.png",
-                                                    fit: BoxFit.fitHeight,
-                                                    alignment: Alignment.center,
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                bottom: 0,
-                                                right: 0,
-                                                child: Container(
-                                                  padding: EdgeInsets.all(1),
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      shape: BoxShape.circle),
-                                                  child: CircleAvatar(
-                                                    radius: 15,
-                                                    foregroundColor:
-                                                        Colors.white,
-                                                    backgroundColor:
-                                                        Color(0XFF4318FF)
-                                                            .withOpacity(0.7),
-                                                    child: Icon(
-                                                      Icons.camera_alt_outlined,
-                                                      size: 20,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    height: 50.h,
+                                    width: double.infinity,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 4.w),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Icon(
+                                            Icons.edit_outlined,
+                                            color: Color(0XFF485585),
+                                            size: 4.h,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              _pickImage(ImageSource.gallery)
+                                                  .then((value) {
+                                                setState(() {});
+                                              });
+                                            },
+                                            child: _image == null &&
+                                                    _pickedImage == null
+                                                ? Stack(
+                                                    children: [
+                                                      CircleAvatar(
+                                                        radius: 50,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(50),
+                                                          clipBehavior:
+                                                              Clip.hardEdge,
+                                                          child: Image.asset(
+                                                            "assets/playstore.png",
+                                                            fit: BoxFit
+                                                                .fitHeight,
+                                                            alignment: Alignment
+                                                                .center,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                        bottom: 0,
+                                                        right: 0,
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.all(1),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  shape: BoxShape
+                                                                      .circle),
+                                                          child: CircleAvatar(
+                                                            radius: 15,
+                                                            foregroundColor:
+                                                                Colors.white,
+                                                            backgroundColor:
+                                                                Color(0XFF4318FF)
+                                                                    .withOpacity(
+                                                                        0.7),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .camera_alt_outlined,
+                                                              size: 20,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                : CircleAvatar(
+                                                    radius: 50,
+                                                    backgroundImage:
+                                                        _pickedImage != null
+                                                            ? FileImage(
+                                                                _pickedImage!)
+                                                            : _image != null
+                                                                ? FileImage(
+                                                                    _image!)
+                                                                : null,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                      clipBehavior:
+                                                          Clip.hardEdge,
+                                                      child: _pickedImage ==
+                                                                  null &&
+                                                              _image == null
+                                                          ? Image.asset(
+                                                              "assets/playstore.png",
+                                                              fit: BoxFit
+                                                                  .fitHeight,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                            )
+                                                          : null,
                                                     ),
                                                   ),
-                                                ),
-                                              )
-                                            ],
                                           ),
-                                        ),
-                                        TextField(
-                                          controller: _textEditingController,
-                                          style: TextStyle(color: Colors.black),
-                                          decoration: InputDecoration(
-                                            labelText: 'Display Name',
-                                            labelStyle:
+                                          TextField(
+                                            controller: _nameController,
+                                            style:
                                                 TextStyle(color: Colors.black),
-                                            border: OutlineInputBorder(),
+                                            decoration: InputDecoration(
+                                              labelText: 'Display Name',
+                                              labelStyle: TextStyle(
+                                                  color: Colors.black),
+                                              border: OutlineInputBorder(),
+                                            ),
                                           ),
-                                        ),
-                                        CustomButton(
-                                            onPressed: () {},
-                                            text: "Apply Changes")
-                                      ],
+                                          CustomButton(
+                                              onPressed: () {
+                                                _saveData();
+                                                callSetstate();
+                                                Navigator.of(context).pop();
+                                              },
+                                              text: "Apply Changes")
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -359,7 +437,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             height: 2.h,
           ),
           Text(
-            displayName,
+            _nameController.text.isEmpty ? "User" : _nameController.text,
             style: GoogleFonts.lexend(
               fontSize: 20.sp,
               fontWeight: FontWeight.w600,
