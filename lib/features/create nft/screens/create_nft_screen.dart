@@ -32,6 +32,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
   List<String> selectedcolors = [];
   List<String> selectedfinishTouch = [];
   int textLength = 0;
+  String writtenText = "";
 
   Map<String, String> artStyle = {
     "Pixelated": "assets/images/artstyle_img_1.jpg",
@@ -190,8 +191,10 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                         controller: promptController,
                         onChanged: (val) {
                           textLength = val.length;
+                          
                           setState(() {});
                         },
+                     
                         cursorColor: Colors.black,
                         decoration: InputDecoration(
                           counterText: "",
@@ -269,6 +272,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
+                          childAspectRatio: 1.2,
                         ),
                         children: artStyle.entries.map(
                           (MapEntry mapEntry) {
@@ -283,7 +287,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                               },
                               child: Container(
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.all(1.h),
+                                margin: EdgeInsets.all(2),
                                 padding: EdgeInsets.all(1.h),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
@@ -352,6 +356,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
+                          childAspectRatio: 1.25,
                         ),
                         children: arts.entries.map(
                           (mapEntry) {
@@ -366,9 +371,9 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                               },
                               child: Container(
                                 margin: EdgeInsets.all(1.h),
-                                padding: EdgeInsets.all(1.h),
+                                padding: EdgeInsets.all(2),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
                                     color: selectedartist.contains(mapEntry.key)
                                         ? Color(0XFF4318FF)
@@ -380,10 +385,10 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                                   children: [
                                     Expanded(
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(25),
                                         child: Transform.scale(
-                                          scaleX: 1.1,
-                                          scaleY: 1.05,
+                                          scaleX: 1.3,
+                                          scaleY: 1.2,
                                           child: Image.asset(
                                             mapEntry.value,
                                             fit: BoxFit.fill,

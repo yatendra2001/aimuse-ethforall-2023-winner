@@ -20,6 +20,7 @@ class CustomRouter {
         return PageTransition(
           settings: const RouteSettings(name: CreateNFTScreen.routeName),
           type: PageTransitionType.rightToLeft,
+          duration: Duration(milliseconds: 500),
           child: const CreateNFTScreen(),
         );
       case GenerateNFTScreen.routeName:
