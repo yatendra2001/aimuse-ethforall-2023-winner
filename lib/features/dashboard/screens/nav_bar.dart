@@ -1,4 +1,5 @@
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
+import 'package:ai_muse/features/profile/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,8 @@ import 'package:sizer/sizer.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
     static const routename = '/bottom-nav-bar';
+
+  const BottomNavBarScreen({super.key});
   @override
   _BottomNavBarScreenState createState() => _BottomNavBarScreenState();
 }
@@ -19,14 +22,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
     DashBoardScreen(),
-    Text(
-      'Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
+    ProfileScreen(),
   ];
 
   @override

@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Ai.muse',
-          theme: ThemeData.light(),
+          theme: ThemeData(
+            scaffoldBackgroundColor: Color(0XFFE0E5F2).withOpacity(1),
+            backgroundColor: Color(0XFFE0E5F2).withOpacity(1),
+          ),
           onGenerateRoute: CustomRouter.onGenerateRoute,
           initialRoute: BottomNavBarScreen.routename,
         );

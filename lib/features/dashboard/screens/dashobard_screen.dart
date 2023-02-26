@@ -163,6 +163,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   height: 2.h,
                 ),
                 InspiredImageBox(
+                  border: true,
                   imgName: "db_img1",
                   text:
                       'A dog driving a car, Avant-garde artstyle, by Pablo Picasso, by Claude Monet, gradient : [B2EBF2, 00BCD4, ], Purple, Unreal Engine, Devianart Top Rated, CGSociety Top Rated.',
@@ -181,6 +182,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   imgName: "db_img4",
                   text:
                       'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
+                ),
+                SizedBox(
+                  height: 15.h,
                 ),
               ],
             ),
