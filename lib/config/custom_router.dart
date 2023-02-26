@@ -1,12 +1,13 @@
 import 'package:ai_muse/features/authentication/screens/link_wallet_screen.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
 import 'package:ai_muse/features/create%20nft/screens/generate_nft_screen.dart';
-import 'package:ai_muse/features/dashboard/screens/bottom_nav_screen.dart';
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/pageview.dart';
 import 'package:ai_muse/features/splashscreen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+
+import '../features/dashboard/screens/nav_bar.dart';
 
 class CustomRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -40,7 +41,7 @@ class CustomRouter {
       case BottomNavBarScreen.routename:
         return MaterialPageRoute(
           settings: const RouteSettings(name: BottomNavBarScreen.routename),
-          builder: (_) => const BottomNavBarScreen(),
+          builder: (_) => BottomNavBarScreen(),
         );
       case DashBoardScreen.routename:
         return MaterialPageRoute(

@@ -9,10 +9,11 @@ import 'package:walletconnect_dart/walletconnect_dart.dart';
 
 import 'package:ai_muse/common_widgets/custom_button.dart';
 import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
-import 'package:ai_muse/features/dashboard/screens/bottom_nav_screen.dart';
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
 import 'package:ai_muse/keys.dart';
 import 'package:ai_muse/utils/session_helper.dart';
+
+import '../../dashboard/screens/nav_bar.dart';
 
 class LinkWalletScreen extends StatefulWidget {
   final Function() afterConnect;
