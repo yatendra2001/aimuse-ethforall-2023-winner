@@ -1,9 +1,9 @@
 import 'package:ai_muse/common_widgets/custom_button.dart';
 import 'package:ai_muse/common_widgets/inspired_image_box.dart';
-import 'package:ai_muse/features/authentication/widgets/custom_outlined_button.dart';
+import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
 import 'package:ai_muse/features/create%20nft/widgets/outlined_box.dart';
-import 'package:ai_muse/keys.dart';
+import '../../../../keys.dart';
 import 'package:ai_muse/mint_nft/nft_mint_repo.dart';
 import 'package:ai_muse/utils/session_helper.dart';
 import 'package:flutter/material.dart';

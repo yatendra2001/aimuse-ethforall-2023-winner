@@ -1,7 +1,7 @@
 import 'dart:developer' as developer;
 
 import 'package:ai_muse/common_widgets/custom_button.dart';
-import 'package:ai_muse/features/authentication/widgets/custom_outlined_button.dart';
+import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
 import 'package:ai_muse/features/create%20nft/models/color_scheme_model.dart';
 import 'package:ai_muse/features/create%20nft/screens/generate_nft_screen.dart';
 import 'package:ai_muse/features/create%20nft/widgets/outlined_box.dart';

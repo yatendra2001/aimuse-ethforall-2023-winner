@@ -32,7 +32,9 @@ class CustomRouter {
         return PageTransition(
           settings: const RouteSettings(name: LinkWalletScreen.routename),
           type: PageTransitionType.bottomToTop,
-          child: const LinkWalletScreen(),
+          child: LinkWalletScreen(
+            afterConnect: () {},
+          ),
         );
       case BottomNavBarScreen.routename:
         return MaterialPageRoute(

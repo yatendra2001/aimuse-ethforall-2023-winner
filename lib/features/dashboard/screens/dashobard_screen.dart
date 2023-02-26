@@ -19,168 +19,172 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   bool isTestnet = SessionHelper.isTestnet;
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0XFF4318FF).withOpacity(0.05),
-                        offset: Offset(0, 4),
-                        blurRadius: 4,
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      children: [
-                        GradientText(
-                          "µ",
-                          gradient: LinearGradient(
-                            colors: [Color(0XFFB721FF), Color(0XFF21D4FD)],
-                          ),
-                          style: GoogleFonts.itim(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0XFF4318FF).withOpacity(0.05),
+                            offset: Offset(0, 4),
+                            blurRadius: 4,
+                            spreadRadius: 0,
+                          )
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          children: [
+                            GradientText(
+                              "µ",
+                              gradient: LinearGradient(
+                                colors: [Color(0XFFB721FF), Color(0XFF21D4FD)],
+                              ),
+                              style: GoogleFonts.itim(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Text(
+                              "ai.muse",
+                              style: GoogleFonts.lexend(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          width: 2.w,
-                        ),
-                        Text(
-                          "ai.muse",
-                          style: GoogleFonts.lexend(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
-                      ],
+                      ),
                     ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isTestnet = isTestnet ? false : true;
+                          SessionHelper.isTestnet = isTestnet;
+                          print(SessionHelper.isTestnet);
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(3.w),
+                        decoration: BoxDecoration(
+                          color: isTestnet ? Colors.black : Color(0xff8345E6),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0XFF4318FF).withOpacity(0.05),
+                              offset: Offset(0, 4),
+                              blurRadius: 4,
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        child: isTestnet
+                            ? SvgPicture.asset(
+                                "assets/icons/mantle_logo.svg",
+                                height: 5.h,
+                              )
+                            : Image.asset(
+                                "assets/images/polygon_logo.png",
+                                height: 5.h,
+                              ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 4.w,
+                    ),
+                    // Container(
+                    //   padding: EdgeInsets.all(4),
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(10),
+                    //     color: Colors.white,
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: Color(0XFF4318FF).withOpacity(0.05),
+                    //         offset: Offset(0, 4),
+                    //         blurRadius: 4,
+                    //         spreadRadius: 0,
+                    //       )
+                    //     ],
+                    //   ),
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(4.0),
+                    //     child: Row(
+                    //       children: [
+                    //         Icon(Icons.account_balance_wallet),
+                    //         SizedBox(
+                    //           width: 2.w,
+                    //         ),
+                    //         Text(
+                    //           "9.168 ETH",
+                    //           style: GoogleFonts.lexend(
+                    //               fontSize: 12.sp, fontWeight: FontWeight.w600),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+                SizedBox(
+                  height: 4.h,
+                ),
+                Text(
+                  "Generate unique NFTs",
+                  style: GoogleFonts.lexend(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18.sp,
                   ),
                 ),
-                Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isTestnet = isTestnet ? false : true;
-                      SessionHelper.isTestnet = isTestnet;
-                      print(SessionHelper.isTestnet);
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(3.w),
-                    decoration: BoxDecoration(
-                      color: isTestnet ? Colors.black : Color(0xff8345E6),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0XFF4318FF).withOpacity(0.05),
-                          offset: Offset(0, 4),
-                          blurRadius: 4,
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: isTestnet
-                        ? SvgPicture.asset(
-                            "assets/icons/mantle_logo.svg",
-                            height: 5.h,
-                          )
-                        : Image.asset(
-                            "assets/images/polygon_logo.png",
-                            height: 5.h,
-                          ),
+                generateBox(),
+                Text(
+                  "Get Inspired",
+                  style: GoogleFonts.lexend(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18.sp,
                   ),
                 ),
                 SizedBox(
-                  width: 4.w,
+                  height: 2.h,
                 ),
-                // Container(
-                //   padding: EdgeInsets.all(4),
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(10),
-                //     color: Colors.white,
-                //     boxShadow: [
-                //       BoxShadow(
-                //         color: Color(0XFF4318FF).withOpacity(0.05),
-                //         offset: Offset(0, 4),
-                //         blurRadius: 4,
-                //         spreadRadius: 0,
-                //       )
-                //     ],
-                //   ),
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(4.0),
-                //     child: Row(
-                //       children: [
-                //         Icon(Icons.account_balance_wallet),
-                //         SizedBox(
-                //           width: 2.w,
-                //         ),
-                //         Text(
-                //           "9.168 ETH",
-                //           style: GoogleFonts.lexend(
-                //               fontSize: 12.sp, fontWeight: FontWeight.w600),
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                // ),
+                InspiredImageBox(
+                  imgName: "db_img1",
+                  text:
+                      'A dog driving a car, Avant-garde artstyle, by Pablo Picasso, by Claude Monet, gradient : [B2EBF2, 00BCD4, ], Purple, Unreal Engine, Devianart Top Rated, CGSociety Top Rated.',
+                ),
+                InspiredImageBox(
+                  imgName: "db_img2",
+                  text:
+                      'Cubism artstyle, by Johannes Vermeer, Red, Blue, Green, Yellow, Flat light, CryEngine, CGSociety Top Rated.',
+                ),
+                InspiredImageBox(
+                  imgName: "db_img3",
+                  text:
+                      'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
+                ),
+                InspiredImageBox(
+                  imgName: "db_img4",
+                  text:
+                      'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
+                ),
               ],
             ),
-            SizedBox(
-              height: 4.h,
-            ),
-            Text(
-              "Generate unique NFTs",
-              style: GoogleFonts.lexend(
-                fontWeight: FontWeight.w600,
-                fontSize: 18.sp,
-              ),
-            ),
-            generateBox(),
-            Text(
-              "Get Inspired",
-              style: GoogleFonts.lexend(
-                fontWeight: FontWeight.w600,
-                fontSize: 18.sp,
-              ),
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-            InspiredImageBox(
-              imgName: "db_img1",
-              text:
-                  'A dog driving a car, Avant-garde artstyle, by Pablo Picasso, by Claude Monet, gradient : [B2EBF2, 00BCD4, ], Purple, Unreal Engine, Devianart Top Rated, CGSociety Top Rated.',
-            ),
-            InspiredImageBox(
-              imgName: "db_img2",
-              text:
-                  'Cubism artstyle, by Johannes Vermeer, Red, Blue, Green, Yellow, Flat light, CryEngine, CGSociety Top Rated.',
-            ),
-            InspiredImageBox(
-              imgName: "db_img3",
-              text:
-                  'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
-            ),
-            InspiredImageBox(
-              imgName: "db_img4",
-              text:
-                  'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
-            ),
-          ],
+          ),
         ),
       ),
     );

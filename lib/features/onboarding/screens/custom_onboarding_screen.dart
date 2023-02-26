@@ -49,46 +49,57 @@ class _CustomScreenState extends State<CustomScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        widget.title,
-                        style: GoogleFonts.lexend().copyWith(
-                            fontWeight: FontWeight.w700, fontSize: 24.sp),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Text(
-                        widget.text,
-                        style: GoogleFonts.lexend().copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11.sp,
-                          color: Color(0XFF8F9BBA),
-                          height: 1.5,
-                          letterSpacing: 1,
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            Text(
+                              widget.title,
+                              style: GoogleFonts.lexend().copyWith(
+                                  fontWeight: FontWeight.w700, fontSize: 24.sp),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Text(
+                              widget.text,
+                              style: GoogleFonts.lexend().copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 11.sp,
+                                color: Color(0XFF8F9BBA),
+                                height: 1.5,
+                                letterSpacing: 1,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
-                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(
-                        height: 6.h,
-                      ),
-                      CustomDotIndicator(
-                        curPageIndex: widget.pageNumber,
-                        onTap: (page) {
-                          widget.pageController.jumpToPage(page.round());
-                        },
-                      ),
-                      SizedBox(
-                        height: 6.h,
-                      ),
-                      CustomButton(
-                        text: "Continue",
-                        onPressed: () {
-                          widget.pageController.nextPage(
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.linear,
-                          );
-                        },
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            CustomDotIndicator(
+                              curPageIndex: widget.pageNumber,
+                              onTap: (page) {
+                                widget.pageController.jumpToPage(page.round());
+                              },
+                            ),
+                            SizedBox(
+                              height: 6.h,
+                            ),
+                            CustomButton(
+                              text: "Continue",
+                              onPressed: () {
+                                widget.pageController.nextPage(
+                                  duration: Duration(milliseconds: 400),
+                                  curve: Curves.linear,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
