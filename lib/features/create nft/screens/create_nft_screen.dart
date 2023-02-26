@@ -191,10 +191,9 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                         controller: promptController,
                         onChanged: (val) {
                           textLength = val.length;
-                          
+
                           setState(() {});
                         },
-                     
                         cursorColor: Colors.black,
                         decoration: InputDecoration(
                           counterText: "",
@@ -371,7 +370,8 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                               },
                               child: Container(
                                 margin: EdgeInsets.all(1.h),
-                                padding: EdgeInsets.all(2),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 1.5.h),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
                                   border: Border.all(

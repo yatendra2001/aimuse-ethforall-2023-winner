@@ -278,26 +278,22 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                       SizedBox(
                         height: 3.h,
                       ),
-                      Row(
-                        children: [
-                          const Spacer(),
-                          Expanded(
-                            flex: 4,
-                            child: Transform.scale(
-                              scale: 0.63.sp,
-                              child: CustomOutlineButton(
-                                text: "Cancel",
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 2.w),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomOutlineButton(
+                              text: "Cancel",
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
                             ),
-                          ),
-                          const Spacer(),
-                          if (imageURL != null)
-                            Expanded(
-                              flex: 4,
-                              child: CustomButton(
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            if (imageURL != null)
+                              CustomButton(
                                 showIcon: false,
                                 onPressed: () async {
                                   if (!_isMinted) {
@@ -516,9 +512,8 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                         ? "Mint Now"
                                         : "Mint this NFT",
                               ),
-                            ),
-                          if (imageURL != null) const Spacer(),
-                        ],
+                          ],
+                        ),
                       )
                     ],
                   )
