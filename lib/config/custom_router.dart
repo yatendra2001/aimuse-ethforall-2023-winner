@@ -24,12 +24,7 @@ class CustomRouter {
           duration: Duration(milliseconds: 500),
           child: const CreateNFTScreen(),
         );
-      case GenerateNFTScreen.routeName:
-        return PageTransition(
-          settings: const RouteSettings(name: GenerateNFTScreen.routeName),
-          type: PageTransitionType.rightToLeft,
-          child: const GenerateNFTScreen(),
-        );
+
       case LinkWalletScreen.routename:
         return PageTransition(
           settings: const RouteSettings(name: LinkWalletScreen.routename),

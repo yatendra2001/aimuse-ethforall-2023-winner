@@ -117,6 +117,9 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
     "Henri Matisse": "assets/images/art_10.jpg",
   };
 
+  bool check = false;
+  String manualText = "";
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -191,8 +194,23 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                       child: TextFormField(
                         controller: promptController,
                         onChanged: (val) {
-                          textLength = val.length;
+                          if (val.isEmpty || check) {
+                            manualText = val;
+                            check = true;
+                          }
 
+                          textLength = val.length;
+                          setState(() {});
+                        },
+                        onEditingComplete: () {
+                          print('editingcomplete');
+                        },
+                        onFieldSubmitted: (value) {
+                          print("onfieldsubmitted");
+                        },
+                        onTapOutside: (_) {
+                          check = false;
+                          manualText = '';
                           setState(() {});
                         },
                         cursorColor: Colors.black,
@@ -573,7 +591,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
   }
 
   void getPrompt() {
-    String newPromp = "";
+    String newPromp = manualText;
     for (int i = 0; i < selectedPrompt.length; i++) {
       newPromp += "${selectedPrompt[i]}, ";
     }
@@ -590,7 +608,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
       if (selectedColorScheme[i].gradient == true) {
         String color = "";
         for (int j = 0; j < selectedColorScheme[i].colorCode.length; j++) {
-          color += selectedColorScheme[i].colorCode[j] + ", ";
+          color += "${selectedColorScheme[i].colorCode[j]}, ";
         }
         newPromp += "gradient : [$color], ";
       } else {
@@ -604,8 +622,8 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
 
     textLength = newPromp.length;
     promptController.text = newPromp;
-    promptController.text = promptController.text
-        .replaceRange(promptController.text.length - 2, null, ".");
+    // promptController.text = promptController.text
+    //     .replaceRange(promptController.text.length - 2, null, ".");
     setState(() {});
   }
 
@@ -613,7 +631,16 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
     if (promptController.text.isNotEmpty) {
       SessionHelper.currentPrompt = promptController.text;
       developer.log(SessionHelper.currentPrompt ?? "");
-      Navigator.of(context).pushNamed(GenerateNFTScreen.routeName);
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => GenerateNFTScreen(
+            artStyle: selectedartstyle,
+            artists: selectedartist,
+            colorScheme: selectedColorScheme,
+            selectedColors: selectedcolors,
+            finishingTouches: selectedfinishTouch,
+            selectedPrompts: selectedPrompt),
+        settings: RouteSettings(name: GenerateNFTScreen.routeName),
+      ));
     } else {
       Fluttertoast.showToast(
           msg: "Empty prompt", backgroundColor: Colors.black45);

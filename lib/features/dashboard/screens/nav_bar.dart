@@ -9,7 +9,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:sizer/sizer.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
-    static const routename = '/bottom-nav-bar';
+  static const routename = '/bottom-nav-bar';
 
   const BottomNavBarScreen({super.key});
   @override
@@ -40,10 +40,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           borderRadius: BorderRadius.circular(40),
           color: Colors.white,
           boxShadow: [
-            BoxShadow(
-              blurRadius: 20,
-              color: Colors.blue.withOpacity(0.4),
-            )
+            BoxShadow(color: Color(0XFF4318FF).withOpacity(0.4), blurRadius: 40)
           ],
         ),
         child: GNav(

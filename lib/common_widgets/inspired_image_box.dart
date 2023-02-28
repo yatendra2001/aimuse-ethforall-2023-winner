@@ -63,40 +63,43 @@ class _InspiredImageBoxState extends State<InspiredImageBox> {
         alignment: Alignment.center,
         child: Column(
           children: [
-            Transform.scale(
-              scaleX: 1.1,
-              scaleY: 1.1,
-              child: widget.isGeneratedScreen
-                  ? Image.network(
-                      widget.imageURL,
-                      scale: 1.6,
-                    )
-                  : Image.asset(
-                      "assets/images/${widget.imgName}.png",
-                    ),
-            ),
+            widget.imgName != ''
+                ? Transform.scale(
+                    scaleX: 1.1,
+                    scaleY: 1.1,
+                    child: widget.isGeneratedScreen
+                        ? Image.network(
+                            widget.imageURL,
+                            scale: 1.6,
+                          )
+                        : Image.asset(
+                            "assets/images/${widget.imgName}.png",
+                          ),
+                  )
+                : const SizedBox.shrink(),
             SizedBox(height: 4.h),
-            Row(
-              children: [
-                Expanded(flex: 3, child: Container()),
-                Text(
-                  "Given Prompt",
-                  style: GoogleFonts.lexend(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12.sp,
-                    color: Color(0XFF47548C),
-                  ),
-                ),
-                Expanded(flex: 2, child: Container()),
-                Expanded(
-                    flex: 1,
-                    child: Icon(
-                      Icons.article_outlined,
+            if (widget.imgName.isNotEmpty)
+              Row(
+                children: [
+                  Expanded(flex: 3, child: Container()),
+                  Text(
+                    "Given Prompt",
+                    style: GoogleFonts.lexend(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12.sp,
                       color: Color(0XFF47548C),
-                      size: 3.h,
-                    )),
-              ],
-            ),
+                    ),
+                  ),
+                  Expanded(flex: 2, child: Container()),
+                  Expanded(
+                      flex: 1,
+                      child: Icon(
+                        Icons.article_outlined,
+                        color: Color(0XFF47548C),
+                        size: 3.h,
+                      )),
+                ],
+              ),
             if (!widget.isGeneratedScreen)
               SizedBox(
                 height: 1.h,

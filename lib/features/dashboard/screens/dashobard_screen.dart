@@ -17,6 +17,7 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   bool isTestnet = SessionHelper.isTestnet;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +33,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     Container(
                       padding: EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(15),
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
@@ -44,7 +45,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(4.0),
+                        padding: EdgeInsets.all(1.w),
                         child: Row(
                           children: [
                             GradientText(
@@ -58,7 +59,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: 2.w,
+                              width: 1.w,
                             ),
                             Text(
                               "ai.muse",
@@ -183,9 +184,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   text:
                       'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
                 ),
-                SizedBox(
-                  height: 15.h,
-                ),
+                InspiredImageBox(
+                  imgName: '',
+                  text: '',
+                )
               ],
             ),
           ),
@@ -195,64 +197,70 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   }
 
   Widget generateBox() {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(CreateNFTScreen.routeName);
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 4.h),
-        height: 22.h,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          gradient: LinearGradient(
-            colors: [
-              Color(0XFF4318FF).withOpacity(0.4),
-              Color(0XFF21D4FD).withOpacity(0.5),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0XFF4318FF).withOpacity(0.2),
-              offset: Offset(0, 4),
-              blurRadius: 6,
-              spreadRadius: 4,
-            )
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 4.h),
+      height: 22.h,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        gradient: LinearGradient(
+          colors: [
+            Color(0XFF4318FF).withOpacity(0.4),
+            Color(0XFF21D4FD).withOpacity(0.5),
           ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              width: 1.w,
-            ),
-            SvgPicture.asset("assets/icons/generate_box_icon.svg"),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Create",
-                  style: GoogleFonts.lexend(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.sp,
+        boxShadow: [
+          BoxShadow(
+            color: Color(0XFF4318FF).withOpacity(0.2),
+            offset: Offset(0, 4),
+            blurRadius: 6,
+            spreadRadius: 4,
+          )
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          borderRadius: BorderRadius.circular(30),
+          onTap: () {
+            Navigator.of(context).pushNamed(CreateNFTScreen.routeName);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                width: 1.w,
+              ),
+              SvgPicture.asset("assets/icons/generate_box_icon.svg"),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Create",
+                    style: GoogleFonts.lexend(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18.sp,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Text(
-                  "personalised\nunique NFT's",
-                  style: GoogleFonts.lexend(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 10.sp,
+                  SizedBox(
+                    height: 1.h,
                   ),
-                )
-              ],
-            ),
-            Image.asset("assets/images/generate_box_image.png")
-          ],
+                  Text(
+                    "personalised\nunique NFT's",
+                    style: GoogleFonts.lexend(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 10.sp,
+                    ),
+                  )
+                ],
+              ),
+              Image.asset("assets/images/generate_box_image.png")
+            ],
+          ),
         ),
       ),
     );

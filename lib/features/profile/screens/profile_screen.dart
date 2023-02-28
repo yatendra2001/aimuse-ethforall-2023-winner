@@ -174,6 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: EdgeInsets.only(top: 1),
                   height: 15.h,
                   child: GridView(
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                     ),
@@ -196,6 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: EdgeInsets.only(top: 1),
                   height: 30.h,
                   child: GridView(
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3),
                     children: jpegImages.entries.map((MapEntry mapEntry) {
@@ -210,8 +212,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     }).toList(),
                   ),
                 ),
-              SizedBox(
-                height: 15.h,
+              InspiredImageBox(
+                imgName: '',
+                text: '',
               ),
             ],
           ),
