@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'package:ai_muse/keys.dart';
+import '../../keys.dart';
 
 class NFTMintRepo extends BaseNFTMintRepo {
   @override
@@ -74,7 +74,8 @@ class NFTMintRepo extends BaseNFTMintRepo {
   Future<String> uploadImageToIPFS(
       {required String imageUrl,
       required String nftName,
-      required String description}) async {
+      required String description,
+      required Map<String, String> traitsDescription}) async {
     String errorMessage = "Something went wrong";
 
     try {
@@ -110,15 +111,27 @@ class NFTMintRepo extends BaseNFTMintRepo {
 
       // Storing image url in a json inside
       String cid = data["value"]["cid"];
-
-      String traits =
-          '[{"trait_type":"BgColor","value": "{artWork.backgroundIndex}"},{"trait_type":"FgColor","value": "{artWork.forgroundIndex}"},{"trait_type":"Radius","value": "{artWork.radiusIndex}"}]';
+      List<dynamic> traits = [
+        {"trait_type": "prompt", "value": "${traitsDescription["prompt"]}"},
+        {"trait_type": "artstyle", "value": "${traitsDescription["artstyle"]}"},
+        {"trait_type": "artist", "value": "${traitsDescription["artist"]}"},
+        {"trait_type": "color", "value": "${traitsDescription["color"]}"},
+        {
+          "trait_type": "colorScheme",
+          "value": "${traitsDescription["colorScheme"]}"
+        },
+        {
+          "trait_type": "finshingTouches",
+          "value": "${traitsDescription["finshingTouches"]}"
+        },
+      ];
+      String traitsString = traits.toString();
 
       Map<String, String> nftJson = {
         "name": nftName,
         "description": description,
         "image": 'ipfs://$cid/$nftName.png',
-        "traits": traits
+        "traits": traitsString,
       };
 
       myFile = File('$appDocPath/$nftName.json');

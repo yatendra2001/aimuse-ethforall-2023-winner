@@ -1,19 +1,14 @@
 import 'dart:convert';
-import 'dart:convert' show utf8, base64Url;
-import 'dart:ffi';
-import 'dart:typed_data';
-import 'package:ai_muse/flow_dart_sdk/fcl/types.dart';
-import 'package:convert/convert.dart';
+import 'dart:developer' as developer;
 
 import 'package:http/http.dart' as http;
-import 'package:ai_muse/flow_dart_sdk/fcl/fcl.dart' as fcl;
-import 'package:pointycastle/pointycastle.dart';
-import 'package:rlp/rlp.dart';
+
+import '../keys.dart';
 
 Future<void> getReferenceBlockId() async {
   // Set the query parameters
   final queryParameters = {
-    'height': "sealed", // or a specific block height, e.g. '100'
+    'height': "sealed",
   };
 
   // Make a GET request to the Flow Access API endpoint to retrieve the block header
@@ -26,8 +21,8 @@ Future<void> getReferenceBlockId() async {
   if (response.statusCode == 200) {
     // Parse the response JSON to extract the reference block ID
     final jsonResponse = jsonDecode(response.body);
-    print(jsonResponse);
-    print(response.headers.toString());
+    developer.log(jsonResponse);
+    developer.log(response.headers.toString());
     final referenceBlockId = jsonResponse['header']['parentId'];
     final blockId = jsonResponse['header']['id'];
   } else {
@@ -36,14 +31,35 @@ Future<void> getReferenceBlockId() async {
   }
 }
 
-Future<void> submitTransaction() async {
-  await fcl.FlowClient().sendTransaction(
-    "12345",
-    arguments: [
-      CadenceValue(type: CadenceType.String, value: "{'test':'test'}"),
-    ],
-  );
+Future<List<Map<String, String>>> getImagesFromStorage() async {
+  String url = "https://api.nft.storage/";
+  print("check 1");
+
+  var request = http.MultipartRequest('GET', Uri.parse(url));
+  request.headers.addAll({
+    'Authorization': "Bearer $NFT_STORAGE_API",
+    'Content-Type': 'application/json',
+  });
+
+  var myresponse = await request.send();
+  var responseBody = await myresponse.stream.bytesToString();
+  final data = jsonDecode(responseBody)["value"];
+  List<Map<String, String>> result = [];
+  for (var element in data) {
+    if (element["files"][0]["type"] == "application/json") {
+      final Map<String, String> map = {
+        "cid": element["cid"],
+        "name": element["files"][0]["name"]
+      };
+      result.add(map);
+    }
+  }
+
+  developer.log(result.toString());
+  return result;
 }
+
+Future<void> submitTransaction() async {}
 
 Future<void> sendTransactionDemo() async {
   final url = Uri.parse('https://rest-testnet.onflow.org/v1/transactions');

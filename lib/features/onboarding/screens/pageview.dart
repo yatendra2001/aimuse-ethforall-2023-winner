@@ -27,14 +27,15 @@ class _OnboardingPageviewState extends State<OnboardingPageview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _page != 0
-          ? AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: IconButton(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: _page != 0
+            ? IconButton(
                 onPressed: () {
                   _pageController.previousPage(
-                    duration: const Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 400),
                     curve: Curves.linear,
                   );
                 },
@@ -42,14 +43,14 @@ class _OnboardingPageviewState extends State<OnboardingPageview> {
                   Icons.arrow_back_ios_new_rounded,
                   color: Colors.black,
                 ),
-              ),
-            )
-          : null,
+              )
+            : null,
+      ),
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
         onTap: () {
           _pageController.nextPage(
-            duration: Duration(milliseconds: 300),
+            duration: Duration(milliseconds: 450),
             curve: Curves.linear,
           );
         },

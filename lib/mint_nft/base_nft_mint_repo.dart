@@ -9,7 +9,8 @@ abstract class BaseNFTMintRepo {
   Future<String> uploadImageToIPFS(
       {required String imageUrl,
       required String nftName,
-      required String description});
+      required String description,
+      required Map<String, String> traitsDescription});
 
   Future<void> mintNFTUsingAPI(
       {required String chain,

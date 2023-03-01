@@ -1,10 +1,11 @@
 import 'dart:developer' as developer;
 
 import 'package:ai_muse/common_widgets/custom_button.dart';
-import 'package:ai_muse/features/authentication/widgets/custom_outlined_button.dart';
+import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
 import 'package:ai_muse/features/create%20nft/models/color_scheme_model.dart';
 import 'package:ai_muse/features/create%20nft/screens/generate_nft_screen.dart';
 import 'package:ai_muse/features/create%20nft/widgets/outlined_box.dart';
+import 'package:ai_muse/flow_chain/mint_on_flow_repo.dart';
 import 'package:ai_muse/mint_nft/nft_mint_repo.dart';
 import 'package:ai_muse/features/loading/loading_page.dart';
 import 'package:ai_muse/utils/session_helper.dart';
@@ -32,6 +33,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
   List<String> selectedcolors = [];
   List<String> selectedfinishTouch = [];
   int textLength = 0;
+  String writtenText = "";
 
   Map<String, String> artStyle = {
     "Pixelated": "assets/images/artstyle_img_1.jpg",
@@ -118,11 +120,15 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
     "Henri Matisse": "assets/images/art_10.jpg",
   };
 
+  bool check = false;
+  String manualText = "";
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,7 +197,23 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                       child: TextFormField(
                         controller: promptController,
                         onChanged: (val) {
+                          if (val.isEmpty || check) {
+                            manualText = val;
+                            check = true;
+                          }
+
                           textLength = val.length;
+                          setState(() {});
+                        },
+                        onEditingComplete: () {
+                          print('editingcomplete');
+                        },
+                        onFieldSubmitted: (value) {
+                          print("onfieldsubmitted");
+                        },
+                        onTapOutside: (_) {
+                          check = false;
+                          manualText = '';
                           setState(() {});
                         },
                         cursorColor: Colors.black,
@@ -271,6 +293,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
+                          childAspectRatio: 1.2,
                         ),
                         children: artStyle.entries.map(
                           (MapEntry mapEntry) {
@@ -285,7 +308,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                               },
                               child: Container(
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.all(1.h),
+                                margin: EdgeInsets.all(2),
                                 padding: EdgeInsets.all(1.h),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
@@ -354,6 +377,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
+                          childAspectRatio: 1.25,
                         ),
                         children: arts.entries.map(
                           (mapEntry) {
@@ -368,9 +392,10 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                               },
                               child: Container(
                                 margin: EdgeInsets.all(1.h),
-                                padding: EdgeInsets.all(1.h),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 1.5.h),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
                                     color: selectedartist.contains(mapEntry.key)
                                         ? Color(0XFF4318FF)
@@ -382,10 +407,10 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                                   children: [
                                     Expanded(
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(25),
                                         child: Transform.scale(
-                                          scaleX: 1.1,
-                                          scaleY: 1.05,
+                                          scaleX: 1.3,
+                                          scaleY: 1.2,
                                           child: Image.asset(
                                             mapEntry.value,
                                             fit: BoxFit.fill,
@@ -569,7 +594,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
   }
 
   void getPrompt() {
-    String newPromp = "";
+    String newPromp = manualText;
     for (int i = 0; i < selectedPrompt.length; i++) {
       newPromp += "${selectedPrompt[i]}, ";
     }
@@ -586,7 +611,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
       if (selectedColorScheme[i].gradient == true) {
         String color = "";
         for (int j = 0; j < selectedColorScheme[i].colorCode.length; j++) {
-          color += selectedColorScheme[i].colorCode[j] + ", ";
+          color += "${selectedColorScheme[i].colorCode[j]}, ";
         }
         newPromp += "gradient : [$color], ";
       } else {
@@ -600,19 +625,29 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
 
     textLength = newPromp.length;
     promptController.text = newPromp;
-    promptController.text = promptController.text
-        .replaceRange(promptController.text.length - 2, null, ".");
+    // promptController.text = promptController.text
+    //     .replaceRange(promptController.text.length - 2, null, ".");
     setState(() {});
   }
 
-  void generate() {
+  void generate() async {
     if (promptController.text.isNotEmpty) {
       SessionHelper.currentPrompt = promptController.text;
       developer.log(SessionHelper.currentPrompt ?? "");
-      Navigator.of(context).pushNamed(GenerateNFTScreen.routeName);
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => GenerateNFTScreen(
+            artStyle: selectedartstyle,
+            artists: selectedartist,
+            colorScheme: selectedColorScheme,
+            selectedColors: selectedcolors,
+            finishingTouches: selectedfinishTouch,
+            selectedPrompts: selectedPrompt),
+        settings: RouteSettings(name: GenerateNFTScreen.routeName),
+      ));
     } else {
-      Fluttertoast.showToast(
-          msg: "Empty prompt", backgroundColor: Colors.black45);
+      await getReferenceBlockId();
+      // Fluttertoast.showToast(
+      //     msg: "Empty prompt", backgroundColor: Colors.black45);
     }
   }
 }
