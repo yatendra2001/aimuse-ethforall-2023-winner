@@ -51,6 +51,18 @@ dependencies:
   flutter_spinkit: ^5.1.0
   share_plus: ^6.3.1
   page_transition: ^2.0.9
+  http2: ^2.0.0
+  grpc: 3.0.0
+  googleapis_auth: ^1.0.0
+  meta: ^1.1.6
+  convert: ^3.1.1
+  async: ^2.2.0
+  protobuf: ^2.0.0
+
+  # Crypto
+  pointycastle: ^3.0.1
+  rlp: ^2.0.0
+  cryptography: ^2.0.1
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:ai_muse/common_widgets/gradient_text.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
 import 'package:ai_muse/common_widgets/inspired_image_box.dart';
+import 'package:ai_muse/flow_chain/mint_on_flow_repo.dart';
 import 'package:ai_muse/utils/session_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -188,8 +189,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   Widget generateBox() {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(CreateNFTScreen.routeName);
+      onTap: () async {
+        // await getReferenceBlockId();
+        await sendTransactionDemo();
+        // await getLatestBlock();
+        // Navigator.of(context).pushNamed(CreateNFTScreen.routeName);
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 4.h),

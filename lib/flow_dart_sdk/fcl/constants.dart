@@ -1,0 +1,17 @@
+const LOCALHOST = "localhost";
+const MOBILE_ENDPOINT = "10.0.2.2";
+
+const EMULATOR_PORT = 3569;
+
+const SERVICE_ACCOUNT = "071c126ffcbe9a36";
+const SERVICE_ACCOUNT_PRIVATE_KEY =
+    "5a67d0776e28a7e88312babd72b33a1bc15ae2401cc1a3f18efd40f56acfb772";
+
+const UFIX64_DECIMAL_PLACES = 10;
+const FIX_64_FACTOR = 100000000;
+
+const ZERO_PREFIX = "0x";
+const ADDRESS_BYTE_LENGTH = 8;
+const BLOCK_ID_BYTE_LENGTH = 32;
+
+const DOMAIN_TAG = "FLOW-V0.0-transaction";

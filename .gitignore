@@ -33,6 +33,7 @@ migrate_working_dir/
 .pub/
 /build/
 /lib/keys.dart
+/lib/flow_chain/flow_dart_sdk/fcl/constants.dart
 
 # Symbolication related
 app.*.symbols
