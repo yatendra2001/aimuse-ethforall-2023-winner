@@ -521,16 +521,16 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                               "colorScheme": colorScheme,
                                               "finshingTouches": finshingTouches
                                             });
-                                        // setState(() {
-                                        //   currentStatus = "Minting NFT...";
-                                        // });
+                                        setState(() {
+                                          currentStatus = "Minting NFT...";
+                                        });
 
-                                        // var result =
-                                        //     await mintStream(jsonUrl: url);
-                                        // print(result);
-                                        // setState(() {
-                                        //   _isMinting = false;
-                                        // });
+                                        var result =
+                                            await mintStream(jsonUrl: url);
+                                        print(result);
+                                        setState(() {
+                                          _isMinting = false;
+                                        });
                                         showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
@@ -539,7 +539,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                             titlePadding: EdgeInsets.all(12.sp),
                                             title: Center(
                                               child: Text(
-                                                "Successfully Uploaded",
+                                                "Successfully Minted",
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.lexend(
                                                     fontWeight: FontWeight.w600,
@@ -593,7 +593,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                  if (SessionHelper.isTestnet ==
+                                                  if (SessionHelper.isTestnet !=
                                                       false)
                                                     InkWell(
                                                       onTap: () {
@@ -647,10 +647,10 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                     }
                                   },
                                   text: _isMinted
-                                      ? "Uploaded"
+                                      ? "Minted"
                                       : (nftName != null && nftName!.isNotEmpty)
-                                          ? "Upload Now"
-                                          : "Upload NFT",
+                                          ? "Mint Now"
+                                          : "Mint NFT",
                                 ),
                             ],
                           ),

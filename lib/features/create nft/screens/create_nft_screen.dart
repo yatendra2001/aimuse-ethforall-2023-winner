@@ -645,9 +645,8 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
         settings: RouteSettings(name: GenerateNFTScreen.routeName),
       ));
     } else {
-      await getReferenceBlockId();
-      // Fluttertoast.showToast(
-      //     msg: "Empty prompt", backgroundColor: Colors.black45);
+      Fluttertoast.showToast(
+          msg: "Empty prompt", backgroundColor: Colors.black45);
     }
   }
 }
