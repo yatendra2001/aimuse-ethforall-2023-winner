@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -38,6 +39,8 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
   String _result = '';
   bool logoutVisible = false;
 
+  TextEditingController textEditingController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -51,8 +54,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
 
     Uri redirectUrl;
     if (Platform.isAndroid) {
-      redirectUrl =
-          Uri.parse('aimuse://com.example.ai_muse/auth');
+      redirectUrl = Uri.parse('aimuse://com.example.ai_muse/auth');
     } else if (Platform.isIOS) {
       redirectUrl =
           Uri.parse('com.web3auth.flutter.web3authFlutterExample://openlogin');
@@ -160,95 +162,351 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
       duration: const Duration(milliseconds: 400),
       child: AnimatedCrossFade(
         firstChild: Padding(
-          padding: const EdgeInsets.all(40),
-          child: Center(
-              child: Column(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Center(
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 1.h,
+                  decoration: BoxDecoration(
+                      color: Color(0XFFE0E5F2),
+                      borderRadius: BorderRadius.circular(40)),
+                  width: 30.w,
+                ),
               ),
-              Visibility(
-                visible: !logoutVisible,
-                child: Column(
+              SizedBox(
+                height: 4.h,
+              ),
+              Icon(
+                Icons.login,
+                color: Color(0XFF707EAE),
+                size: 6.h,
+              ),
+              SizedBox(
+                height: 1.h,
+              ),
+              Text(
+                "Walletless login",
+                style: GoogleFonts.lexend(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.sp,
+                ),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Text(
+                "Choose a social login from below or sign in via email",
+                style: GoogleFonts.lexend(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 10.sp,
+                  color: Color(0XFF8F9BBA),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  fixedSize: Size(50.w, 6.5.h),
+                  side: const BorderSide(color: Color(0XFF4318FF), width: 1),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
+                onPressed: _login(_withGoogle),
+                child: Row(
                   children: [
-                    const SizedBox(
-                      height: 50,
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.google,
+                            color: Color(0XFF4318FF),
+                          ),
+                        ],
+                      ),
                     ),
-                    const Icon(
-                      Icons.flutter_dash,
-                      size: 80,
-                      color: Color(0xFF1389fd),
+                    SizedBox(
+                      width: 3.w,
                     ),
-                    const SizedBox(
-                      height: 40,
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        "Google",
+                        style: GoogleFonts.dmSans().copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.sp,
+                          color: const Color(0XFF4318FF),
+                        ),
+                      ),
                     ),
-                    const Text(
-                      'Web3Auth',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 36,
-                          color: Color(0xFF0364ff)),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      'Welcome to Web3Auth x Flutter Demo',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      'Login with',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                        onPressed: _login(_withGoogle),
-                        child: const Text('Google')),
-                    ElevatedButton(
-                        onPressed: _login(_withFacebook),
-                        child: const Text('Facebook')),
-                    ElevatedButton(
-                        onPressed: _login(_withEmailPasswordless),
-                        child: const Text('Email Passwordless')),
-                    ElevatedButton(
-                        onPressed: _login(_withDiscord),
-                        child: const Text('Discord')),
                   ],
                 ),
               ),
-              Visibility(
-                // ignore: sort_child_properties_last
-                child: Column(
+              SizedBox(
+                height: 2.h,
+              ),
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  fixedSize: Size(50.w, 6.5.h),
+                  side: const BorderSide(color: Color(0XFF4318FF), width: 1),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
+                onPressed: _login(_withFacebook),
+                child: Row(
                   children: [
-                    Center(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Colors.red[600] // This is what you need!
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.facebook,
+                            color: Color(0XFF4318FF),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 3.w,
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        "Facebook",
+                        style: GoogleFonts.dmSans().copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.sp,
+                          color: const Color(0XFF4318FF),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  fixedSize: Size(50.w, 6.5.h),
+                  side: const BorderSide(color: Color(0XFF4318FF), width: 1),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
+                onPressed: _login(_withDiscord),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.discord,
+                            color: Color(0XFF4318FF),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 3.w,
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        "Discord",
+                        style: GoogleFonts.dmSans().copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.sp,
+                          color: const Color(0XFF4318FF),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Text(
+                "or",
+                style: GoogleFonts.lexend(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12.sp,
+                  color: Color(0XFF8F9BBA),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  fixedSize: Size(50.w, 6.5.h),
+                  side: const BorderSide(color: Color(0XFF4318FF), width: 1),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(40.0))),
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(40),
+                            topLeft: Radius.circular(40),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Center(
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: 1.h,
+                                decoration: BoxDecoration(
+                                    color: Color(0XFFE0E5F2),
+                                    borderRadius: BorderRadius.circular(40)),
+                                width: 30.w,
                               ),
-                          onPressed: _logout(),
-                          child: Column(
-                            children: const [
-                              Text('Logout'),
-                            ],
-                          )),
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            Icon(
+                              Icons.mail,
+                              color: Color(0XFF707EAE),
+                              size: 6.h,
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Text(
+                              "Email login",
+                              style: GoogleFonts.lexend(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20.sp,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(4.w),
+                              child: Text(
+                                "Please enter your email address & proceed password-less",
+                                style: GoogleFonts.lexend(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12.sp,
+                                  color: Color(0XFF8F9BBA),
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              padding: EdgeInsets.symmetric(horizontal: 4.w),
+                              decoration: BoxDecoration(
+                                  color: Color(0XFFF4F7FE),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: TextField(
+                                controller: textEditingController,
+                                decoration: InputDecoration(
+                                  fillColor: Color(0XFFF4F7FE),
+                                  hintText: "Email",
+                                  border: InputBorder.none,
+                                  suffix: InkWell(
+                                    child: Icon(
+                                      Icons.close,
+                                      size: 14.sp,
+                                    ),
+                                    onTap: () {
+                                      textEditingController.clear();
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            CustomButton(
+                              onPressed: _login(_withEmailPasswordless),
+                              text: "Verify",
+                              showIcon: false,
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(
+                            Icons.mail,
+                            color: Color(0XFF4318FF),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 3.w,
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        "Email",
+                        style: GoogleFonts.dmSans().copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.sp,
+                          color: const Color(0XFF4318FF),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                visible: logoutVisible,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(_result),
               )
             ],
-          )),
+          ),
         ),
         secondChild: Container(
           width: double.infinity,
@@ -290,6 +548,96 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
         duration: const Duration(milliseconds: 500),
       ),
     );
+  }
+
+  demo() {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+        ),
+        Visibility(
+          visible: !logoutVisible,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              const Icon(
+                Icons.flutter_dash,
+                size: 80,
+                color: Color(0xFF1389fd),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              const Text(
+                'Web3Auth',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                    color: Color(0xFF0364ff)),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                'Welcome to Web3Auth x Flutter Demo',
+                style: TextStyle(fontSize: 14),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Login with',
+                style: TextStyle(fontSize: 12),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  onPressed: _login(_withGoogle), child: const Text('Google')),
+              ElevatedButton(
+                  onPressed: _login(_withFacebook),
+                  child: const Text('Facebook')),
+              ElevatedButton(
+                  onPressed: _login(_withEmailPasswordless),
+                  child: const Text('Email Passwordless')),
+              ElevatedButton(
+                  onPressed: _login(_withDiscord),
+                  child: const Text('Discord')),
+            ],
+          ),
+        ),
+        Visibility(
+          // ignore: sort_child_properties_last
+          child: Column(
+            children: [
+              Center(
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.red[600] // This is what you need!
+                        ),
+                    onPressed: _logout(),
+                    child: Column(
+                      children: const [
+                        Text('Logout'),
+                      ],
+                    )),
+              ),
+            ],
+          ),
+          visible: logoutVisible,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(_result),
+        )
+      ],
+    ));
   }
 
   customModalBottomSheet() {
@@ -349,6 +697,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
           logoutVisible = true;
           log(_result.toString());
         });
+        
       } on UserCancelledException {
         print("User cancelled.");
       } on UnKnownException {
@@ -388,7 +737,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
     return Web3AuthFlutter.login(LoginParams(
         loginProvider: Provider.email_passwordless,
         extraLoginOptions:
-            ExtraLoginOptions(login_hint: "sosid94742@abincol.com")));
+            ExtraLoginOptions(login_hint: textEditingController.text)));
   }
 
   Future<Web3AuthResponse> _withDiscord() {
