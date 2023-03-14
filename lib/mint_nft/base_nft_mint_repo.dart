@@ -18,4 +18,7 @@ abstract class BaseNFTMintRepo {
       required String NFT_Description,
       required String mintingAddress,
       required String imageURL});
+
+  Future<void> mintNFTOnSolana(
+      {required String name, required String symbol, required String imageUrl});
 }

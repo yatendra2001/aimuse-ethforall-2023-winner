@@ -1,12 +1,22 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:http/http.dart' as http;
 import 'package:ai_muse/common_widgets/gradient_text.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
 import 'package:ai_muse/common_widgets/inspired_image_box.dart';
 import 'package:ai_muse/flow_chain/mint_on_flow_repo.dart';
+import 'package:ai_muse/mint_nft/nft_mint_solana.dart';
 import 'package:ai_muse/utils/session_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+import 'package:solana/base58.dart';
+import 'package:solana/encoder.dart';
+import 'package:solana/solana.dart';
+
+import '../../../keys.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const routename = '/dashboard';
@@ -227,8 +237,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           borderRadius: BorderRadius.circular(30),
-          onTap: () {
-            // await getImagesFromStorage();
+          onTap: () async {
             Navigator.of(context).pushNamed(CreateNFTScreen.routeName);
           },
           child: Row(

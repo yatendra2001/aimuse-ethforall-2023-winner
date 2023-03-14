@@ -204,28 +204,37 @@ class NFTMintRepo extends BaseNFTMintRepo {
     }
     throw (errorMessage);
   }
-}
 
-Future<String?> generateImageFromAI({required String prompt}) async {
-  String apikey = DALL_E_API;
-  String url = 'https://api.openai.com/v1/images/generations';
-  if (prompt.isNotEmpty) {
-    var data = {
-      "prompt": prompt,
-      "n": 1,
-      "size": "512x512",
+  @override
+  Future<void> mintNFTOnSolana(
+      {required String name,
+      required String symbol,
+      required String imageUrl}) async {
+    final url = Uri.parse('https://api-eu1.tatum.io/v3/nft/mint/');
+    final headers = {
+      'x-api-key': TOTUM_API_TESTNET,
+      'Content-Type': 'application/json',
     };
-    var res = await http.post(Uri.parse(url),
-        headers: {
-          "Authorization": "Bearer $apikey",
-          "Content-Type": "application/json"
-        },
-        body: jsonEncode(data));
-
-    var jsonResponse = jsonDecode(res.body);
-    String? image = jsonResponse['data'][0]['url'];
-    return image;
-  } else {
-    return "Enter Something";
+    final body = json.encode({
+      'from': SOLANA_WALLET_AI_MUSE_PUBLIC_KEY,
+      'chain': 'SOL',
+      'fromPrivateKey': SOLANA_WALLET_AI_MUSE_PRIVATE_KEY,
+      'to': SOLANA_WALLET_AI_MUSE_PUBLIC_KEY,
+      'metadata': {
+        'name': name,
+        'symbol': symbol,
+        'sellerFeeBasisPoints': 0,
+        'uri': imageUrl,
+        'creators': [
+          {
+            'address': SOLANA_WALLET_AI_MUSE_PUBLIC_KEY,
+            'verified': true,
+            'share': 100
+          }
+        ]
+      }
+    });
+    final response = await http.post(url, headers: headers, body: body);
+    print(response.body);
   }
 }

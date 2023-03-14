@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,6 +10,8 @@ import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
+import 'package:solana/encoder.dart';
+import 'package:solana/solana.dart';
 import 'package:web3dart/web3dart.dart';
 
 import 'package:ai_muse/common_widgets/custom_button.dart';
@@ -106,7 +111,8 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
   final TextEditingController _nftNameController = TextEditingController();
 
   Future<void> generateImage() async {
-    final url = await generateImageFromAI(prompt: SessionHelper.currentPrompt!);
+    final url = await NFTMintRepo()
+        .generateImageFromAI(prompt: SessionHelper.currentPrompt!);
     setState(() {
       imageURL = url;
     });
@@ -524,10 +530,12 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                         setState(() {
                                           currentStatus = "Minting NFT...";
                                         });
-
-                                        var result =
-                                            await mintStream(jsonUrl: url);
-                                        print(result);
+                                        log(url);
+                                        var result = await NFTMintRepo()
+                                            .mintNFTOnSolana(
+                                                name: nftName!,
+                                                symbol: "AMC",
+                                                imageUrl: url);
                                         setState(() {
                                           _isMinting = false;
                                         });
@@ -576,9 +584,9 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                                     ),
                                                     onPressed: () {
                                                       Navigator.of(context)
-                                                          .pushReplacementNamed(
-                                                              CreateNFTScreen
-                                                                  .routeName);
+                                                          .pop();
+                                                      Navigator.of(context)
+                                                          .pop();
                                                     },
                                                     child: Text(
                                                       "Done",

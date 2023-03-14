@@ -69,6 +69,9 @@ dependencies:
   image_picker: ^0.8.6+3
   shared_preferences: ^2.0.18
   cached_network_image: ^3.2.3
+  solana: ^0.29.0
+  bs58check: ^1.0.2
+  solana_web3: ^0.0.6+2
 
 dev_dependencies:
   flutter_test:
