@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:walletconnect_dart/walletconnect_dart.dart';
@@ -74,7 +75,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
     );
   }
 
-  bool _showSecond = false;
+  bool _showSecond = true;
   var connector = WalletConnect(
       bridge: 'https://bridge.walletconnect.org',
       clientMeta: const PeerMeta(
@@ -525,17 +526,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                height: 3.h,
-              ),
-              Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 20.h,
-              ),
-              SizedBox(
-                height: 3.h,
-              ),
+              Lottie.asset("assets/animations/confetti.json", height: 25.h),
               CustomButton(onPressed: widget.afterConnect, text: "Okay"),
               SizedBox(
                 height: 3.h,
@@ -695,9 +686,9 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
         setState(() {
           _result = response.toString();
           logoutVisible = true;
+          _showSecond = true;
           log(_result.toString());
         });
-        
       } on UserCancelledException {
         print("User cancelled.");
       } on UnKnownException {
