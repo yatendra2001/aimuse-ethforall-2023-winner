@@ -1,5 +1,7 @@
+import 'dart:collection';
 import 'dart:developer' as developer;
-import 'dart:math';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +14,10 @@ import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
 import 'package:ai_muse/keys.dart';
 import 'package:ai_muse/utils/session_helper.dart';
+import 'package:web3auth_flutter/enums.dart';
+import 'package:web3auth_flutter/input.dart';
+import 'package:web3auth_flutter/output.dart';
+import 'package:web3auth_flutter/web3auth_flutter.dart';
 
 import '../../dashboard/screens/nav_bar.dart';
 
@@ -29,6 +35,43 @@ class LinkWalletScreen extends StatefulWidget {
 }
 
 class _LinkWalletScreenState extends State<LinkWalletScreen> {
+  String _result = '';
+  bool logoutVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    HashMap themeMap = HashMap<String, String>();
+    themeMap['primary'] = "#229954";
+
+    Uri redirectUrl;
+    if (Platform.isAndroid) {
+      redirectUrl =
+          Uri.parse('aimuse://com.example.ai_muse/auth');
+    } else if (Platform.isIOS) {
+      redirectUrl =
+          Uri.parse('com.web3auth.flutter.web3authFlutterExample://openlogin');
+    } else {
+      throw UnKnownException('Unknown platform');
+    }
+
+    await Web3AuthFlutter.init(
+      Web3AuthOptions(
+        clientId:
+            'BKqCkFNPTafssD_yrufumwqJju6Y1phXCSHPRrvqpQgTAcKoMtxLBhDPyEJSKVT2PYDN7ELj-DPYEJ9IfE8gXDs',
+        network: Network.testnet,
+        redirectUrl: redirectUrl,
+        whiteLabel:
+            WhiteLabelData(dark: true, name: "AI Muse", theme: themeMap),
+      ),
+    );
+  }
+
   bool _showSecond = false;
   var connector = WalletConnect(
       bridge: 'https://bridge.walletconnect.org',
@@ -116,372 +159,96 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
       width: double.infinity,
       duration: const Duration(milliseconds: 400),
       child: AnimatedCrossFade(
-        firstChild: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 2.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 30.w,
-                  height: 1.h,
-                  decoration: BoxDecoration(
-                    color: const Color(0XFFE0E5F2),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 4.h,
-            ),
-            // Icon(
-            //   Icons.account_balance_wallet_rounded,
-            //   color: Color(0XFF707EAE),
-            //   size: 5.h,
-            // ),
-            // SizedBox(
-            //   height: 2.h,
-            // ),
-            // Text(
-            //   "Link a crypto-wallet",
-            //   style: GoogleFonts.lexend()
-            //       .copyWith(fontWeight: FontWeight.w700, fontSize: 18.sp),
-            //   textAlign: TextAlign.center,
-            // ),
-            // SizedBox(
-            //   height: 2.h,
-            // ),
-            // Text(
-            //   "Your crypto wallet securely stores your digital goods and cryptocurrencies.Connect to one of our wallet providers or create a new one.",
-            //   style: GoogleFonts.lexend().copyWith(
-            //     fontWeight: FontWeight.w600,
-            //     fontSize: 12.sp,
-            //     color: Color(0XFF8F9BBA),
-            //     height: 1.5,
-            //     letterSpacing: 1,
-            //   ),
-            //   textAlign: TextAlign.center,
-            // ),
-            // SizedBox(
-            //   height: 3.h,
-            // ),
-            if (_session != null)
-              CustomOutlineButton(
-                  text: "Continue",
-                  // walletLogo: "assets/images/metamask_logo.png",
-                  onPressed: () {
-                    String? networkName;
-                    setState(() {
-                      networkName = getNetworkName(_session.chainId);
-                      developer.log(networkName!);
-                    });
-                    if (networkName == "Mantle Testnet") {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Successfully Logged In"),
-                        backgroundColor: Colors.greenAccent,
-                      ));
-                      SessionHelper.walletAddress = _session.accounts[0];
-                      Navigator.of(context)
-                          .pushReplacementNamed(BottomNavBarScreen.routename);
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text("Wrong Network Selected"),
-                              content: const Text(
-                                  "Kindly Create a Mantle Testnet inside Metamask using following details:\n\n• Network Name: Mantle Testnet\n\n• New RPC URL: \nhttps://rpc.testnet.mantle.xyz\n\n• Chain ID: 5001\n\n• Currency Symbol: BIT\n\n•Block explorer URL(Optional): https://explorer.testnet.mantle.xyz"),
-                              actions: [
-                                CustomOutlineButton(
-                                    text: "Okay",
-                                    onPressed: () async {
-                                      await connector.killSession();
-                                      Navigator.of(context).pop();
-                                    })
-                              ],
-                            );
-                          });
-                    }
-                  }),
-            if (_session == null)
-              SizedBox(
-                width: 60.w,
-                height: 7.5.h,
-                child: CustomOutlineButton(
-                  text: "Blocto",
-                  walletLogo: "assets/images/blocto_logo.png",
-                  onPressed: () => loginUsingMetamask(context),
-                ),
+        firstChild: Padding(
+          padding: const EdgeInsets.all(40),
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
               ),
-            // if (_session == null)
-            //   SizedBox(
-            //     height: 3.h,
-            //   ),
-            // if (_session == null)
-            //   SizedBox(
-            //     width: 60.w,
-            //     height: 7.5.h,
-            //     child: CustomOutlineButton(
-            //         text: "Rainbow",
-            //         walletLogo: "assets/images/rainbow_logo.png",
-            //         onPressed: () {}),
-            //   ),
-
-            if (_session == null)
-              SizedBox(
-                height: 3.h,
-              ),
-            // if (_session == null)
-            //   OutlinedButton(
-            //     style: OutlinedButton.styleFrom(
-            //       fixedSize: Size(60.w, 7.5.h),
-            //       backgroundColor: const Color(0xff8345E6),
-            //       shape: const RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.all(
-            //           Radius.circular(30),
-            //         ),
-            //       ),
-            //     ),
-            //     onPressed: () {
-            //       TextEditingController _walletAddressController =
-            //           TextEditingController(text: WALLET_OWNER);
-            //       SessionHelper.walletAddress = WALLET_OWNER;
-            //       showModalBottomSheet(
-            //           context: context,
-            //           builder: (context) {
-            //             return Container(
-            //               height: 30.h,
-            //               padding: EdgeInsets.symmetric(horizontal: 8.w),
-            //               decoration: BoxDecoration(
-            //                 borderRadius: BorderRadius.circular(60),
-            //                 color: Colors.white,
-            //               ),
-            //               width: double.infinity,
-            //               child: Column(
-            //                 children: [
-            //                   SizedBox(
-            //                     height: 2.h,
-            //                   ),
-            //                   Divider(
-            //                       thickness: 4,
-            //                       indent: 30.w,
-            //                       endIndent: 30.w,
-            //                       color: Colors.black38),
-            //                   SizedBox(
-            //                     height: 4.h,
-            //                   ),
-            //                   SizedBox(
-            //                     height: 10.h,
-            //                     width: 100.w,
-            //                     child: TextField(
-            //                       controller: _walletAddressController,
-            //                       decoration: const InputDecoration(
-            //                         focusedBorder: OutlineInputBorder(
-            //                             borderSide: BorderSide(
-            //                                 color: Color(0XFF4318FF))),
-            //                         enabledBorder: OutlineInputBorder(
-            //                             borderSide: BorderSide(
-            //                                 color: Color(0XFF4318FF))),
-            //                         border: OutlineInputBorder(
-            //                           borderSide: BorderSide(
-            //                             color: Color(0XFF4318FF),
-            //                           ),
-            //                         ),
-            //                         labelStyle:
-            //                             TextStyle(color: Color(0XFF4318FF)),
-            //                         hintStyle:
-            //                             TextStyle(color: Color(0XFF4318FF)),
-            //                         labelText: 'Account Address',
-            //                       ),
-            //                     ),
-            //                   ),
-            //                   Transform.scale(
-            //                     scale: 0.7,
-            //                     child: CustomOutlineButton(
-            //                         text: "Done",
-            //                         onPressed: () {
-            //                           Navigator.of(context)
-            //                               .pushReplacementNamed(
-            //                                   BottomNavBarScreen.routename);
-            //                         }),
-            //                   ),
-            //                 ],
-            //               ),
-            //             );
-            //           });
-            //     },
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //       children: [
-            //         const Icon(
-            //           Icons.link,
-            //           color: Colors.white,
-            //         ),
-            //         Text(
-            //           "Enter polygon address",
-            //           style: GoogleFonts.dmSans().copyWith(
-            //             fontWeight: FontWeight.w500,
-            //             fontSize: 10.sp,
-            //             color: Colors.white,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // if (_session == null)
-            //   SizedBox(
-            //     height: 3.h,
-            //   ),
-            if (_session == null)
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  fixedSize: Size(60.w, 7.5.h),
-                  backgroundColor: Color(0xff00EE8A),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(30),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  TextEditingController _walletAddressController =
-                      TextEditingController(text: WALLET_OWNER_FLOW);
-                  SessionHelper.walletAddress = WALLET_OWNER_FLOW;
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          height: 30.h,
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(60),
-                            color: Colors.white,
-                          ),
-                          width: double.infinity,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 30.w,
-                                    height: 1.h,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0XFFE0E5F2),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 4.h,
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                                width: 100.w,
-                                child: TextField(
-                                  controller: _walletAddressController,
-                                  decoration: const InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0XFF4318FF))),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0XFF4318FF))),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0XFF4318FF),
-                                      ),
-                                    ),
-                                    labelStyle:
-                                        TextStyle(color: Color(0XFF4318FF)),
-                                    hintStyle:
-                                        TextStyle(color: Color(0XFF4318FF)),
-                                    labelText: 'Account Address',
-                                  ),
-                                ),
-                              ),
-                              Transform.scale(
-                                scale: 0.7,
-                                child: CustomOutlineButton(
-                                    text: "Done",
-                                    onPressed: () {
-                                      setState(() {
-                                        _showSecond = true;
-                                      });
-                                      Navigator.of(context).pop();
-                                      // Navigator.of(context)
-                                      //     .pushReplacementNamed(
-                                      //         BottomNavBarScreen.routename);
-                                    }),
-                              ),
-                            ],
-                          ),
-                        );
-                      });
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Visibility(
+                visible: !logoutVisible,
+                child: Column(
                   children: [
+                    const SizedBox(
+                      height: 50,
+                    ),
                     const Icon(
-                      Icons.link,
-                      color: Colors.black,
+                      Icons.flutter_dash,
+                      size: 80,
+                      color: Color(0xFF1389fd),
                     ),
-                    Text(
-                      "Enter Flow Address",
-                      style: GoogleFonts.dmSans().copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10.sp,
-                        color: Colors.black,
-                      ),
+                    const SizedBox(
+                      height: 40,
                     ),
+                    const Text(
+                      'Web3Auth',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 36,
+                          color: Color(0xFF0364ff)),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Welcome to Web3Auth x Flutter Demo',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      'Login with',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                        onPressed: _login(_withGoogle),
+                        child: const Text('Google')),
+                    ElevatedButton(
+                        onPressed: _login(_withFacebook),
+                        child: const Text('Facebook')),
+                    ElevatedButton(
+                        onPressed: _login(_withEmailPasswordless),
+                        child: const Text('Email Passwordless')),
+                    ElevatedButton(
+                        onPressed: _login(_withDiscord),
+                        child: const Text('Discord')),
                   ],
                 ),
               ),
-            SizedBox(
-              height: 3.h,
-            ),
-            // OutlinedButton(
-            //   onPressed: () {
-            //     setState(() {
-            //       _showSecond = true;
-            //     });
-            //   },
-            //   child: Text("Press Me"),
-            // ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "New to wallets?",
-                    style: GoogleFonts.lexend().copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12.sp,
-                      color: const Color(0XFF8F9BBA),
+              Visibility(
+                // ignore: sort_child_properties_last
+                child: Column(
+                  children: [
+                    Center(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Colors.red[600] // This is what you need!
+                              ),
+                          onPressed: _logout(),
+                          child: Column(
+                            children: const [
+                              Text('Logout'),
+                            ],
+                          )),
                     ),
-                  ),
-                  TextSpan(
-                    text: " Learn more",
-                    style: GoogleFonts.lexend().copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12.sp,
-                      color: const Color(0XFFB9A2FF),
-                    ),
-                  )
-                ],
+                  ],
+                ),
+                visible: logoutVisible,
               ),
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(_result),
+              )
+            ],
+          )),
         ),
         secondChild: Container(
           width: double.infinity,
@@ -571,5 +338,60 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
         ],
       ),
     );
+  }
+
+  VoidCallback _login(Future<Web3AuthResponse> Function() method) {
+    return () async {
+      try {
+        final Web3AuthResponse response = await method();
+        setState(() {
+          _result = response.toString();
+          logoutVisible = true;
+          log(_result.toString());
+        });
+      } on UserCancelledException {
+        print("User cancelled.");
+      } on UnKnownException {
+        print("Unknown exception occurred");
+      }
+    };
+  }
+
+  VoidCallback _logout() {
+    return () async {
+      try {
+        await Web3AuthFlutter.logout();
+        setState(() {
+          _result = '';
+          logoutVisible = false;
+        });
+      } on UserCancelledException {
+        print("User cancelled.");
+      } on UnKnownException {
+        print("Unknown exception occurred");
+      }
+    };
+  }
+
+  Future<Web3AuthResponse> _withGoogle() {
+    return Web3AuthFlutter.login(LoginParams(
+      loginProvider: Provider.google,
+      mfaLevel: MFALevel.NONE,
+    ));
+  }
+
+  Future<Web3AuthResponse> _withFacebook() {
+    return Web3AuthFlutter.login(LoginParams(loginProvider: Provider.facebook));
+  }
+
+  Future<Web3AuthResponse> _withEmailPasswordless() {
+    return Web3AuthFlutter.login(LoginParams(
+        loginProvider: Provider.email_passwordless,
+        extraLoginOptions:
+            ExtraLoginOptions(login_hint: "sosid94742@abincol.com")));
+  }
+
+  Future<Web3AuthResponse> _withDiscord() {
+    return Web3AuthFlutter.login(LoginParams(loginProvider: Provider.discord));
   }
 }
