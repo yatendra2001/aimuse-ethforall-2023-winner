@@ -36,16 +36,16 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
   String writtenText = "";
 
   Map<String, String> artStyle = {
-    "Pixelated": "assets/images/artstyle_img_1.jpg",
-    "Digital Art": "assets/images/artstyle_img_2.jpg",
-    "Art Nouveau": "assets/images/artstyle_img_3.jpg",
-    "Avant-garde": "assets/images/artstyle_img_4.jpg",
-    "Baroque": "assets/images/artstyle_img_5.jpg",
-    "CoBrA": "assets/images/artstyle_img_6.jpg",
-    "Color Field Painting": "assets/images/artstyle_img_7.jpg",
-    "Conceptual art": "assets/images/artstyle_img_8.jpg",
-    "Constructivism": "assets/images/artstyle_img_9.jpeg",
-    "Cubism": "assets/images/artstyle_img_10.jpg",
+    "Pixelated": "assets/images/nw_12.jpeg",
+    "Digital Art": "assets/images/nw_2.jpeg",
+    "Art Nouveau": "assets/images/nw_3.jpeg",
+    "Avant-garde": "assets/images/nw_4.jpeg",
+    "Baroque": "assets/images/nw_5.jpeg",
+    "CoBrA": "assets/images/nw_6.jpeg",
+    "Color Field Painting": "assets/images/nw_7.jpeg",
+    "Conceptual art": "assets/images/nw_8.jpeg",
+    "Constructivism": "assets/images/nw_9.jpeg",
+    "Cubism": "assets/images/nw_10.jpeg",
   };
 
   List<String> finishingTouches = [
@@ -87,6 +87,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
   ];
 
   List<String> prompts = [
+    "Radio in Mars",
     "A turtle wearing a top hat and monocle",
     "A dog driving a car",
     "A squirrel water skiing",
@@ -157,10 +158,10 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                 ),
               ),
               SizedBox(
-                height: 4.h,
+                height: 2.h,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -185,7 +186,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 2.h,
+                      height: 1.h,
                     ),
                     Container(
                       padding:
@@ -247,10 +248,10 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 2.h,
+                      height: 4.h,
                     ),
                     SizedBox(
-                      height: 4.5.h,
+                      height: 6.h,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
@@ -285,7 +286,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                       height: 1.h,
                     ),
                     SizedBox(
-                      height: 45.h,
+                      height: 35.h,
                       width: double.infinity,
                       child: GridView(
                         shrinkWrap: true,
@@ -293,7 +294,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 1.2,
+                          childAspectRatio: 1.1,
                         ),
                         children: artStyle.entries.map(
                           (MapEntry mapEntry) {
@@ -308,8 +309,8 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                               },
                               child: Container(
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.all(2),
-                                padding: EdgeInsets.all(1.h),
+                                margin: EdgeInsets.all(8),
+                                padding: EdgeInsets.all(4),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
@@ -327,8 +328,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
                                         child: Transform.scale(
-                                          scaleX: 1.1,
-                                          scaleY: 1.05,
+                                          scaleX: 1,
                                           child: Image.asset(
                                             mapEntry.value,
                                             fit: BoxFit.fill,
@@ -366,10 +366,10 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 1.h,
+                      height: 2.h,
                     ),
                     SizedBox(
-                      height: 50.h,
+                      height: 14.h,
                       width: double.infinity,
                       child: GridView(
                         shrinkWrap: true,
@@ -377,12 +377,14 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 1.25,
+                          childAspectRatio: 0.28,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
                         ),
                         children: arts.entries.map(
                           (mapEntry) {
-                            return GestureDetector(
-                              onTap: () {
+                            return OutlinedBox(
+                              onPressed: () {
                                 if (selectedartist.contains(mapEntry.key)) {
                                   selectedartist.remove(mapEntry.key);
                                 } else {
@@ -390,47 +392,8 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                                 }
                                 getPrompt();
                               },
-                              child: Container(
-                                margin: EdgeInsets.all(1.h),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 6, vertical: 1.5.h),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(
-                                    color: selectedartist.contains(mapEntry.key)
-                                        ? Color(0XFF4318FF)
-                                        : Color.fromRGBO(0, 0, 0, 0),
-                                    width: 1.5,
-                                  ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(25),
-                                        child: Transform.scale(
-                                          scaleX: 1.3,
-                                          scaleY: 1.2,
-                                          child: Image.asset(
-                                            mapEntry.value,
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 1.h,
-                                    ),
-                                    Text(
-                                      mapEntry.key,
-                                      style: GoogleFonts.lexend(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10.sp,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              text: mapEntry.key,
+                              selected: selectedartist.contains(mapEntry.key),
                             );
                           },
                         ).toList(),
@@ -449,76 +412,53 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                     SizedBox(
                       height: 1.h,
                     ),
-                    SizedBox(
-                      height: 30.h,
-                      width: double.infinity,
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        itemBuilder: (context, index) {
-                          CustomColorScheme cstScheme = colorScheme[index];
-                          return GestureDetector(
-                            onTap: () {
-                              if (selectedColorScheme.contains(cstScheme)) {
-                                selectedColorScheme.remove(cstScheme);
-                              } else {
-                                selectedColorScheme.add(cstScheme);
-                              }
-                              getPrompt();
-                            },
-                            child: Container(
-                              margin: EdgeInsets.all(1.h),
-                              padding: EdgeInsets.all(1.h),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: selectedColorScheme.contains(cstScheme)
-                                      ? Color(0XFF4318FF)
-                                      : Color.fromRGBO(0, 0, 0, 0),
-                                  width: 1.5,
-                                ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: cstScheme.gradient
-                                            ? null
-                                            : Color(int.parse(
-                                                "0XFF${cstScheme.colorCode[0]}")),
-                                        gradient: cstScheme.gradient
-                                            ? LinearGradient(
-                                                colors: cstScheme.colorCode
-                                                    .map((color) {
-                                                  return Color(
-                                                    int.parse("0XFF$color"),
-                                                  );
-                                                }).toList(),
-                                              )
-                                            : null,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    cstScheme.colorName,
-                                    style: GoogleFonts.lexend(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10.sp,
-                                    ),
-                                  ),
-                                ],
+                    Wrap(
+                      children: colorScheme.map((cstScheme) {
+                        return GestureDetector(
+                          onTap: () {
+                            if (selectedColorScheme.contains(cstScheme)) {
+                              selectedColorScheme.remove(cstScheme);
+                            } else {
+                              selectedColorScheme.add(cstScheme);
+                            }
+                            getPrompt();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(0.8.h),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: selectedColorScheme.contains(cstScheme)
+                                    ? Colors.grey
+                                    : Colors.transparent,
+                                width: 3,
                               ),
                             ),
-                          );
-                        },
-                        itemCount: colorScheme.length,
-                      ),
+                            child: Container(
+                              height: 4.5.h,
+                              width: 4.5.h,
+                              margin: EdgeInsets.all(0.3.h),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: cstScheme.gradient
+                                    ? null
+                                    : Color(int.parse(
+                                        "0XFF${cstScheme.colorCode[0]}")),
+                                gradient: cstScheme.gradient
+                                    ? LinearGradient(
+                                        colors:
+                                            cstScheme.colorCode.map((color) {
+                                          return Color(
+                                            int.parse("0XFF$color"),
+                                          );
+                                        }).toList(),
+                                      )
+                                    : null,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
                     ),
                     SizedBox(
                       height: 4.h,
@@ -542,7 +482,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 0.45,
+                          childAspectRatio: 0.4,
                         ),
                         itemBuilder: (context, index) {
                           return Padding(

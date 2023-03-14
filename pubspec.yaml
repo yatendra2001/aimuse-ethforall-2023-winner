@@ -71,6 +71,7 @@ dependencies:
   cached_network_image: ^3.2.3
   web3auth_flutter: ^1.2.0
   font_awesome_flutter: ^10.4.0
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
