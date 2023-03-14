@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:ai_muse/features/authentication/widgets/custom_outlined_button.dart';
 import 'package:ai_muse/features/dashboard/screens/bottom_nav_screen.dart';
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
-import 'package:ai_muse/keys.dart';
+
 import 'package:ai_muse/utils/session_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -228,8 +228,8 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                     ),
                     onPressed: () {
                       TextEditingController _walletAddressController =
-                          TextEditingController(text: WALLET_OWNER);
-                      SessionHelper.walletAddress = WALLET_OWNER;
+                          TextEditingController(text: "");
+                      SessionHelper.walletAddress = "";
                       showModalBottomSheet(
                           context: context,
                           builder: (context) {
@@ -329,8 +329,8 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                     ),
                     onPressed: () {
                       TextEditingController _walletAddressController =
-                          TextEditingController(text: WALLET_OWNER);
-                      SessionHelper.walletAddress = WALLET_OWNER;
+                          TextEditingController(text: "");
+                      SessionHelper.walletAddress = "";
                       showModalBottomSheet(
                           context: context,
                           builder: (context) {
