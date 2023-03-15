@@ -4,9 +4,9 @@ import 'dart:typed_data';
 import 'package:ai_muse/keys.dart';
 import 'package:http/http.dart' as http;
 import 'package:bs58check/bs58check.dart' as bs58check;
-import 'package:solana/encoder.dart';
-import 'package:solana/solana.dart';
-import 'package:solana/src/crypto/ed25519_hd_keypair.dart';
+// import 'package:solana/encoder.dart';
+// import 'package:solana/solana.dart';
+// import 'package:solana/src/crypto/ed25519_hd_keypair.dart';
 
 import 'package:solana_web3/solana_web3.dart' as web3;
 import 'package:solana_web3/programs/system.dart' as web3Program;
@@ -131,51 +131,51 @@ Future<String?> mintOnSolanaWeb3() async {
   log(result);
 }
 
-Future<String?> mintOnSolana(
-    {required String jsonUrl, required Map<String, String> metadata}) async {
-  try {
-    // Replace the values below with your own
+// Future<String?> mintOnSolana(
+//     {required String jsonUrl, required Map<String, String> metadata}) async {
+//   try {
+//     // Replace the values below with your own
 
-    const mintAddress = SOLANA_WALLET_MAC_CLI_AI_MUSE_PUBLIC_KEY;
-    const recipientAddress = SOLANA_WALLET_MAC_CLI_PUBLIC_KEY;
+//     const mintAddress = SOLANA_WALLET_MAC_CLI_AI_MUSE_PUBLIC_KEY;
+//     const recipientAddress = SOLANA_WALLET_MAC_CLI_PUBLIC_KEY;
 
-    // Initialize a Solana client
-    final client = SolanaClient(
-        rpcUrl: Uri.parse("https://api.devnet.solana.com"),
-        websocketUrl: Uri.parse("wss://api.devnet.solana.com"));
-    log("done 1");
+//     // Initialize a Solana client
+//     final client = SolanaClient(
+//         rpcUrl: Uri.parse("https://api.devnet.solana.com"),
+//         websocketUrl: Uri.parse("wss://api.devnet.solana.com"));
+//     log("done 1");
 
-    // Create the instruction to transfer the NFT
-    final metadata = [
-      {"trait_type": "name", "value": "test_name"},
-      {"trait_type": "description", "value": "test_description"}
-    ];
+//     // Create the instruction to transfer the NFT
+//     final metadata = [
+//       {"trait_type": "name", "value": "test_name"},
+//       {"trait_type": "description", "value": "test_description"}
+//     ];
 
-    final seed1 = Uint8List.fromList(SOLANA_WALLET_MAC_CLI_PRIVATE_KEY);
-    final seed2 = Uint8List.fromList(SOLANA_WALLET_MAC_CLI_AI_MUSE_PRIVATE_KEY);
-    final keyPairMacCli = await Ed25519HDKeyPair.fromSeedWithHdPath(
-        seed: seed1, hdPath: "m/44'/501'");
-    final keyPairAIMuse = await Ed25519HDKeyPair.fromSeedWithHdPath(
-        seed: seed2, hdPath: "m/44'/501'");
-    log("1: ${keyPairMacCli.address}, 2: ${keyPairAIMuse.address}");
-    final transferInstruction = await client.sendAndConfirmTransaction(
-      signers: [keyPairAIMuse],
-      commitment: Commitment.processed,
-      message: Message(instructions: [
-        Instruction(
-            programId: Ed25519HDPublicKey.fromBase58(mintAddress),
-            accounts: [
-              AccountMeta(
-                  pubKey: Ed25519HDPublicKey.fromBase58(recipientAddress),
-                  isWriteable: true,
-                  isSigner: false),
-            ],
-            data: ByteArray.fromString(metadata.toString()))
-      ]),
-    );
-    log("done 2");
-    return transferInstruction;
-  } catch (e) {
-    log(e.toString());
-  }
-}
+//     final seed1 = Uint8List.fromList(SOLANA_WALLET_MAC_CLI_PRIVATE_KEY);
+//     final seed2 = Uint8List.fromList(SOLANA_WALLET_MAC_CLI_AI_MUSE_PRIVATE_KEY);
+//     final keyPairMacCli = await Ed25519HDKeyPair.fromSeedWithHdPath(
+//         seed: seed1, hdPath: "m/44'/501'");
+//     final keyPairAIMuse = await Ed25519HDKeyPair.fromSeedWithHdPath(
+//         seed: seed2, hdPath: "m/44'/501'");
+//     log("1: ${keyPairMacCli.address}, 2: ${keyPairAIMuse.address}");
+//     final transferInstruction = await client.sendAndConfirmTransaction(
+//       signers: [keyPairAIMuse],
+//       commitment: Commitment.processed,
+//       message: Message(instructions: [
+//         Instruction(
+//             programId: Ed25519HDPublicKey.fromBase58(mintAddress),
+//             accounts: [
+//               AccountMeta(
+//                   pubKey: Ed25519HDPublicKey.fromBase58(recipientAddress),
+//                   isWriteable: true,
+//                   isSigner: false),
+//             ],
+//             data: ByteArray.fromString(metadata.toString()))
+//       ]),
+//     );
+//     log("done 2");
+//     return transferInstruction;
+//   } catch (e) {
+//     log(e.toString());
+//   }
+// }

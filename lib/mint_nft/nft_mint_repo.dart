@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:ai_muse/mint_nft/base_nft_mint_repo.dart';
+import 'package:ai_muse/utils/session_helper.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:path_provider/path_provider.dart';
@@ -216,10 +217,10 @@ class NFTMintRepo extends BaseNFTMintRepo {
       'Content-Type': 'application/json',
     };
     final body = json.encode({
-      'from': SOLANA_WALLET_AI_MUSE_PUBLIC_KEY,
+      'from': SessionHelper.walletAddress,
       'chain': 'SOL',
-      'fromPrivateKey': SOLANA_WALLET_AI_MUSE_PRIVATE_KEY,
-      'to': SOLANA_WALLET_AI_MUSE_PUBLIC_KEY,
+      'fromPrivateKey': SessionHelper.userPrivateKey,
+      'to': SessionHelper.walletAddress,
       'metadata': {
         'name': name,
         'symbol': symbol,
@@ -227,7 +228,7 @@ class NFTMintRepo extends BaseNFTMintRepo {
         'uri': imageUrl,
         'creators': [
           {
-            'address': SOLANA_WALLET_AI_MUSE_PUBLIC_KEY,
+            'address': SessionHelper.walletAddress,
             'verified': true,
             'share': 100
           }

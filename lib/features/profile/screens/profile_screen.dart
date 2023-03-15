@@ -13,6 +13,8 @@ import 'package:flutter/services.dart';
 import 'package:clipboard/clipboard.dart';
 import '../../../common_widgets/inspired_image_box.dart';
 
+import 'package:http/http.dart' as http;
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -42,9 +44,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final String? imagePath = prefs.getString('imagePath');
     _image = imagePath != null ? File(imagePath) : null;
 
-    // final ipfsImageData = await getImagesFromStorage();
-    // String url = 'https://ipfs.io/ipfs/';
-    // var resp = await httpClient.get(Uri.parse(url));
+    final ipfsImageData = await getImagesFromStorage();
+    String url = 'https://ipfs.io/ipfs/';
+    var resp = await http.get(Uri.parse(url));
     setState(() {});
   }
 

@@ -10,8 +10,8 @@ import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
-import 'package:solana/encoder.dart';
-import 'package:solana/solana.dart';
+// import 'package:solana/encoder.dart';
+// import 'package:solana/solana.dart';
 import 'package:web3dart/web3dart.dart';
 
 import 'package:ai_muse/common_widgets/custom_button.dart';
@@ -530,12 +530,13 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                         setState(() {
                                           currentStatus = "Minting NFT...";
                                         });
-                                        log(url);
+                                        log("https://ipfs.io/ipfs/${url.split('/')[2]}/${url.split('/')[3]}");
                                         var result = await NFTMintRepo()
                                             .mintNFTOnSolana(
                                                 name: nftName!,
                                                 symbol: "AMC",
-                                                imageUrl: url);
+                                                imageUrl:
+                                                    ("https://ipfs.io/ipfs/${url.split('/')[2]}/${url.split('/')[3]}"));
                                         setState(() {
                                           _isMinting = false;
                                         });

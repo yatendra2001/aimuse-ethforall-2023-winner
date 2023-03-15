@@ -12,9 +12,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-import 'package:solana/base58.dart';
-import 'package:solana/encoder.dart';
-import 'package:solana/solana.dart';
+// import 'package:solana/base58.dart';
+// import 'package:solana/encoder.dart';
+// import 'package:solana/solana.dart';
 
 import '../../../keys.dart';
 
