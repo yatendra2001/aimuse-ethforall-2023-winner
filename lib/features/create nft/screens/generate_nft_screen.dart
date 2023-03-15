@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 // import 'package:solana/encoder.dart';
 // import 'package:solana/solana.dart';
 import 'package:web3dart/web3dart.dart';
@@ -427,83 +429,29 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                   onPressed: () async {
                                     if (!_isMinted) {
                                       if (nftName == null || nftName!.isEmpty) {
-                                        showDialog(
+                                        showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top: Radius.circular(
+                                                          40.0))),
                                           context: context,
-                                          builder: (context) => AlertDialog(
-                                            title: Container(
-                                              // height: 30.h,
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 8.w),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(60),
-                                                color: Colors.white,
-                                              ),
-                                              width: double.infinity,
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(
-                                                    height: 10.h,
-                                                    width: 100.w,
-                                                    child: TextField(
-                                                      controller:
-                                                          _nftNameController,
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          nftName = value;
-                                                        });
-                                                      },
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                                borderSide: BorderSide(
-                                                                    color: Color(
-                                                                        0XFF4318FF))),
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                                borderSide: BorderSide(
-                                                                    color: Color(
-                                                                        0XFF4318FF))),
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0XFF4318FF),
-                                                          ),
-                                                        ),
-                                                        labelStyle: TextStyle(
-                                                            color: Color(
-                                                                0XFF4318FF)),
-                                                        hintStyle: TextStyle(
-                                                            color: Color(
-                                                                0XFF4318FF)),
-                                                        labelText: 'NFT Name',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Transform.scale(
-                                                    scale: 0.7,
-                                                    child: CustomOutlineButton(
-                                                        text: "Done",
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            nftName =
-                                                                _nftNameController
-                                                                    .text;
-                                                          });
-                                                          print(nftName);
-                                                          print(SessionHelper
-                                                              .isTestnet);
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        }),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                          builder: (context) {
+                                            return modalBottomSheet(
+                                                title: "Name your NFT",
+                                                description:
+                                                    "Brand your newly generated NFT with a catchy name!",
+                                                buttonName: "Done",
+                                                textEditingController:
+                                                    _nftNameController,
+                                                icon: Icons.edit,
+                                                onPressed: () {
+                                                  nftName =
+                                                      _nftNameController.text;
+                                                  Navigator.pop(context);
+                                                });
+                                          },
                                         );
                                       }
                                       if (nftName != null &&
@@ -515,6 +463,8 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                         });
                                         final url = await NFTMintRepo()
                                             .uploadImageToIPFS(
+                                                walletAddress: SessionHelper
+                                                    .walletAddress!,
                                                 imageUrl: imageURL!,
                                                 nftName: nftName!,
                                                 description: SessionHelper
@@ -540,117 +490,27 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                         setState(() {
                                           _isMinting = false;
                                         });
-                                        showDialog(
+                                        showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top: Radius.circular(
+                                                          40.0))),
                                           context: context,
-                                          builder: (context) => AlertDialog(
-                                            actionsPadding:
-                                                EdgeInsets.all(12.sp),
-                                            titlePadding: EdgeInsets.all(12.sp),
-                                            title: Center(
-                                              child: Text(
-                                                "Successfully Minted",
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.lexend(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 18.sp,
-                                                    color: Color(0XFF4318FF)),
-                                              ),
-                                            ),
-                                            content: Lottie.asset(
-                                                "assets/animations/confetti.json",
-                                                repeat: true,
-                                                height: 40.h),
-                                            actions: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: [
-                                                  OutlinedButton(
-                                                    style: OutlinedButton
-                                                        .styleFrom(
-                                                      fixedSize:
-                                                          Size(30.w, 5.5.h),
-                                                      side: const BorderSide(
-                                                          color:
-                                                              Color(0XFF4318FF),
-                                                          width: 1),
-                                                      shape:
-                                                          const RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                          Radius.circular(30),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Text(
-                                                      "Done",
-                                                      style:
-                                                          GoogleFonts.dmSans()
-                                                              .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 13.sp,
-                                                        color: const Color(
-                                                            0XFF4318FF),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  if (SessionHelper.isTestnet !=
-                                                      false)
-                                                    InkWell(
-                                                      onTap: () {
-                                                        Share.share(
-                                                            '👋Hey-Checkout my latest NFT for AI Muse Collection on OpeanSea. \nhttps://opensea.io/collection/ai-muse-collection',
-                                                            subject:
-                                                                'AI Muse!');
-                                                      },
-                                                      child: Container(
-                                                        padding:
-                                                            EdgeInsets.all(10),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            SizedBox.shrink(),
-                                                            Text(
-                                                              "Share",
-                                                              style: GoogleFonts
-                                                                      .dmSans()
-                                                                  .copyWith(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      fontSize:
-                                                                          13.sp,
-                                                                      color: Colors
-                                                                          .white),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        height: 5.5.h,
-                                                        width: 30.w,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(25),
-                                                          color:
-                                                              Color(0XFF4318FF),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                          builder: (context) {
+                                            return modalBottomSheet(
+                                                title: "Success",
+                                                description:
+                                                    "Your ai muse collectible has been successfully minted!",
+                                                buttonName: "Share creation",
+                                                icon: Icons.check_circle,
+                                                onPressed: () {
+                                                  Share.share(
+                                                      '👋Hey-Checkout my latest NFT for AI Muse Collection on OpeanSea. \nhttps://opensea.io/collection/ai-muse-collection',
+                                                      subject: 'AI Muse!');
+                                                });
+                                          },
                                         );
                                       }
                                     }
@@ -701,6 +561,130 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget modalBottomSheet(
+      {required String title,
+      required String description,
+      required VoidCallback onPressed,
+      required IconData icon,
+      required String buttonName,
+      TextEditingController? textEditingController}) {
+    return Container(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(40),
+          topLeft: Radius.circular(40),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 2.h,
+          ),
+          Center(
+            child: Container(
+              alignment: Alignment.center,
+              height: 1.h,
+              decoration: BoxDecoration(
+                  color: Color(0XFFE0E5F2),
+                  borderRadius: BorderRadius.circular(40)),
+              width: 30.w,
+            ),
+          ),
+          SizedBox(
+            height: 4.h,
+          ),
+          Icon(
+            icon,
+            color: textEditingController == null
+                ? Color(0XFF01B574)
+                : Color(0XFF707EAE),
+            size: 6.h,
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          Text(
+            title,
+            style: GoogleFonts.lexend(
+              fontWeight: FontWeight.w600,
+              fontSize: 20.sp,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(4.w),
+            child: Text(
+              description,
+              style: GoogleFonts.lexend(
+                fontWeight: FontWeight.w600,
+                fontSize: 12.sp,
+                color: Color(0XFF8F9BBA),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          if (textEditingController != null)
+            SizedBox(
+              height: 2.h,
+            ),
+          if (textEditingController != null)
+            Container(
+              width: MediaQuery.of(context).size.width * 0.6,
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              decoration: BoxDecoration(
+                  color: Color(0XFFF4F7FE),
+                  borderRadius: BorderRadius.circular(15)),
+              child: TextField(
+                controller: textEditingController,
+                decoration: InputDecoration(
+                  fillColor: Color(0XFFF4F7FE),
+                  hintText: "NFT Name",
+                  border: InputBorder.none,
+                  suffix: InkWell(
+                    child: Icon(
+                      Icons.close,
+                      size: 14.sp,
+                    ),
+                    onTap: () {
+                      textEditingController.clear();
+                    },
+                  ),
+                ),
+              ),
+            ),
+          SizedBox(
+            height: 3.h,
+          ),
+          CustomButton(
+            onPressed: onPressed,
+            text: buttonName,
+            showIcon: false,
+          ),
+          if (textEditingController == null) SizedBox(height: 1.h),
+          if (textEditingController == null)
+            CustomOutlineButton(
+              text: "Buy us a Coffee",
+              onPressed: () async {
+                Fluttertoast.showToast(
+                    msg: "Wallet address copied",
+                    backgroundColor: Colors.black54);
+                Clipboard.setData(const ClipboardData(
+                    text: SOLANA_WALLET_AI_MUSE_PUBLIC_KEY));
+                await launchUrlString("https://stripe-onramp.vercel.app/",
+                    mode: LaunchMode.externalApplication);
+              },
+            ),
+          SizedBox(
+            height: 4.h,
+          ),
+        ],
       ),
     );
   }

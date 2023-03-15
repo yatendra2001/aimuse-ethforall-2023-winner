@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:ai_muse/common_widgets/gradient_text.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 // import 'package:solana/base58.dart';
 // import 'package:solana/encoder.dart';
 // import 'package:solana/solana.dart';
@@ -120,34 +122,47 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     // SizedBox(
                     //   width: 4.w,
                     // ),
-                    Container(
-                      padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0XFF4318FF).withOpacity(0.05),
-                            offset: Offset(0, 4),
-                            blurRadius: 4,
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.account_balance_wallet),
-                            SizedBox(
-                              width: 2.w,
-                            ),
-                            Text(
-                              "9.168 ETH",
-                              style: GoogleFonts.lexend(
-                                  fontSize: 12.sp, fontWeight: FontWeight.w600),
+                    GestureDetector(
+                      onTap: () async {
+                        Fluttertoast.showToast(
+                            msg: "Wallet address copied",
+                            backgroundColor: Colors.black54);
+                        Clipboard.setData(const ClipboardData(
+                            text: SOLANA_WALLET_AI_MUSE_PUBLIC_KEY));
+                        await launchUrlString(
+                            "https://stripe-onramp.vercel.app/",
+                            mode: LaunchMode.externalApplication);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0XFF4318FF).withOpacity(0.05),
+                              offset: Offset(0, 4),
+                              blurRadius: 4,
+                              spreadRadius: 0,
                             )
                           ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.coffee_rounded),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              Text(
+                                "Buy me a coffee",
+                                style: GoogleFonts.lexend(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

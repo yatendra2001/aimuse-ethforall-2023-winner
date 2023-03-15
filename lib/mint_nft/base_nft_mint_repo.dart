@@ -8,6 +8,7 @@ abstract class BaseNFTMintRepo {
 
   Future<String> uploadImageToIPFS(
       {required String imageUrl,
+      required String walletAddress,
       required String nftName,
       required String description,
       required Map<String, String> traitsDescription});

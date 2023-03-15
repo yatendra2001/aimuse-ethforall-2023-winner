@@ -76,6 +76,7 @@ class NFTMintRepo extends BaseNFTMintRepo {
       {required String imageUrl,
       required String nftName,
       required String description,
+      required String walletAddress,
       required Map<String, String> traitsDescription}) async {
     String errorMessage = "Something went wrong";
 
@@ -130,6 +131,7 @@ class NFTMintRepo extends BaseNFTMintRepo {
 
       Map<String, String> nftJson = {
         "name": nftName,
+        "walletAddress": walletAddress,
         "description": description,
         "image": 'ipfs://$cid/$nftName.png',
         "traits": traitsString,

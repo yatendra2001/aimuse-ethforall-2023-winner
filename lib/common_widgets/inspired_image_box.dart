@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -9,6 +10,7 @@ class InspiredImageBox extends StatefulWidget {
   final bool isGeneratedScreen;
   final String imageURL;
   final bool border;
+  final bool isProfileInspireBox;
 
   const InspiredImageBox(
       {Key? key,
@@ -17,7 +19,8 @@ class InspiredImageBox extends StatefulWidget {
       this.showbgColor = true,
       this.isGeneratedScreen = false,
       this.border = false,
-      this.imageURL = ""})
+      this.imageURL = "",
+      this.isProfileInspireBox = false})
       : super(key: key);
 
   @override
@@ -104,7 +107,7 @@ class _InspiredImageBoxState extends State<InspiredImageBox> {
               SizedBox(
                 height: 1.h,
               ),
-            if (!widget.isGeneratedScreen)
+            if (!widget.isGeneratedScreen || widget.isProfileInspireBox)
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Text(

@@ -1,9 +1,13 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:ai_muse/common_widgets/custom_button.dart';
 import 'package:ai_muse/flow_chain/mint_on_flow_repo.dart';
 import 'package:ai_muse/utils/session_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,7 +27,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String longString = SessionHelper.walletAddress!;
+  String longString = SessionHelper.walletAddress ??
+      "4xBk2ns8BnPwj6SiyrJR4ubzGfWvAefP738bV25jZ65L";
   bool gridOff = true;
   String displayName = "Tanmay Yadav";
   TextEditingController? _textEditingController;
@@ -31,6 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final picker = ImagePicker();
   final TextEditingController _nameController = TextEditingController();
   File? _image, _pickedImage;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -46,8 +52,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final ipfsImageData = await getImagesFromStorage();
     String url = 'https://ipfs.io/ipfs/';
-    var resp = await http.get(Uri.parse(url));
+    await fetchImages(ipfsImageData);
     setState(() {});
+  }
+
+  Future<void> fetchImages(List<Map<String, dynamic>> list) async {
+    for (var item in list) {
+      var cid = item["cid"];
+      var name = item["name"];
+
+      var url = "https://ipfs.io/ipfs/$cid/$name";
+      var response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        var prompt = jsonData["description"];
+        prompt = prompt.split(',')[0];
+        var image = jsonData["image"];
+        image =
+            "https://ipfs.io/ipfs/${image.split('/')[2]}/${image.split('/')[3]}";
+        var address = jsonData["walletAddress"];
+        if (address == SessionHelper.walletAddress) {
+          images[image] = prompt;
+        }
+        log(images.toString());
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        print("Request failed with status: ${response.statusCode}.");
+      }
+    }
+
+    print(images);
   }
 
   Future<void> _saveData() async {
@@ -68,18 +105,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   //png
-  Map<String, String> images = {
-    "profile_history_img2": "Deepika Padukone as an alien holding a radio",
-    "profile_history_img3": "A kangaroo playing the guitar",
-    "profile_history_img1": "A parrot doing a magic trick",
-  };
+  Map<String, String> images = {};
 
   //jpeg
-  Map<String, String> jpegImages = {
-    "profile_history_img4": "Deepika Padukone as an alien holding a radio",
-    "profile_history_img5": "A kangaroo playing the guitar",
-    "profile_history_img6": "A parrot doing a magic trick",
-  };
+  Map<String, String> jpegImages = {};
 
   @override
   Widget build(BuildContext context) {
@@ -108,70 +137,103 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: 2.h,
               ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                child: Container(
-                  height: 6.h,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.grey.shade200,
-                        width: 1,
-                        style: BorderStyle.solid,
+              _isLoading == true
+                  ? Center(
+                      child: Container(
+                        height: 40.h,
+                        width: 80.w,
+                        padding: EdgeInsets.symmetric(vertical: 4.h),
+                        margin: EdgeInsets.symmetric(vertical: 1.5.h),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0XFF4318FF).withOpacity(0.05),
+                              offset: Offset(0, 4),
+                              blurRadius: 4,
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        alignment: Alignment.center,
+                        child: Center(
+                          child: SpinKitWanderingCubes(
+                            color: Color(0XFF4318FF),
+                            size: 35.sp,
+                          ),
+                        ),
+                      ),
+                    )
+                  : DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                      ),
+                      child: Container(
+                        height: 6.h,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey.shade200,
+                              width: 1,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Spacer(
+                              flex: 2,
+                            ),
+                            InkWell(
+                              child: Icon(
+                                Icons.grid_off,
+                                color: gridOff
+                                    ? Color(0XFF4318FF)
+                                    : Color(0XFF707EAE),
+                                size: 3.5.h,
+                              ),
+                              onTap: () {
+                                gridOff = true;
+                                setState(() {});
+                              },
+                            ),
+                            Spacer(),
+                            InkWell(
+                              onTap: () {
+                                gridOff = false;
+                                setState(() {});
+                              },
+                              child: Icon(
+                                Icons.grid_on,
+                                color: gridOff == false
+                                    ? Color(0XFF4318FF)
+                                    : Color(0XFF707EAE),
+                                size: 3.5.h,
+                              ),
+                            ),
+                            Spacer(
+                              flex: 2,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      Spacer(
-                        flex: 2,
-                      ),
-                      InkWell(
-                        child: Icon(
-                          Icons.grid_off,
-                          color:
-                              gridOff ? Color(0XFF4318FF) : Color(0XFF707EAE),
-                          size: 3.5.h,
-                        ),
-                        onTap: () {
-                          gridOff = true;
-                          setState(() {});
-                        },
-                      ),
-                      Spacer(),
-                      InkWell(
-                        onTap: () {
-                          gridOff = false;
-                          setState(() {});
-                        },
-                        child: Icon(
-                          Icons.grid_on,
-                          color: gridOff == false
-                              ? Color(0XFF4318FF)
-                              : Color(0XFF707EAE),
-                          size: 3.5.h,
-                        ),
-                      ),
-                      Spacer(
-                        flex: 2,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               if (gridOff)
                 Column(
                   children: images.entries.map((MapEntry mapEntry) {
                     return Padding(
                       padding: EdgeInsets.only(bottom: 1),
                       child: InspiredImageBox(
-                          imgName: mapEntry.key, text: mapEntry.value),
+                          isGeneratedScreen: true,
+                          isProfileInspireBox: true,
+                          imageURL: mapEntry.key,
+                          imgName: mapEntry.key,
+                          text: mapEntry.value),
                     );
                   }).toList(),
                 ),
@@ -180,7 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Colors.white,
                   width: double.infinity,
                   padding: EdgeInsets.only(top: 1),
-                  height: 15.h,
+                  height: 35.h,
                   child: GridView(
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -191,39 +253,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.all(4.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                              "${"assets/images/" + mapEntry.key}.png"),
+                          child: CachedNetworkImage(imageUrl: mapEntry.key),
                         ),
                       );
                     }).toList(),
                   ),
                 ),
-              if (gridOff == false)
-                Container(
-                  color: Colors.white,
-                  width: double.infinity,
-                  padding: EdgeInsets.only(top: 1),
-                  height: 30.h,
-                  child: GridView(
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3),
-                    children: jpegImages.entries.map((MapEntry mapEntry) {
-                      return Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                              "${"assets/images/" + mapEntry.key}.jpeg"),
-                        ),
-                      );
-                    }).toList(),
-                  ),
+              // if (gridOff == false)
+              //   Container(
+              //     color: Colors.white,
+              //     width: double.infinity,
+              //     padding: EdgeInsets.only(top: 1),
+              //     height: 30.h,
+              //     child: GridView(
+              //       physics: NeverScrollableScrollPhysics(),
+              //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //           crossAxisCount: 3),
+              //       children: jpegImages.entries.map((MapEntry mapEntry) {
+              //         return Padding(
+              //           padding: const EdgeInsets.all(4.0),
+              //           child: ClipRRect(
+              //             borderRadius: BorderRadius.circular(10),
+              //             child: CachedNetworkImage(imageUrl: mapEntry.key),
+              //           ),
+              //         );
+              //       }).toList(),
+              //     ),
+              //   ),
+              if (_isLoading == false)
+                InspiredImageBox(
+                  imgName: '',
+                  text: '',
                 ),
-              InspiredImageBox(
-                imgName: '',
-                text: '',
-              ),
             ],
           ),
         ),
