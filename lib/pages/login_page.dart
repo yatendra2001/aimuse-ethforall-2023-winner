@@ -22,22 +22,22 @@ class _LoginPageState extends State<LoginPage> {
             'https://files.gitbook.com/v0/b/gitbook-legacy-files/o/spaces%2F-LJJeCjcLrr53DcT1Ml7%2Favatar.png?alt=media'
           ]));
 
-  var _session, _uri;
+  // ignore: prefer_typing_uninitialized_variables
+  var _session;
 
   loginUsingMetamask(BuildContext context) async {
     if (!connector.connected) {
       try {
         var session = await connector.createSession(onDisplayUri: (uri) async {
-          _uri = uri;
           await launchUrlString(uri, mode: LaunchMode.externalApplication);
         });
-        print(session.accounts[0]);
-        print(session.chainId);
+        debugPrint(session.accounts[0]);
+        debugPrint(session.chainId.toString());
         setState(() {
           _session = session;
         });
       } catch (exp) {
-        print(exp);
+        debugPrint(exp.toString());
       }
     }
   }
@@ -78,8 +78,8 @@ class _LoginPageState extends State<LoginPage> {
         'session_update',
         (payload) => setState(() {
               _session = payload;
-              print(_session.accounts[0]);
-              print(_session.chainId);
+              debugPrint(_session.accounts[0]);
+              debugPrint(_session.chainId);
             }));
     connector.on(
         'disconnect',
@@ -130,8 +130,8 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                         (_session.chainId != 1)
-                            ? Row(
-                                children: const [
+                            ? const Row(
+                                children: [
                                   Icon(Icons.warning,
                                       color: Colors.redAccent, size: 15),
                                   Text('Network not supported. Switch to '),

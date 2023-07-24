@@ -1,27 +1,21 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
-import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-// import 'package:solana/encoder.dart';
-// import 'package:solana/solana.dart';
 import 'package:web3dart/web3dart.dart';
 
 import 'package:ai_muse/common_widgets/custom_button.dart';
 import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
 import 'package:ai_muse/common_widgets/inspired_image_box.dart';
 import 'package:ai_muse/features/create%20nft/models/color_scheme_model.dart';
-import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
-import 'package:ai_muse/features/create%20nft/widgets/outlined_box.dart';
 import 'package:ai_muse/mint_nft/nft_mint_repo.dart';
 import 'package:ai_muse/utils/session_helper.dart';
 
@@ -108,7 +102,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
   String? nftName;
   bool _isMinting = false;
   String? currentStatus;
-  bool _isMinted = false;
+  final bool _isMinted = false;
 
   final TextEditingController _nftNameController = TextEditingController();
 
@@ -138,10 +132,10 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
       function = contract.function('mint');
       chainClient = Web3Client(ALCHEMY_KEY_PROD, httpClient);
     }
-    print(chainClient);
+    debugPrint(chainClient.toString());
 
     String url = jsonUrl;
-    print('url to mint $url');
+    debugPrint('url to mint $url');
     var results = await Future.wait([
       chainClient.sendTransaction(
         credential,
@@ -159,6 +153,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
   }
 
   Future<DeployedContract> getContract(
+      // ignore: non_constant_identifier_names
       {required String CONTRACT_ADDRESS}) async {
     String abi = await rootBundle.loadString("assets/abi.json");
     DeployedContract contract = DeployedContract(
@@ -177,7 +172,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
             body:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               SpinKitWanderingCubes(
-                color: Color(0XFF4318FF),
+                color: const Color(0XFF4318FF),
                 size: 35.sp,
               ),
               SizedBox(height: 5.h),
@@ -240,8 +235,9 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Color(0XFF4318FF).withOpacity(0.05),
-                                  offset: Offset(0, 4),
+                                  color:
+                                      const Color(0XFF4318FF).withOpacity(0.05),
+                                  offset: const Offset(0, 4),
                                   blurRadius: 4,
                                   spreadRadius: 0,
                                 )
@@ -250,7 +246,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                             alignment: Alignment.center,
                             child: Center(
                               child: SpinKitWanderingCubes(
-                                color: Color(0XFF4318FF),
+                                color: const Color(0XFF4318FF),
                                 size: 35.sp,
                               ),
                             ),
@@ -278,7 +274,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                           style: GoogleFonts.lexend(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w500,
-                            color: Color(0XFF47548C),
+                            color: const Color(0XFF47548C),
                             height: 1.75,
                           ),
                         ),
@@ -291,7 +287,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                           style: GoogleFonts.lexend(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
-                              color: Color(0XFF8F9BBA)),
+                              color: const Color(0XFF8F9BBA)),
                         ),
                         SizedBox(
                           height: 1.h,
@@ -311,7 +307,8 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                       decoration: BoxDecoration(
                         border: showDetail
-                            ? Border.all(color: Color(0XFF4318FF), width: 1)
+                            ? Border.all(
+                                color: const Color(0XFF4318FF), width: 1)
                             : null,
                         borderRadius: BorderRadius.circular(15),
                         color: showDetail == false
@@ -330,18 +327,18 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w400,
                                   color: showDetail
-                                      ? Color(0XFF4318FF)
-                                      : Color(0XFF8F9BBA),
+                                      ? const Color(0XFF4318FF)
+                                      : const Color(0XFF8F9BBA),
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Icon(
                                 showDetail
                                     ? Icons.keyboard_arrow_up
                                     : Icons.keyboard_arrow_down,
                                 color: showDetail
-                                    ? Color(0XFF4318FF)
-                                    : Color(0XFF8F9BBA),
+                                    ? const Color(0XFF4318FF)
+                                    : const Color(0XFF8F9BBA),
                                 size: 3.h,
                               )
                             ],
@@ -359,14 +356,14 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                         "Finishing touches", finshingTouches),
                                   ],
                                 )
-                              : SizedBox.shrink()
+                              : const SizedBox.shrink()
                         ],
                       ),
                     ),
                   ),
                   Column(
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [],
                       ),
@@ -398,7 +395,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                   await generateImage();
                                 },
                                 child: Padding(
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   child: Row(
                                     children: [
                                       const Icon(
@@ -413,7 +410,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                         style: GoogleFonts.lexend(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12.sp,
-                                          color: Color(0XFF4318FF),
+                                          color: const Color(0XFF4318FF),
                                         ),
                                       ),
                                     ],
@@ -481,15 +478,10 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                                           currentStatus = "Minting NFT...";
                                         });
                                         log("https://ipfs.io/ipfs/${url.split('/')[2]}/${url.split('/')[3]}");
-                                        var result = await NFTMintRepo()
-                                            .mintNFTOnSolana(
-                                                name: nftName!,
-                                                symbol: "AMC",
-                                                imageUrl:
-                                                    ("https://ipfs.io/ipfs/${url.split('/')[2]}/${url.split('/')[3]}"));
                                         setState(() {
                                           _isMinting = false;
                                         });
+                                        // ignore: use_build_context_synchronously
                                         showModalBottomSheet(
                                           isScrollControlled: true,
                                           shape: const RoundedRectangleBorder(
@@ -538,7 +530,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
 
   Widget getTextRich(String str1, String str2) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Align(
         alignment: Alignment.topLeft,
         child: Text.rich(
@@ -548,7 +540,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
             style: GoogleFonts.lexend(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w500,
-                color: Color(0XFF47548C)),
+                color: const Color(0XFF47548C)),
             children: [
               TextSpan(
                 text: str2,
@@ -556,7 +548,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
                     height: 1.4,
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w400,
-                    color: Color(0XFF8F9BBA)),
+                    color: const Color(0XFF8F9BBA)),
               ),
             ],
           ),
@@ -575,7 +567,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
     return Container(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(40),
@@ -593,7 +585,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
               alignment: Alignment.center,
               height: 1.h,
               decoration: BoxDecoration(
-                  color: Color(0XFFE0E5F2),
+                  color: const Color(0XFFE0E5F2),
                   borderRadius: BorderRadius.circular(40)),
               width: 30.w,
             ),
@@ -604,8 +596,8 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
           Icon(
             icon,
             color: textEditingController == null
-                ? Color(0XFF01B574)
-                : Color(0XFF707EAE),
+                ? const Color(0XFF01B574)
+                : const Color(0XFF707EAE),
             size: 6.h,
           ),
           SizedBox(
@@ -625,7 +617,7 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
               style: GoogleFonts.lexend(
                 fontWeight: FontWeight.w600,
                 fontSize: 12.sp,
-                color: Color(0XFF8F9BBA),
+                color: const Color(0XFF8F9BBA),
               ),
               textAlign: TextAlign.center,
             ),
@@ -639,12 +631,12 @@ class _GenerateNFTScreenState extends State<GenerateNFTScreen> {
               width: MediaQuery.of(context).size.width * 0.6,
               padding: EdgeInsets.symmetric(horizontal: 4.w),
               decoration: BoxDecoration(
-                  color: Color(0XFFF4F7FE),
+                  color: const Color(0XFFF4F7FE),
                   borderRadius: BorderRadius.circular(15)),
               child: TextField(
                 controller: textEditingController,
                 decoration: InputDecoration(
-                  fillColor: Color(0XFFF4F7FE),
+                  fillColor: const Color(0XFFF4F7FE),
                   hintText: "NFT Name",
                   border: InputBorder.none,
                   suffix: InkWell(

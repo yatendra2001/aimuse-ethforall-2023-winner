@@ -27,42 +27,41 @@ class _CustomButtonState extends State<CustomButton> {
       width: 46.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Color(0XFF4318FF),
+        color: const Color(0XFF4318FF),
         boxShadow: [
           onclicked == false
               ? BoxShadow(
-                  color: Color(0XFF4318FF).withOpacity(0.4), blurRadius: 20)
-              : BoxShadow(color: Colors.white30),
+                  color: const Color(0XFF4318FF).withOpacity(0.4),
+                  blurRadius: 20)
+              : const BoxShadow(color: Colors.white30),
         ],
       ),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () {
           widget.onPressed();
           onclicked = !onclicked;
           setState(() {});
         },
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox.shrink(),
-              Text(
-                widget.text,
-                style: GoogleFonts.dmSans().copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13.sp,
-                    color: Colors.white),
-              ),
-              widget.showIcon
-                  ? Icon(
-                      Icons.arrow_forward_ios,
-                      size: 18,
-                      color: Colors.white,
-                    )
-                  : SizedBox.shrink(),
-            ],
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox.shrink(),
+            Text(
+              widget.text,
+              style: GoogleFonts.dmSans().copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13.sp,
+                  color: Colors.white),
+            ),
+            widget.showIcon
+                ? const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 18,
+                    color: Colors.white,
+                  )
+                : const SizedBox.shrink(),
+          ],
         ),
       ),
     );

@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
 import 'package:ai_muse/keys.dart';
+import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:bs58check/bs58check.dart' as bs58check;
-// import 'package:solana/encoder.dart';
-// import 'package:solana/solana.dart';
-// import 'package:solana/src/crypto/ed25519_hd_keypair.dart';
 
 import 'package:solana_web3/solana_web3.dart' as web3;
+// ignore: library_prefixes
 import 'package:solana_web3/programs/system.dart' as web3Program;
 
 // Replace with your Solana wallet address
@@ -26,7 +26,6 @@ String mintAddress = SOLANA_WALLET_AI_MUSE_PUBLIC_KEY;
 
 // Replace with the number of NFTs to mint
 int numTokens = 1;
-
 Future<void> mintNFT() async {
   var client = http.Client();
 
@@ -90,7 +89,7 @@ Future<void> mintNFT() async {
   );
 
   // Print the response
-  print(response.body);
+  debugPrint(response.body);
 
   // Close the HTTP client
   client.close();
@@ -102,12 +101,12 @@ Future<String?> mintOnSolanaWeb3() async {
   final connection = web3.Connection(cluster);
 
   // Create a wallet to transfer tokens from.
-  print('Connecting account 1 \n');
+  debugPrint('Connecting account 1 \n');
   final wallet1 = web3.Keypair.fromSecretKeySync(
       Uint8List.fromList(SOLANA_WALLET_MAC_CLI_PRIVATE_KEY));
   final address1 = wallet1.publicKey;
 
-  print('Connecting account 2 \n');
+  debugPrint('Connecting account 2 \n');
   final wallet2 = web3.Keypair.fromSecretKeySync(
       Uint8List.fromList(SOLANA_WALLET_MAC_CLI_AI_MUSE_PRIVATE_KEY));
   final address2 = wallet1.publicKey;
@@ -123,12 +122,13 @@ Future<String?> mintOnSolanaWeb3() async {
   );
 
   // Send the transaction to the cluster and wait for it to be confirmed.
-  print('Send and confirm transaction...\n');
+  debugPrint('Send and confirm transaction...\n');
   final result = await connection.sendAndConfirmTransaction(
     transaction,
     signers: [wallet2], // Fee payer + transaction signer.
   );
   log(result);
+  return null;
 }
 
 // Future<String?> mintOnSolana(

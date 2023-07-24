@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:developer' as developer;
 import 'dart:developer';
 import 'dart:io';
 
@@ -14,15 +13,12 @@ import 'package:walletconnect_dart/walletconnect_dart.dart';
 import 'package:ai_muse/common_widgets/custom_button.dart';
 import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
-import 'package:ai_muse/keys.dart';
 import 'package:ai_muse/utils/session_helper.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/output.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
 import 'package:solana_web3/solana_web3.dart' as web3;
-
-import '../../dashboard/screens/nav_bar.dart';
 
 class LinkWalletScreen extends StatefulWidget {
   final Function() afterConnect;
@@ -87,22 +83,22 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
             'https://files.gitbook.com/v0/b/gitbook-legacy-files/o/spaces%2F-LJJeCjcLrr53DcT1Ml7%2Favatar.png?alt=media'
           ]));
 
-  var _session, _uri;
+  // ignore: prefer_typing_uninitialized_variables
+  var _session;
 
   loginUsingMetamask(BuildContext context) async {
     if (!connector.connected) {
       try {
         var session = await connector.createSession(onDisplayUri: (uri) async {
-          _uri = uri;
           await launchUrlString(uri, mode: LaunchMode.externalApplication);
         });
-        print(session.accounts[0]);
-        print(session.chainId);
+        debugPrint(session.accounts[0]);
+        debugPrint(session.chainId.toString());
         setState(() {
           _session = session;
         });
       } catch (exp) {
-        print(exp);
+        debugPrint(exp.toString());
       }
     }
   }
@@ -143,8 +139,8 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
         'session_update',
         (payload) => setState(() {
               _session = payload;
-              print(_session.accounts[0]);
-              print(_session.chainId);
+              debugPrint(_session.accounts[0]);
+              debugPrint(_session.chainId);
             }));
     connector.on(
         'disconnect',
@@ -153,7 +149,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
             }));
     return AnimatedContainer(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(40),
           topRight: Radius.circular(40),
@@ -175,7 +171,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                   alignment: Alignment.center,
                   height: 1.h,
                   decoration: BoxDecoration(
-                      color: Color(0XFFE0E5F2),
+                      color: const Color(0XFFE0E5F2),
                       borderRadius: BorderRadius.circular(40)),
                   width: 30.w,
                 ),
@@ -185,7 +181,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
               ),
               Icon(
                 Icons.login,
-                color: Color(0XFF707EAE),
+                color: const Color(0XFF707EAE),
                 size: 6.h,
               ),
               SizedBox(
@@ -206,7 +202,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                 style: GoogleFonts.lexend(
                   fontWeight: FontWeight.w500,
                   fontSize: 10.sp,
-                  color: Color(0XFF8F9BBA),
+                  color: const Color(0XFF8F9BBA),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -226,7 +222,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                 onPressed: _login(_withGoogle),
                 child: Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -270,7 +266,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                 onPressed: _login(_withFacebook),
                 child: Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -315,7 +311,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -351,7 +347,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                 style: GoogleFonts.lexend(
                   fontWeight: FontWeight.w600,
                   fontSize: 12.sp,
-                  color: Color(0XFF8F9BBA),
+                  color: const Color(0XFF8F9BBA),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -371,7 +367,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                 onPressed: () {
                   showModalBottomSheet(
                     isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.vertical(top: Radius.circular(40.0))),
                     context: context,
@@ -379,7 +375,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                       return Container(
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(40),
@@ -397,7 +393,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                                 alignment: Alignment.center,
                                 height: 1.h,
                                 decoration: BoxDecoration(
-                                    color: Color(0XFFE0E5F2),
+                                    color: const Color(0XFFE0E5F2),
                                     borderRadius: BorderRadius.circular(40)),
                                 width: 30.w,
                               ),
@@ -407,7 +403,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                             ),
                             Icon(
                               Icons.mail,
-                              color: Color(0XFF707EAE),
+                              color: const Color(0XFF707EAE),
                               size: 6.h,
                             ),
                             SizedBox(
@@ -427,7 +423,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                                 style: GoogleFonts.lexend(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12.sp,
-                                  color: Color(0XFF8F9BBA),
+                                  color: const Color(0XFF8F9BBA),
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -439,12 +435,12 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                               width: MediaQuery.of(context).size.width * 0.6,
                               padding: EdgeInsets.symmetric(horizontal: 4.w),
                               decoration: BoxDecoration(
-                                  color: Color(0XFFF4F7FE),
+                                  color: const Color(0XFFF4F7FE),
                                   borderRadius: BorderRadius.circular(15)),
                               child: TextField(
                                 controller: textEditingController,
                                 decoration: InputDecoration(
-                                  fillColor: Color(0XFFF4F7FE),
+                                  fillColor: const Color(0XFFF4F7FE),
                                   hintText: "Email",
                                   border: InputBorder.none,
                                   suffix: InkWell(
@@ -479,7 +475,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -615,8 +611,8 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
                             Colors.red[600] // This is what you need!
                         ),
                     onPressed: _logout(),
-                    child: Column(
-                      children: const [
+                    child: const Column(
+                      children: [
                         Text('Logout'),
                       ],
                     )),
@@ -688,7 +684,6 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
         setState(() {
           _result = response.toString();
           SessionHelper.userPrivateKey = response.privKey;
-          final userInfo = response.userInfo;
           logoutVisible = true;
           _showSecond = true;
           log(_result.toString());
@@ -696,7 +691,7 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
         // Create a connection to the devnet cluster.
         final cluster = web3.Cluster.devnet;
         final connection = web3.Connection(cluster);
-        print('Connecting account 1 \n');
+        debugPrint('Connecting account 1 \n');
         final wallet1 = web3.Keypair.generateSync();
         final address1 = wallet1.publicKey;
         SessionHelper.walletAddress = address1.toString();
@@ -708,9 +703,9 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
         );
         log(SessionHelper.walletAddress!);
       } on UserCancelledException {
-        print("User cancelled.");
+        debugPrint("User cancelled.");
       } on UnKnownException {
-        print("Unknown exception occurred");
+        debugPrint("Unknown exception occurred");
       }
     };
   }
@@ -724,9 +719,9 @@ class _LinkWalletScreenState extends State<LinkWalletScreen> {
           logoutVisible = false;
         });
       } on UserCancelledException {
-        print("User cancelled.");
+        debugPrint("User cancelled.");
       } on UnKnownException {
-        print("Unknown exception occurred");
+        debugPrint("Unknown exception occurred");
       }
     };
   }

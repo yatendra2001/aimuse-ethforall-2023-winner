@@ -1,14 +1,15 @@
-import 'dart:typed_data';
 import '../../keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:web3dart/web3dart.dart';
 
 class MintNFTPage extends StatefulWidget {
-  MintNFTPage({Key? key, required this.title}) : super(key: key);
+  const MintNFTPage({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
+  // ignore: library_private_types_in_public_api
   _MintNFTPageState createState() => _MintNFTPageState();
 }
 
@@ -28,27 +29,27 @@ class _MintNFTPageState extends State<MintNFTPage> {
     super.initState();
     httpClient = http.Client();
     mantleClient = Web3Client("https://rpc.testnet.mantle.xyz/", httpClient);
-    print(mantleClient);
+    debugPrint(mantleClient.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(CONTRACT_NAME),
+        title: const Text(CONTRACT_NAME),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('\n Contract address:'),
-          Text(CONTRACT_ADDRESS_MANTLE_TESTNET),
+          const Text('\n Contract address:'),
+          const Text(CONTRACT_ADDRESS_MANTLE_TESTNET),
           FutureBuilder<String>(
             future: getTokenSymbol(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Text('\nToken symbol: ${snapshot.data!}');
               } else {
-                return Text('\nToken symbol: wait...');
+                return const Text('\nToken symbol: wait...');
               }
             },
           ),
@@ -59,7 +60,7 @@ class _MintNFTPageState extends State<MintNFTPage> {
                 tokenCounter = snapshot.data!;
                 return Text('\nNumber of tokens: $tokenCounter');
               } else {
-                return Text('\nNumber of tokens: wait...');
+                return const Text('\nNumber of tokens: wait...');
               }
             },
           ),
@@ -67,7 +68,7 @@ class _MintNFTPageState extends State<MintNFTPage> {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: ElevatedButton(
-                child: Text('Mint!'),
+                child: const Text('Mint!'),
                 onPressed: () async {
                   FocusManager.instance.primaryFocus?.unfocus();
                   mintStream().listen((dynamic event) {
@@ -125,12 +126,13 @@ class _MintNFTPageState extends State<MintNFTPage> {
                         height: 100,
                       ),
                       Text(
-                          '  Token number ${index}\n  Image name {artwork.title}')
+                          '  Token number $index\n  Image name {artwork.title}')
                     ],
                   ),
                 );
               } else {
-                return Text('\n\n\n   Retrieving image from IPFS ...\n\n\n');
+                return const Text(
+                    '\n\n\n   Retrieving image from IPFS ...\n\n\n');
               }
             },
           );
@@ -177,8 +179,9 @@ class _MintNFTPageState extends State<MintNFTPage> {
     DeployedContract contract = await getContract();
     ContractFunction function = contract.function('mint');
 
+    // ignore: prefer_interpolation_to_compose_strings
     String url = r'ipfs://' + JSON_CID + r'/' + 'test_image.json';
-    print('url to mint $url');
+    debugPrint('url to mint $url');
     var results = await Future.wait([
       getImageFromJson(url),
       mantleClient.sendTransaction(
@@ -197,18 +200,18 @@ class _MintNFTPageState extends State<MintNFTPage> {
   }
 
   Future<String> getTokenSymbol() async {
-    if (tokenSymbol != '')
+    if (tokenSymbol != '') {
       return tokenSymbol;
-    else {
+    } else {
       List<dynamic> result = await query('symbol', []);
       return result[0].toString();
     }
   }
 
   Future<int> gettokenCounter() async {
-    if (tokenCounter >= 0)
+    if (tokenCounter >= 0) {
       return tokenCounter;
-    else {
+    } else {
       List<dynamic> result = await query('tokenCounter', []);
       return int.parse(result[0].toString());
     }

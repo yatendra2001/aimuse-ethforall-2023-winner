@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -29,21 +28,21 @@ class _OutlinedBoxState extends State<OutlinedBox> {
           borderRadius: BorderRadius.circular(30),
           color: Colors.white,
           border: Border.all(
-            color: Color(0XFF4318FF),
+            color: const Color(0XFF4318FF),
           ),
         ),
         child: Material(
-          color: widget.selected ? Color(0XFF4318FF) : null,
+          color: widget.selected ? const Color(0XFF4318FF) : null,
           borderRadius: BorderRadius.circular(30),
           child: InkWell(
-            splashColor: Color(0XFF4318FF),
-            hoverColor: Color(0XFF4318FF),
-            highlightColor: Color(0XFF4318FF),
+            splashColor: const Color(0XFF4318FF),
+            hoverColor: const Color(0XFF4318FF),
+            highlightColor: const Color(0XFF4318FF),
             borderRadius: BorderRadius.circular(30),
             onTap: widget.onPressed,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 0.9.h),
-              margin: EdgeInsets.all(0),
+              margin: const EdgeInsets.all(0),
               alignment: Alignment.center,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,7 +52,7 @@ class _OutlinedBoxState extends State<OutlinedBox> {
                     style: GoogleFonts.dmSans(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,
-                      color: widget.selected ? Colors.white : Color(0XFF4318FF),
+                      color: widget.selected ? Colors.white : const Color(0XFF4318FF),
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),

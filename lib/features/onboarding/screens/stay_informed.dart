@@ -1,6 +1,5 @@
 import 'package:ai_muse/features/authentication/screens/link_wallet_screen.dart';
 import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
-import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
 import 'package:ai_muse/features/dashboard/screens/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,7 +32,7 @@ class _StayInformedScreenState extends State<StayInformedScreen> {
   @override
   void initState() {
     Future.delayed(
-      Duration(seconds: 0),
+      const Duration(seconds: 0),
       () {
         showModalBottomSheet(
           isScrollControlled: true,
@@ -87,7 +86,7 @@ class _StayInformedScreenState extends State<StayInformedScreen> {
                           style: GoogleFonts.lexend().copyWith(
                             fontWeight: FontWeight.w600,
                             fontSize: 11.sp,
-                            color: Color(0XFF8F9BBA),
+                            color: const Color(0XFF8F9BBA),
                             height: 1.5,
                             letterSpacing: 1,
                           ),

@@ -3,10 +3,8 @@ import 'package:ai_muse/features/onboarding/screens/pageview.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import 'features/dashboard/screens/nav_bar.dart';
-
 void main(List<String> args) {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,8 +18,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Ai.muse',
           theme: ThemeData(
-            scaffoldBackgroundColor: Color(0XFF4F7FE).withOpacity(1),
-            backgroundColor: Color(0XFF4F7FE).withOpacity(1),
+            scaffoldBackgroundColor: const Color(0x0ff4f7fe).withOpacity(1),
           ),
           onGenerateRoute: CustomRouter.onGenerateRoute,
           initialRoute: OnboardingPageview.routeName,

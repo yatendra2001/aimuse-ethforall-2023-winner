@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,7 +34,7 @@ class _CustomScreenState extends State<CustomScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -68,7 +67,7 @@ class _CustomScreenState extends State<CustomScreen> {
                               style: GoogleFonts.lexend().copyWith(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 11.sp,
-                                color: Color(0XFF8F9BBA),
+                                color: const Color(0XFF8F9BBA),
                                 height: 1.5,
                                 letterSpacing: 1,
                               ),
@@ -94,7 +93,7 @@ class _CustomScreenState extends State<CustomScreen> {
                               text: "Continue",
                               onPressed: () {
                                 widget.pageController.nextPage(
-                                  duration: Duration(milliseconds: 400),
+                                  duration: const Duration(milliseconds: 400),
                                   curve: Curves.linear,
                                 );
                               },

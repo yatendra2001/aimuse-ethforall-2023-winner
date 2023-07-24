@@ -1,19 +1,13 @@
 import 'dart:developer' as developer;
 
 import 'package:ai_muse/common_widgets/custom_button.dart';
-import 'package:ai_muse/common_widgets/custom_outlined_button.dart';
 import 'package:ai_muse/features/create%20nft/models/color_scheme_model.dart';
 import 'package:ai_muse/features/create%20nft/screens/generate_nft_screen.dart';
 import 'package:ai_muse/features/create%20nft/widgets/outlined_box.dart';
-import 'package:ai_muse/flow_chain/mint_on_flow_repo.dart';
-import 'package:ai_muse/mint_nft/nft_mint_repo.dart';
-import 'package:ai_muse/features/loading/loading_page.dart';
 import 'package:ai_muse/utils/session_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 
 class CreateNFTScreen extends StatefulWidget {
@@ -207,10 +201,10 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                           setState(() {});
                         },
                         onEditingComplete: () {
-                          print('editingcomplete');
+                          debugPrint('editingcomplete');
                         },
                         onFieldSubmitted: (value) {
-                          print("onfieldsubmitted");
+                          debugPrint("onfieldsubmitted");
                         },
                         onTapOutside: (_) {
                           check = false;
@@ -309,15 +303,15 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
                               },
                               child: Container(
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.all(8),
-                                padding: EdgeInsets.all(4),
+                                margin: const EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(4),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                     color:
                                         selectedartstyle.contains(mapEntry.key)
-                                            ? Color(0XFF4318FF)
-                                            : Color.fromRGBO(0, 0, 0, 0),
+                                            ? const Color(0XFF4318FF)
+                                            : const Color.fromRGBO(0, 0, 0, 0),
                                     width: 1.5,
                                   ),
                                 ),
@@ -582,7 +576,7 @@ class _CreateNFTScreenState extends State<CreateNFTScreen> {
             selectedColors: selectedcolors,
             finishingTouches: selectedfinishTouch,
             selectedPrompts: selectedPrompt),
-        settings: RouteSettings(name: GenerateNFTScreen.routeName),
+        settings: const RouteSettings(name: GenerateNFTScreen.routeName),
       ));
     } else {
       Fluttertoast.showToast(

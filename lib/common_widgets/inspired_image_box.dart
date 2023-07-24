@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -41,13 +40,13 @@ class _InspiredImageBoxState extends State<InspiredImageBox> {
       )),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 4.h),
-        margin: EdgeInsets.symmetric(vertical: 1),
+        margin: const EdgeInsets.symmetric(vertical: 1),
         decoration: BoxDecoration(
           color: widget.showbgColor
               ? Colors.white
               : Theme.of(context).scaffoldBackgroundColor,
           borderRadius: widget.border
-              ? BorderRadius.only(
+              ? const BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
                 )
@@ -90,7 +89,7 @@ class _InspiredImageBoxState extends State<InspiredImageBox> {
                     style: GoogleFonts.lexend(
                       fontWeight: FontWeight.w500,
                       fontSize: 12.sp,
-                      color: Color(0XFF47548C),
+                      color: const Color(0XFF47548C),
                     ),
                   ),
                   Expanded(flex: 2, child: Container()),
@@ -98,7 +97,7 @@ class _InspiredImageBoxState extends State<InspiredImageBox> {
                       flex: 1,
                       child: Icon(
                         Icons.article_outlined,
-                        color: Color(0XFF47548C),
+                        color: const Color(0XFF47548C),
                         size: 3.h,
                       )),
                 ],
@@ -115,7 +114,7 @@ class _InspiredImageBoxState extends State<InspiredImageBox> {
                   style: GoogleFonts.lexend(
                     fontSize: 11.sp,
                     fontWeight: FontWeight.w500,
-                    color: Color(0XFF8F9BBA),
+                    color: const Color(0XFF8F9BBA),
                     height: 1.75,
                   ),
                   textAlign: TextAlign.center,

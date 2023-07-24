@@ -8,15 +8,14 @@ import 'package:ai_muse/utils/session_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
-import 'package:clipboard/clipboard.dart';
 import '../../../common_widgets/inspired_image_box.dart';
 
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
 class ProfileScreen extends StatefulWidget {
@@ -31,8 +30,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       "4xBk2ns8BnPwj6SiyrJR4ubzGfWvAefP738bV25jZ65L";
   bool gridOff = true;
   String displayName = "Tanmay Yadav";
-  TextEditingController? _textEditingController;
-  File? _imageFile;
   final picker = ImagePicker();
   final TextEditingController _nameController = TextEditingController();
   File? _image, _pickedImage;
@@ -51,7 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _image = imagePath != null ? File(imagePath) : null;
 
     final ipfsImageData = await getImagesFromStorage();
-    String url = 'https://ipfs.io/ipfs/';
     await fetchImages(ipfsImageData);
     setState(() {});
   }
@@ -80,11 +76,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _isLoading = false;
         });
       } else {
-        print("Request failed with status: ${response.statusCode}.");
+        debugPrint("Request failed with status: ${response.statusCode}.");
       }
     }
 
-    print(images);
+    debugPrint(images.toString());
   }
 
   Future<void> _saveData() async {
@@ -99,6 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _pickImage(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
+    // ignore: deprecated_member_use
     final PickedFile? pickedFile = await picker.getImage(source: source);
     _pickedImage = pickedFile != null ? File(pickedFile.path) : _image;
     setState(() {});
@@ -149,8 +146,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
-                              color: Color(0XFF4318FF).withOpacity(0.05),
-                              offset: Offset(0, 4),
+                              color: const Color(0XFF4318FF).withOpacity(0.05),
+                              offset: const Offset(0, 4),
                               blurRadius: 4,
                               spreadRadius: 0,
                             )
@@ -159,14 +156,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         alignment: Alignment.center,
                         child: Center(
                           child: SpinKitWanderingCubes(
-                            color: Color(0XFF4318FF),
+                            color: const Color(0XFF4318FF),
                             size: 35.sp,
                           ),
                         ),
                       ),
                     )
                   : DecoratedBox(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
@@ -186,15 +183,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         child: Row(
                           children: [
-                            Spacer(
+                            const Spacer(
                               flex: 2,
                             ),
                             InkWell(
                               child: Icon(
                                 Icons.grid_off,
                                 color: gridOff
-                                    ? Color(0XFF4318FF)
-                                    : Color(0XFF707EAE),
+                                    ? const Color(0XFF4318FF)
+                                    : const Color(0XFF707EAE),
                                 size: 3.5.h,
                               ),
                               onTap: () {
@@ -202,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 setState(() {});
                               },
                             ),
-                            Spacer(),
+                            const Spacer(),
                             InkWell(
                               onTap: () {
                                 gridOff = false;
@@ -211,12 +208,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: Icon(
                                 Icons.grid_on,
                                 color: gridOff == false
-                                    ? Color(0XFF4318FF)
-                                    : Color(0XFF707EAE),
+                                    ? const Color(0XFF4318FF)
+                                    : const Color(0XFF707EAE),
                                 size: 3.5.h,
                               ),
                             ),
-                            Spacer(
+                            const Spacer(
                               flex: 2,
                             ),
                           ],
@@ -227,7 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Column(
                   children: images.entries.map((MapEntry mapEntry) {
                     return Padding(
-                      padding: EdgeInsets.only(bottom: 1),
+                      padding: const EdgeInsets.only(bottom: 1),
                       child: InspiredImageBox(
                           isGeneratedScreen: true,
                           isProfileInspireBox: true,
@@ -241,11 +238,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   color: Colors.white,
                   width: double.infinity,
-                  padding: EdgeInsets.only(top: 1),
+                  padding: const EdgeInsets.only(top: 1),
                   height: 35.h,
                   child: GridView(
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                     ),
                     children: images.entries.map((MapEntry mapEntry) {
@@ -281,7 +279,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //     ),
               //   ),
               if (_isLoading == false)
-                InspiredImageBox(
+                const InspiredImageBox(
                   imgName: '',
                   text: '',
                 ),
@@ -375,7 +373,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         children: [
                                           Icon(
                                             Icons.edit_outlined,
-                                            color: Color(0XFF485585),
+                                            color: const Color(0XFF485585),
                                             size: 4.h,
                                           ),
                                           GestureDetector(
@@ -411,9 +409,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         right: 0,
                                                         child: Container(
                                                           padding:
-                                                              EdgeInsets.all(1),
+                                                              const EdgeInsets
+                                                                  .all(1),
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                                   color: Colors
                                                                       .white,
                                                                   shape: BoxShape
@@ -423,10 +422,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             foregroundColor:
                                                                 Colors.white,
                                                             backgroundColor:
-                                                                Color(0XFF4318FF)
+                                                                const Color(
+                                                                        0XFF4318FF)
                                                                     .withOpacity(
                                                                         0.7),
-                                                            child: Icon(
+                                                            child: const Icon(
                                                               Icons
                                                                   .camera_alt_outlined,
                                                               size: 20,
@@ -469,9 +469,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                           TextField(
                                             controller: _nameController,
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                            decoration: InputDecoration(
+                                            style: const TextStyle(
+                                                color: Colors.black),
+                                            decoration: const InputDecoration(
                                               labelText: 'Display Name',
                                               labelStyle: TextStyle(
                                                   color: Colors.black),
@@ -493,8 +493,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               );
                             });
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.edit_outlined,
                         ),
@@ -513,7 +513,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: GoogleFonts.lexend(
               fontSize: 20.sp,
               fontWeight: FontWeight.w600,
-              color: Color(0XFF1B2559),
+              color: const Color(0XFF1B2559),
             ),
           ),
           SizedBox(
@@ -524,7 +524,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: GoogleFonts.lexend(
               fontSize: 10.sp,
               fontWeight: FontWeight.w500,
-              color: Color(0XFF47548C),
+              color: const Color(0XFF47548C),
             ),
           ),
           SizedBox(
@@ -540,7 +540,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: GoogleFonts.lexend(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
-                  color: Color(0XFF8F9BBA),
+                  color: const Color(0XFF8F9BBA),
                 ),
               ),
               SizedBox(
@@ -554,8 +554,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: longString));
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.copy,
                       color: Color(0XFF8F9BBA),

@@ -15,7 +15,9 @@ abstract class BaseNFTMintRepo {
 
   Future<void> mintNFTUsingAPI(
       {required String chain,
+      // ignore: non_constant_identifier_names
       required String NFT_Name,
+      // ignore: non_constant_identifier_names
       required String NFT_Description,
       required String mintingAddress,
       required String imageURL});

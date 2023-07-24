@@ -21,6 +21,22 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
         body: Container(
       alignment: Alignment.center,
+      height: double.infinity,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          stops: [0.0, 0.69, 0.74, 0.74, 1],
+          colors: [
+            Color(0xFF4318FF),
+            Color(0xFF509CFE),
+            Color(0xFF48A5FE),
+            Color(0xFF48A5FE),
+            Color(0xFF21D4FD),
+          ],
+        ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -44,22 +60,6 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           )
         ],
-      ),
-      height: double.infinity,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          stops: [0.0, 0.69, 0.74, 0.74, 1],
-          colors: [
-            Color(0xFF4318FF),
-            Color(0xFF509CFE),
-            Color(0xFF48A5FE),
-            Color(0xFF48A5FE),
-            Color(0xFF21D4FD),
-          ],
-        ),
       ),
     ));
   }

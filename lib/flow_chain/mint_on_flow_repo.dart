@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
+// ignore: depend_on_referenced_packages
+import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
 import '../keys.dart';
@@ -14,7 +17,7 @@ Future<void> getReferenceBlockId() async {
   // Make a GET request to the Flow Access API endpoint to retrieve the block header
   final uri =
       Uri.https('rest-testnet.onflow.org', '/v1/blocks', queryParameters);
-  print(uri);
+  debugPrint(uri.toString());
   final response = await http.get(uri);
 
   // Check if the request was successful
@@ -23,17 +26,15 @@ Future<void> getReferenceBlockId() async {
     final jsonResponse = jsonDecode(response.body);
     developer.log(jsonResponse);
     developer.log(response.headers.toString());
-    final referenceBlockId = jsonResponse['header']['parentId'];
-    final blockId = jsonResponse['header']['id'];
   } else {
-    print('Request failed with status: ${response.statusCode}.');
-    print('Request failed with status: ${response.body}.');
+    debugPrint('Request failed with status: ${response.statusCode}.');
+    debugPrint('Request failed with status: ${response.body}.');
   }
 }
 
 Future<List<Map<String, String>>> getImagesFromStorage() async {
   String url = "https://api.nft.storage/";
-  print("check 1");
+  debugPrint("check 1");
 
   var request = http.MultipartRequest('GET', Uri.parse(url));
   request.headers.addAll({
@@ -103,6 +104,6 @@ Future<void> sendTransactionDemo() async {
     headers: {'Content-Type': 'application/json'},
   );
 
-  print(response.statusCode);
-  print(response.body);
+  debugPrint(response.statusCode.toString());
+  debugPrint(response.body);
 }

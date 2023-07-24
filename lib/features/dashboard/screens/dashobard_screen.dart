@@ -1,12 +1,7 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 import 'package:ai_muse/common_widgets/gradient_text.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
 import 'package:ai_muse/common_widgets/inspired_image_box.dart';
-import 'package:ai_muse/flow_chain/mint_on_flow_repo.dart';
-import 'package:ai_muse/mint_nft/nft_mint_solana.dart';
 import 'package:ai_muse/utils/session_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -44,14 +39,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Color(0XFF4318FF).withOpacity(0.05),
-                            offset: Offset(0, 4),
+                            color: const Color(0XFF4318FF).withOpacity(0.05),
+                            offset: const Offset(0, 4),
                             blurRadius: 4,
                             spreadRadius: 0,
                           )
@@ -63,7 +58,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           children: [
                             GradientText(
                               "µ",
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [Color(0XFFB721FF), Color(0XFF21D4FD)],
                               ),
                               style: GoogleFonts.itim(
@@ -85,7 +80,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         ),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     // GestureDetector(
                     //   onTap: () {
                     //     setState(() {
@@ -134,14 +129,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             mode: LaunchMode.externalApplication);
                       },
                       child: Container(
-                        padding: EdgeInsets.all(4),
+                        padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Color(0XFF4318FF).withOpacity(0.05),
-                              offset: Offset(0, 4),
+                              color: const Color(0XFF4318FF).withOpacity(0.05),
+                              offset: const Offset(0, 4),
                               blurRadius: 4,
                               spreadRadius: 0,
                             )
@@ -151,7 +146,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           padding: const EdgeInsets.all(4.0),
                           child: Row(
                             children: [
-                              Icon(Icons.coffee_rounded),
+                              const Icon(Icons.coffee_rounded),
                               SizedBox(
                                 width: 2.w,
                               ),
@@ -189,28 +184,28 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 SizedBox(
                   height: 2.h,
                 ),
-                InspiredImageBox(
+                const InspiredImageBox(
                   border: true,
                   imgName: "db_img1",
                   text:
                       'A dog driving a car, Avant-garde artstyle, by Pablo Picasso, by Claude Monet, gradient : [B2EBF2, 00BCD4, ], Purple, Unreal Engine, Devianart Top Rated, CGSociety Top Rated.',
                 ),
-                InspiredImageBox(
+                const InspiredImageBox(
                   imgName: "db_img2",
                   text:
                       'Cubism artstyle, by Johannes Vermeer, Red, Blue, Green, Yellow, Flat light, CryEngine, CGSociety Top Rated.',
                 ),
-                InspiredImageBox(
+                const InspiredImageBox(
                   imgName: "db_img3",
                   text:
                       'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
                 ),
-                InspiredImageBox(
+                const InspiredImageBox(
                   imgName: "db_img4",
                   text:
                       'A dog driving a car, Pixelated artstyle, by Vincent Van Gogh, by Johannes Vermeer, gradient : [FFF59D, FBC02D, ], Yellow, Devianart Top Rated, CGSociety Top Rated, Broad light, Maya Engine.',
                 ),
-                InspiredImageBox(
+                const InspiredImageBox(
                   imgName: '',
                   text: '',
                 )
@@ -231,16 +226,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         borderRadius: BorderRadius.circular(30),
         gradient: LinearGradient(
           colors: [
-            Color(0XFF4318FF).withOpacity(0.4),
-            Color(0XFF21D4FD).withOpacity(0.5),
+            const Color(0XFF4318FF).withOpacity(0.4),
+            const Color(0XFF21D4FD).withOpacity(0.5),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: Color(0XFF4318FF).withOpacity(0.2),
-            offset: Offset(0, 4),
+            color: const Color(0XFF4318FF).withOpacity(0.2),
+            offset: const Offset(0, 4),
             blurRadius: 6,
             spreadRadius: 4,
           )

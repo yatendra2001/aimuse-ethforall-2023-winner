@@ -1,0 +1,46 @@
+name: AI-Muse
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: "3.10.6"
+
+      - name: Get Dependencies
+        run: flutter pub get
+
+      - name: Create .env file
+        run: |
+          echo '${{ secrets.ENV_FILE_CONTENT }}' > lib/keys.dart
+
+      - name: Run Analyzer
+        run: flutter analyze
+
+      - name: Run Tests
+        run: flutter test
+
+      - name: Build APK
+        run: flutter build apk
+
+      # - name: Build iOS
+      #   run: flutter build ios --no-codesign
+
+      - name: Archive APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk

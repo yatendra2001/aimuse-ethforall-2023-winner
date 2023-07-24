@@ -1,6 +1,5 @@
 import 'package:ai_muse/features/authentication/screens/link_wallet_screen.dart';
 import 'package:ai_muse/features/create%20nft/screens/create_nft_screen.dart';
-import 'package:ai_muse/features/create%20nft/screens/generate_nft_screen.dart';
 import 'package:ai_muse/features/dashboard/screens/dashobard_screen.dart';
 import 'package:ai_muse/features/onboarding/screens/pageview.dart';
 import 'package:ai_muse/features/splashscreen/splash_screen.dart';
@@ -15,13 +14,13 @@ class CustomRouter {
       case '/':
         return MaterialPageRoute(
           settings: const RouteSettings(name: '/'),
-          builder: (_) => SplashScreen(),
+          builder: (_) => const SplashScreen(),
         );
       case CreateNFTScreen.routeName:
         return PageTransition(
           settings: const RouteSettings(name: CreateNFTScreen.routeName),
           type: PageTransitionType.rightToLeft,
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           child: const CreateNFTScreen(),
         );
 
@@ -36,7 +35,7 @@ class CustomRouter {
       case BottomNavBarScreen.routename:
         return MaterialPageRoute(
           settings: const RouteSettings(name: BottomNavBarScreen.routename),
-          builder: (_) => BottomNavBarScreen(),
+          builder: (_) => const BottomNavBarScreen(),
         );
       case DashBoardScreen.routename:
         return MaterialPageRoute(
@@ -46,7 +45,7 @@ class CustomRouter {
       case OnboardingPageview.routeName:
         return MaterialPageRoute(
           settings: const RouteSettings(name: OnboardingPageview.routeName),
-          builder: (_) => OnboardingPageview(),
+          builder: (_) => const OnboardingPageview(),
         );
       default:
         return _errorRoute();

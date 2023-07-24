@@ -2,16 +2,19 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
-import 'package:ai_muse/mint_nft/base_nft_mint_repo.dart';
 import 'package:ai_muse/utils/session_helper.dart';
+import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
+import 'package:welltested/welltested.dart';
 
 import '../../keys.dart';
 
-class NFTMintRepo extends BaseNFTMintRepo {
-  @override
+@Welltested()
+class NFTMintRepo {
   Future<String?> generateImageFromAI({required String prompt}) async {
     String errorMessage = "Something went wrong";
 
@@ -44,7 +47,6 @@ class NFTMintRepo extends BaseNFTMintRepo {
     throw (errorMessage);
   }
 
-  @override
   Future<String> storeFileInDirectory(
       {required String url,
       required String title,
@@ -71,7 +73,6 @@ class NFTMintRepo extends BaseNFTMintRepo {
     throw (errorMessage);
   }
 
-  @override
   Future<String> uploadImageToIPFS(
       {required String imageUrl,
       required String nftName,
@@ -168,10 +169,11 @@ class NFTMintRepo extends BaseNFTMintRepo {
     throw (errorMessage);
   }
 
-  @override
   Future<void> mintNFTUsingAPI(
       {required String chain,
+      // ignore: non_constant_identifier_names
       required String NFT_Name,
+      // ignore: non_constant_identifier_names
       required String NFT_Description,
       required String mintingAddress,
       required String imageURL}) async {
@@ -199,7 +201,7 @@ class NFTMintRepo extends BaseNFTMintRepo {
 
       var myresponse = await request.send();
       var responseBody = await myresponse.stream.bytesToString();
-      print(responseBody);
+      debugPrint(responseBody);
       developer.log("check 2");
     } catch (err) {
       errorMessage = err.toString();
@@ -208,7 +210,6 @@ class NFTMintRepo extends BaseNFTMintRepo {
     throw (errorMessage);
   }
 
-  @override
   Future<void> mintNFTOnSolana(
       {required String name,
       required String symbol,
@@ -238,6 +239,6 @@ class NFTMintRepo extends BaseNFTMintRepo {
       }
     });
     final response = await http.post(url, headers: headers, body: body);
-    print(response.body);
+    debugPrint(response.body);
   }
 }
