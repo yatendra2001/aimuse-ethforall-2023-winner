@@ -3,10 +3,11 @@ name: AI-Muse
 on:
   push:
     branches:
-      - master
+      - develop_sol
+
   pull_request:
     branches:
-      - master
+      - develop_sol
 
 jobs:
   build:
@@ -35,9 +36,6 @@ jobs:
 
       - name: Build APK
         run: flutter build apk
-
-      # - name: Build iOS
-      #   run: flutter build ios --no-codesign
 
       - name: Archive APK
         uses: actions/upload-artifact@v2
