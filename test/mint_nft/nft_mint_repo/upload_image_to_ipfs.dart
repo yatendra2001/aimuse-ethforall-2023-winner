@@ -1,6 +1,7 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 
-import 'uploadImageToIPFS.mocks.dart';
+import 'upload_image_to_IPFS.mocks.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:ai_muse/mint_nft/nft_mint_repo.dart';
