@@ -1,7 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 
-import 'upload_image_to_IPFS.mocks.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:ai_muse/mint_nft/nft_mint_repo.dart';
@@ -12,6 +11,8 @@ import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
+
+import 'upload_image_to_ipfs.mocks.dart';
 
 @GenerateMocks([http.Client, Directory, File])
 void main() {
