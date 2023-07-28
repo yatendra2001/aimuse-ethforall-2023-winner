@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'uploadImageToIPFS.welltested_test.mocks.dart';
+import 'uploadImageToIPFS.mocks.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:ai_muse/mint_nft/nft_mint_repo.dart';
