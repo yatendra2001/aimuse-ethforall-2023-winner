@@ -1,3 +1,5 @@
+// ignore_for_file: override_on_non_overriding_member
+
 import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
@@ -9,9 +11,11 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
+import 'package:welltested/welltested.dart';
 
 import '../../keys.dart';
 
+@Welltested()
 class NFTMintRepo {
   Future<String?> generateImageFromAI({required String prompt}) async {
     String errorMessage = "Something went wrong";
