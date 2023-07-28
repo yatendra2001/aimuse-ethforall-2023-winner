@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:ai_muse/mint_nft/base_nft_mint_repo.dart';
 import 'package:ai_muse/utils/session_helper.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -16,7 +17,8 @@ import 'package:welltested/welltested.dart';
 import '../../keys.dart';
 
 @Welltested()
-class NFTMintRepo {
+class NFTMintRepo extends BaseNFTMintRepo {
+  @override
   Future<String?> generateImageFromAI({required String prompt}) async {
     String errorMessage = "Something went wrong";
 
@@ -49,6 +51,7 @@ class NFTMintRepo {
     throw (errorMessage);
   }
 
+  @override
   Future<String> storeFileInDirectory(
       {required String url,
       required String title,
@@ -75,6 +78,7 @@ class NFTMintRepo {
     throw (errorMessage);
   }
 
+  @override
   Future<String> uploadImageToIPFS(
       {required String imageUrl,
       required String nftName,
@@ -171,6 +175,7 @@ class NFTMintRepo {
     throw (errorMessage);
   }
 
+  @override
   Future<void> mintNFTUsingAPI(
       {required String chain,
       // ignore: non_constant_identifier_names
@@ -212,6 +217,7 @@ class NFTMintRepo {
     throw (errorMessage);
   }
 
+  @override
   Future<void> mintNFTOnSolana(
       {required String name,
       required String symbol,

@@ -8,6 +8,7 @@ import 'dart:convert' as _i5;
 import 'dart:io' as _i3;
 import 'dart:typed_data' as _i6;
 
+import 'package:ai_muse/utils/session_helper.dart' as _i7;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -343,6 +344,15 @@ class MockClient extends _i1.Mock implements _i2.Client {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [SessionHelper].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSessionHelper extends _i1.Mock implements _i7.SessionHelper {
+  MockSessionHelper() {
+    _i1.throwOnMissingStub(this);
+  }
 }
 
 /// A class which mocks [Directory].

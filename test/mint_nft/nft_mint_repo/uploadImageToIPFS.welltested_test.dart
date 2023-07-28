@@ -7,13 +7,14 @@ import 'package:ai_muse/mint_nft/nft_mint_repo.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+// ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
 
 @GenerateMocks([http.Client, Directory, File])
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
   group('uploadImageToIPFS', () {
     const imageUrl = 'https://example.com/image.png';
     const nftName = 'TestNFT';
@@ -99,19 +100,6 @@ void main() {
               walletAddress: walletAddress,
               traitsDescription: traitsDescription),
           throwsA(isA<String>()));
-    });
-
-    // Add a test to mock the path_provider plugin
-    test('mock path_provider', () async {
-      final directory = MockDirectory();
-      when(getApplicationDocumentsDirectory())
-          .thenAnswer((_) async => directory);
-      when(directory.path).thenReturn('/test/path');
-
-      // You can add additional mocks for other path_provider methods if needed.
-
-      // Now you can call your function that uses path_provider in your repository,
-      // and it should work properly without throwing MissingPluginException.
     });
   });
 }
